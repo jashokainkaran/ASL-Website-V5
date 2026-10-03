@@ -1,0 +1,6 @@
+'use client';
+import {useMemo,useEffect,useRef} from 'react';
+import {useFrame} from '@react-three/fiber';
+import {BufferGeometry,BufferAttribute,ShaderMaterial,AdditiveBlending,Color,Points} from 'three';
+import {hash} from '../formations/shared';
+export function Ambient({count}:{count:number}) {const points=useRef<Points>(null);const geometry=useMemo(()=>{const g=new BufferGeometry(),a=new Float32Array(count*3);for(let i=0;i<count;i++)a.set([(hash(i,21)-.5)*35,(hash(i,22)-.5)*22,-3-hash(i,23)*12],i*3);g.setAttribute('position',new BufferAttribute(a,3));return g;},[count]);const material=useMemo(()=>new ShaderMaterial({transparent:true,depthWrite:false,blending:AdditiveBlending,uniforms:{uColor:{value:new Color(getComputedStyle(document.documentElement).getPropertyValue('--color-bone').trim())}},vertexShader:'void main(){gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);gl_PointSize=1.;}',fragmentShader:'uniform vec3 uColor;void main(){float a=1.-smoothstep(0.,.5,length(gl_PointCoord-.5));gl_FragColor=vec4(uColor,a*.12);}'}),[]);useEffect(()=>()=>{geometry.dispose();material.dispose();},[geometry,material]);useFrame((_,delta)=>{if(points.current)points.current.rotation.y+=delta*.001;});return <points ref={points} geometry={geometry} material={material} dispose={null}/>;}

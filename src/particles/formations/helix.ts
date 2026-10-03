@@ -1,0 +1,2 @@
+import {sample,cross,hash,type Generator} from './shared';
+export const helix:Generator=(count,c)=>sample(count,(u,i)=>{const a=u*Math.PI*2*c.helixTurns; const lane=hash(i,7); const branch=lane<.45?0:Math.PI; const radius=c.width*.125*c.helixRadius; const off=cross(i,.16); const bridge=lane>.9?(hash(i,9)*2-1):1; return [Math.cos(a+branch)*radius*bridge+off[0],(u-.5)*c.height*.98*c.helixHeight+off[1],Math.sin(a+branch)*1.35*bridge+off[0]];});

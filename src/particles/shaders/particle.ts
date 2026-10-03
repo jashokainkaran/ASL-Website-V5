@@ -1,0 +1,55 @@
+import {formations} from '../states';
+export const vertexShader = `
+${formations.map(f=>`attribute vec3 ${f.attribute};`).join('\n')}
+attribute vec4 aIdentity; attribute vec4 aCharacter; attribute vec3 aOffset;
+uniform float uTime,uProgress,uRate,uDpr,uSize,uDistribution,uLargeShare,uFocus,uBlur,uStretch,uTwinkle,uIdle,uCurve,uRadius,uStrength,uFalloff,uSwirl,uRecovery,uTrailWidth,uOctaves;
+uniform int uTrailLength;
+uniform vec3 uHistory[24];
+uniform vec2 uViewport;
+varying float vBrightness,vBlur,vStretch,vWarm,vGold,vTrail;
+varying vec2 vDirection;
+const float PI=3.14159265;
+// Analytic divergence-free curl field; octave count is quality-tier controlled.
+vec3 curl(vec3 p,float t){vec3 result=vec3(0.);float amp=1.;for(int j=0;j<3;j++){if(float(j)>=uOctaves)break;result+=amp*vec3(sin(p.y+t)-cos(p.z-t),sin(p.z+t)-cos(p.x-t),sin(p.x+t)-cos(p.y-t));p*=1.9;amp*=.5;}return result;}
+vec3 transit(vec3 from,vec3 target,float p,float start,float end,float time){
+ if(p<=start)return from;if(p>=end)return target;
+ float threshold=.55*aIdentity.y+.3*aIdentity.x+.15*fract(aIdentity.z/7.);
+ if(start<.2)threshold=clamp(length(target)/6.,0.,1.)*.65+aIdentity.x*.35;
+ if(start>.2&&start<.3)threshold=clamp(abs(target.y)/6.,0.,1.)*.45+aIdentity.x*.25+step(.45,aIdentity.x)*.2;
+ float local=smoothstep(0.,.72,clamp((p-start)/(end-start)-threshold*.28,0.,1.));
+ vec3 axis=vec3(cos(aIdentity.w+local*PI*2.),sin(aIdentity.w+local*PI*2.),sin(local*PI+aIdentity.w));
+ vec3 flow=curl(mix(from,target,local)*.36,time*.07)+axis*.65;
+ return mix(from,target,local)+flow*sin(PI*local)*uCurve*.65;
+}
+vec3 positionAt(float time,float progress){
+ vec3 p=${formations[0].attribute};
+ ${formations.slice(1).map(f=>`p=transit(p,${f.attribute},progress,${f.window[0].toFixed(4)},${f.window[1].toFixed(4)},time);`).join('\n')}
+ float rest=1.-smoothstep(.88,.96,progress)*.82;
+ p+=curl(p*.35,time*.12/aCharacter.y+aIdentity.w)*uIdle*rest;
+ p+=aOffset*sin(time*.2+aIdentity.w)*uIdle;
+ return p;
+}
+void main(){
+ vec3 p=positionAt(uTime,uProgress); vec3 original=p;vec3 next=positionAt(uTime+.016,uProgress+uRate*.016);
+ vTrail=0.;
+ for(int i=0;i<24;i++){if(i>=uTrailLength)break;vec3 h=uHistory[i];float age=max(0.,uTime-h.z);vec2 delta=p.xy-h.xy;float dist=length(delta);float strength=exp(-age*uRecovery)*pow(max(0.,1.-dist/uRadius),uFalloff);p.xy+=(delta+vec2(-delta.y,delta.x)*uSwirl)*strength*uStrength/aCharacter.y;vTrail+=exp(-dist*dist/(uTrailWidth*uTrailWidth))*exp(-age*2.)*.18;}
+ next+=p-original;
+ vec4 mv=modelViewMatrix*vec4(p,1.);vec4 clip=projectionMatrix*mv;
+ vec4 nextClip=projectionMatrix*modelViewMatrix*vec4(next,1.);
+ vec2 velocity=(nextClip.xy/nextClip.w-clip.xy/clip.w)*uViewport;
+ float speed=length(velocity);vDirection=speed>.001?normalize(velocity):vec2(1.,0.);vStretch=1.+min(speed*.3,3.)*uStretch;
+ vBlur=min(abs(-mv.z-uFocus)*.12*uBlur,1.5);
+ float large=step(1.-uLargeShare,aCharacter.x)*step(-mv.z,11.);
+ float medium=step(.88,aCharacter.x)*(1.-large);
+ float size=(1.+medium*1.3*uDistribution+large*9.*uDistribution)*(1.+vBlur);
+ gl_PointSize=clamp(uSize*uDpr*clamp(uViewport.y/900.,.85,1.25)*size*(10./-mv.z)*sqrt(vStretch),1.,26.*uDpr);
+ vBrightness=(.30+aCharacter.z*.55+length(aOffset.xy)*.12)*(1.+uTwinkle*sin(uTime*.7+aIdentity.w))*exp(-max(0.,-mv.z-8.)*.04)/(1.+vBlur*.6);
+ vBrightness*=mix(1.,.25,large);vWarm=aCharacter.w;vGold=step(.998,aIdentity.x);gl_Position=clip;
+}`;
+export const fragmentShader = `
+uniform vec3 uBone,uCream,uGold;
+varying float vBrightness,vBlur,vStretch,vWarm,vGold,vTrail;varying vec2 vDirection;
+void main(){vec2 q=(gl_PointCoord-.5)*2.;q=vec2(dot(q,vDirection),dot(q,vec2(-vDirection.y,vDirection.x)));q.y*=vStretch;float r=length(q);if(r>1.)discard;
+ float core=exp(-r*r*(22./(1.+vBlur*3.)));float edge=exp(-r*r*5.)*.24;float alpha=(core+edge)*(1.-smoothstep(.75,1.,r))*vBrightness;
+ vec3 color=mix(mix(uBone,uCream,vWarm*.35),uGold,vGold*.7);gl_FragColor=vec4(color,alpha+vTrail*edge);}
+`;
