@@ -1,0 +1,27 @@
+@import "tailwindcss";
+@import "./tokens.css";
+* { box-sizing: border-box; }
+html { background: var(--color-void); color: var(--color-bone); }
+body { margin: 0; font-family: var(--font-geist), sans-serif; }
+a { color: inherit; text-decoration: none; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 7px; }
+::selection { background: var(--color-burgundy); color: var(--color-bone); }
+.site-header { position: fixed; z-index: 30; inset: 0 0 auto; height: 100px; display: flex; align-items: center; justify-content: space-between; padding: 0 4vw; background: linear-gradient(var(--color-void), transparent); }
+.wordmark { font-size: 30px; letter-spacing: -.08em; font-weight: 600; }
+.site-nav { display: flex; align-items: center; gap: 32px; font-size: 13px; }
+.site-nav a { padding: 14px 0; }
+.site-nav .nav-cta { border: 1px solid var(--line); padding: 13px 23px; }
+.skip-link { position: fixed; top: -100px; left: 20px; z-index: 100; background: var(--color-ink); padding: 14px; }
+.skip-link:focus { top: 12px; }
+.canvas-layer { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+main { position: relative; z-index: 1; }
+.container { width: min(1440px, 92%); margin-inline: auto; }
+.placeholder-page { min-height: 100svh; padding: 24vh 4vw 12vh; }
+.eyebrow { font-family: var(--font-geist-mono), monospace; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; }
+h1, h2, p { margin: 0; }
+h1 { font-family: var(--font-instrument), serif; font-size: clamp(64px, 8vw, 132px); font-weight: 400; line-height: .98; letter-spacing: -.035em; }
+.placeholder-page p { margin-top: 30px; max-width: 550px; color: var(--color-muted); line-height: 1.7; }
+.placeholder-page .eyebrow { margin-bottom: 30px; }
+@media(max-width:700px) { .site-header { height: 80px; padding-inline: 6vw; } .site-nav { gap: 14px; } .site-nav a:not(.nav-cta) { display: none; } .site-nav .nav-cta { padding: 12px 18px; } }

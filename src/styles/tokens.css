@@ -1,0 +1,7 @@
+@theme inline {
+ --color-void: #070708; --color-ink: #111214; --color-burgundy: #621B2A;
+ --color-bone: #F6F1E8; --color-gold: #C6A15B; --color-slate: #6C737D;
+ --color-muted: #B2AFAC; --color-wine: #2B1119;
+ --font-display: var(--font-instrument); --font-sans: var(--font-geist); --font-mono: var(--font-geist-mono);
+}
+:root { --surface: var(--color-void); --text: var(--color-bone); --line: color-mix(in srgb, var(--color-bone) 23%, transparent); }
