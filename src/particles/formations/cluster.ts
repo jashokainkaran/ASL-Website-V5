@@ -1,0 +1,2 @@
+import {sample,cross,type Generator} from './shared';
+export const cluster:Generator=(count,c)=>sample(count,(u,i)=>{const mobile=c.width<c.height;const a=u*Math.PI*8;const lane=i%5;const off=cross(i,.18);const r=1.8+.45*Math.sin(a*3+lane);return [(mobile?0:c.width*.29)+Math.cos(a)*r*(mobile?c.width*.16:c.width*.105)+off[0],Math.sin(a)*r*(mobile?.65:1.7)+off[1]+(mobile?c.height*.22:0),Math.sin(a*2+lane)*1.6+off[0]];});

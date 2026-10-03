@@ -1,5 +1,9 @@
 export const bookingUrl = '/contact';
 export const site = {
+ skipLabel:'Skip to introduction', specialism:'Design / Development / Deployment', headlineFirst:'Digital matter,', headlineLast:'given form.', openingLine:'ONE MATERIAL. INFINITE POSSIBILITY.', scrollLabel:'SCROLL TO SHAPE',
+ capabilityLabel:'01 — Capabilities', capabilityLink:'Explore capability', materialLabel:'Mutable matter /', beats:['Shaped','Built','Released','Alive'],
+ statementLabel:'02 — A considered approach', proofLabel:'Selected work / Placeholder entries for layout review', finalLabel:'03 — Your next chapter',
+ emailLabel:'Contact email — placeholder', footerLine:'Considered. Built. Released.', provisionalLabel:'Identity / Provisional',
  name: 'ASL', label: 'ASL / DIGITAL STUDIO', isPlaceholder: true,
  headline: 'Digital matter, given form.',
  description: 'ASL designs, builds and deploys websites and digital products for founders and teams who want more than a template.',

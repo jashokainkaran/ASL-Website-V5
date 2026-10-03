@@ -1,6 +1,6 @@
 import {formations} from '../states';
 export const vertexShader = `
-${formations.map(f=>`attribute vec3 ${f.attribute};`).join('\n')}
+${[...new Set(formations.map(f=>f.attribute))].map(attribute=>`attribute vec3 ${attribute};`).join('\n')}
 attribute vec4 aIdentity; attribute vec4 aCharacter; attribute vec3 aOffset;
 uniform float uTime,uProgress,uRate,uDpr,uSize,uDistribution,uLargeShare,uFocus,uBlur,uStretch,uTwinkle,uIdle,uCurve,uRadius,uStrength,uFalloff,uSwirl,uRecovery,uTrailWidth,uOctaves;
 uniform int uTrailLength;
@@ -14,25 +14,25 @@ vec3 curl(vec3 p,float t){vec3 result=vec3(0.);float amp=1.;for(int j=0;j<3;j++)
 vec3 transit(vec3 from,vec3 target,float p,float start,float end,float time){
  if(p<=start)return from;if(p>=end)return target;
  float threshold=.55*aIdentity.y+.3*aIdentity.x+.15*fract(aIdentity.z/7.);
- if(start<.2)threshold=clamp(length(target)/6.,0.,1.)*.65+aIdentity.x*.35;
- if(start>.2&&start<.3)threshold=clamp(abs(target.y)/6.,0.,1.)*.45+aIdentity.x*.25+step(.45,aIdentity.x)*.2;
+ if(start<.1)threshold=clamp(length(target)/6.,0.,1.)*.65+aIdentity.x*.35;
+ if(start>.1&&start<.2)threshold=clamp(abs(target.y)/6.,0.,1.)*.45+aIdentity.x*.25+step(.45,aIdentity.x)*.2;
  float local=smoothstep(0.,.72,clamp((p-start)/(end-start)-threshold*.28,0.,1.));
  vec3 axis=vec3(cos(aIdentity.w+local*PI*2.),sin(aIdentity.w+local*PI*2.),sin(local*PI+aIdentity.w));
- vec3 flow=curl(mix(from,target,local)*.36,time*.07)+axis*.65;
+ vec3 flow=curl(mix(from,target,local)*.36,time*.07)+axis*.20;
  return mix(from,target,local)+flow*sin(PI*local)*uCurve*.65;
 }
 vec3 positionAt(float time,float progress){
  vec3 p=${formations[0].attribute};
  ${formations.slice(1).map(f=>`p=transit(p,${f.attribute},progress,${f.window[0].toFixed(4)},${f.window[1].toFixed(4)},time);`).join('\n')}
- float rest=1.-smoothstep(.88,.96,progress)*.82;
- p+=curl(p*.35,time*.12/aCharacter.y+aIdentity.w)*uIdle*rest;
+ float rest=1.-smoothstep(.4576,.4992,progress)*.82;
+ p+=curl(p*.35,time*.12+aIdentity.w*.04)*uIdle*rest;
  p+=aOffset*sin(time*.2+aIdentity.w)*uIdle;
  return p;
 }
 void main(){
  vec3 p=positionAt(uTime,uProgress); vec3 original=p;vec3 next=positionAt(uTime+.016,uProgress+uRate*.016);
  vTrail=0.;
- for(int i=0;i<24;i++){if(i>=uTrailLength)break;vec3 h=uHistory[i];float age=max(0.,uTime-h.z);vec2 delta=p.xy-h.xy;float dist=length(delta);float strength=exp(-age*uRecovery)*pow(max(0.,1.-dist/uRadius),uFalloff);p.xy+=(delta+vec2(-delta.y,delta.x)*uSwirl)*strength*uStrength/aCharacter.y;vTrail+=exp(-dist*dist/(uTrailWidth*uTrailWidth))*exp(-age*2.)*.18;}
+ for(int i=0;i<24;i++){if(i>=uTrailLength)break;vec3 h=uHistory[i];float age=max(0.,uTime-h.z);vec2 delta=p.xy-h.xy;float dist=length(delta);float strength=exp(-age*uRecovery)*pow(max(0.,1.-dist/uRadius),uFalloff);p.xy+=(delta+vec2(-delta.y,delta.x)*uSwirl)*strength*uStrength*exp(-float(i)*.25)*.25/aCharacter.y;vTrail+=exp(-dist*dist/(uTrailWidth*uTrailWidth))*exp(-age*2.)*.18;}
  next+=p-original;
  vec4 mv=modelViewMatrix*vec4(p,1.);vec4 clip=projectionMatrix*mv;
  vec4 nextClip=projectionMatrix*modelViewMatrix*vec4(next,1.);
