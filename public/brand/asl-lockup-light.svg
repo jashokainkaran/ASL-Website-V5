@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 142 48" fill="none" role="img" aria-labelledby="title">
+  <title id="title">ASL logo</title>
+  <g>
+    <path d="M5 38 18 8l9 23H15" stroke="#F5F3F1" stroke-width="2.2" stroke-linecap="square"/>
+    <path d="M27 12h15L29 24l14 13H25" stroke="#F5F3F1" stroke-width="2.2" stroke-linecap="square"/>
+    <path d="M43 9v29" stroke="#F5F3F1" stroke-width="2.2" stroke-linecap="square"/>
+    <path d="M5 43h38" stroke="#812B45" stroke-width="2.2"/>
+  </g>
+  <text x="64" y="31" fill="#F5F3F1" font-family="Geist, Inter, Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="4">ASL</text>
+</svg>

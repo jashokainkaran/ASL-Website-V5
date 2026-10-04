@@ -1,22 +1,27 @@
-// PROVISIONAL original monoline ASL. One continuous cubic spline, shared by SVG and points.
-export const logoSegments: number[][] = [
- // Angular A, a shared crossbar, an asymmetric S and a forward-cut L terminal.
- [0,95, 18,65, 38,30, 56,5],
- [56,5, 65,35, 73,65, 82,95],
- [82,95, 79,83, 76,72, 73,61],
- [73,61, 59,61, 44,61, 28,61],
- [28,61, 52,61, 78,61, 102,61],
- [102,61, 99,86, 119,96, 144,96],
- [144,96, 168,96, 186,84, 185,69],
- [185,69, 184,56, 166,49, 146,43],
- [146,43, 126,37, 112,31, 116,20],
- [116,20, 121,5, 139,4, 158,5],
- [158,5, 180,5, 205,5, 235,5],
- [235,5, 230,34, 225,65, 220,95],
- [220,95, 245,95, 276,95, 300,95],
-];
-export const logoPath='M 0 95 '+logoSegments.map(s=>`C ${s.slice(2).join(' ')}`).join(' ');
-function point(s:number[],t:number) {const r=1-t;return [r*r*r*s[0]+3*r*r*t*s[2]+3*r*t*t*s[4]+t*t*t*s[6],r*r*r*s[1]+3*r*r*t*s[3]+3*r*t*t*s[5]+t*t*t*s[7]];}
-const samples=logoSegments.flatMap(s=>Array.from({length:100},(_,j)=>point(s,j/99)));
-const lengths=[0]; for(let i=1;i<samples.length;i++) lengths[i]=lengths[i-1]+Math.hypot(samples[i][0]-samples[i-1][0],samples[i][1]-samples[i-1][1]);
-export function getLogoPoints(count:number) {const result=new Float32Array(count*3); let j=1; for(let i=0;i<count;i++){const distance=i/(count-1)*lengths[lengths.length-1];while(j<lengths.length-1&&lengths[j]<distance)j++;const t=(distance-lengths[j-1])/(lengths[j]-lengths[j-1]||1);result[i*3]=(samples[j-1][0]*(1-t)+samples[j][0]*t-150)/150;result[i*3+1]=(50-samples[j-1][1]*(1-t)-samples[j][1]*t)/150;}return result;}
+import {hash} from '../formations/shared';
+// Exact absolute path coordinates from public/brand/asl-mark-light.svg.
+export const markPolylines = [
+ [[5,38],[18,8],[27,31],[15,31]],
+ [[27,12],[42,12],[29,24],[43,37],[25,37]],
+ [[43,9],[43,38]], [[5,43],[43,43]],
+] as const;
+export const markPaths=markPolylines.map(points=>points.map((p,i)=>`${i?'L':'M'}${p[0]} ${p[1]}`).join(''));
+const segments=markPolylines.flatMap(points=>points.slice(1).map((end,i)=>{
+ const start=points[i];return {start,end,length:Math.hypot(end[0]-start[0],end[1]-start[1])};
+}));
+const total=segments.reduce((sum,s)=>sum+s.length,0);
+/** Arc-length ordering preserves correspondence; disconnected paths never acquire connecting strokes. */
+export function getASLMarkPoints(count:number) {
+ const result=new Float32Array(count*3);
+ for(let i=0;i<count;i++) {
+  let distance=(i+.5)/count*total;
+  let segment=segments[segments.length-1];
+  for(const candidate of segments){segment=candidate;if(distance<=candidate.length)break;distance-=candidate.length;}
+  const {start,end,length}=segment,t=Math.min(1,distance/length),offset=(hash(i,42)-.5)*2.2;
+  const x=start[0]+(end[0]-start[0])*t-(end[1]-start[1])/length*offset;
+  const y=start[1]+(end[1]-start[1])*t+(end[0]-start[0])/length*offset;
+  result.set([(x-24)/20,(25.5-y)/20,(hash(i,43)-.5)*.025],i*3);
+ }
+ return result;
+}
+export const getLogoPoints=getASLMarkPoints;

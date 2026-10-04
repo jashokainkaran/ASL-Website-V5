@@ -21,10 +21,32 @@ vec3 transit(vec3 from,vec3 target,float p,float start,float end,float time){
  vec3 flow=curl(mix(from,target,local)*.36,time*.07)+axis*.20;
  return mix(from,target,local)+flow*sin(PI*local)*uCurve*.65;
 }
+// Release travels from the ends toward the core. The original strand is pulled and
+// untwisted before any flight toward a filament, preserving volume and continuity.
+vec3 unravel(vec3 helix,float progress){
+ float release=smoothstep(0.,1.,clamp((progress-.2704)/.050- (1.-abs(aIdentity.y*2.-1.))*.4,0.,1.));
+ float turn=release*(aIdentity.y-.5)*2.8;
+ mat2 rotation=mat2(cos(turn),-sin(turn),sin(turn),cos(turn));
+ helix.xz=rotation*helix.xz;
+ helix.x*=1.+release*1.1;
+ helix.y*=1.-release*.30;
+ helix.x+=release*(aIdentity.y-.5)*5.;
+ helix.z+=sin(aIdentity.y*PI*2.)*release*.8;
+ return helix;
+}
+vec3 finalTarget(vec3 logo){
+ bool mobile=uViewport.x<uViewport.y;
+ float width=11.547*uViewport.x/uViewport.y;
+ return vec3(logo.x*(mobile?.65:1.15)+width*(mobile?.20:.30),logo.y*(mobile?.65:1.15)+(mobile?1.35:-.5),logo.z);
+}
 vec3 positionAt(float time,float progress){
  vec3 p=${formations[0].attribute};
- ${formations.slice(1).map(f=>`p=transit(p,${f.attribute},progress,${f.window[0].toFixed(4)},${f.window[1].toFixed(4)},time);`).join('\n')}
+ ${formations.slice(1).map(f=>f.name==='filaments'?`p=transit(unravel(p,progress),aFilamentTarget,progress,.313,.374,time);`:`p=transit(p,${f.name==='final'?'finalTarget(aLogoTarget)':f.attribute},progress,${f.window[0].toFixed(4)},${f.window[1].toFixed(4)},time);`).join('\n')}
  float rest=1.-smoothstep(.4576,.4992,progress)*.82;
+ float streamLife=smoothstep(.69,.75,progress)*(1.-smoothstep(.77,.84,progress));
+ p.x+=sin(time*.65+aIdentity.y*18.)*.12*streamLife;
+ float clusterLife=smoothstep(.77,.84,progress)*(1.-smoothstep(.86,.91,progress));
+ p+=aOffset*sin(time*.5+aIdentity.y*PI*6.)*.18*clusterLife;
  p+=curl(p*.35,time*.12+aIdentity.w*.04)*uIdle*rest;
  p+=aOffset*sin(time*.2+aIdentity.w)*uIdle;
  return p;
@@ -32,7 +54,7 @@ vec3 positionAt(float time,float progress){
 void main(){
  vec3 p=positionAt(uTime,uProgress); vec3 original=p;vec3 next=positionAt(uTime+.016,uProgress+uRate*.016);
  vTrail=0.;
- for(int i=0;i<24;i++){if(i>=uTrailLength)break;vec3 h=uHistory[i];float age=max(0.,uTime-h.z);vec2 delta=p.xy-h.xy;float dist=length(delta);float strength=exp(-age*uRecovery)*pow(max(0.,1.-dist/uRadius),uFalloff);p.xy+=(delta+vec2(-delta.y,delta.x)*uSwirl)*strength*uStrength*exp(-float(i)*.25)*.25/aCharacter.y;vTrail+=exp(-dist*dist/(uTrailWidth*uTrailWidth))*exp(-age*2.)*.18;}
+ for(int i=0;i<24;i+=2){if(i>=uTrailLength)break;vec3 h=uHistory[i];float age=max(0.,uTime-h.z);if(age>2.)continue;vec2 delta=p.xy-h.xy;float squared=dot(delta,delta);if(squared>uRadius*uRadius)continue;float dist=sqrt(squared);float strength=exp(-age*uRecovery)*pow(max(0.,1.-dist/uRadius),uFalloff);p.xy+=(delta+vec2(-delta.y,delta.x)*uSwirl)*strength*uStrength*exp(-float(i)*.25)*.25/aCharacter.y;vTrail+=exp(-dist*dist/(uTrailWidth*uTrailWidth))*exp(-age*2.)*.18;}
  next+=p-original;
  vec4 mv=modelViewMatrix*vec4(p,1.);vec4 clip=projectionMatrix*mv;
  vec4 nextClip=projectionMatrix*modelViewMatrix*vec4(next,1.);
@@ -44,7 +66,7 @@ void main(){
  float size=(1.+medium*1.3*uDistribution+large*9.*uDistribution)*(1.+vBlur);
  gl_PointSize=clamp(uSize*uDpr*clamp(uViewport.y/900.,.85,1.25)*size*(10./-mv.z)*sqrt(vStretch),1.,26.*uDpr);
  vBrightness=(.30+aCharacter.z*.55+length(aOffset.xy)*.12)*(1.+uTwinkle*sin(uTime*.7+aIdentity.w))*exp(-max(0.,-mv.z-8.)*.04)/(1.+vBlur*.6);
- vBrightness*=mix(1.,.25,large);vWarm=aCharacter.w;vGold=step(.998,aIdentity.x);gl_Position=clip;
+ vBrightness*=mix(1.,.25,large);vWarm=aCharacter.w;vGold=step(.52,uProgress)*step(.998,aIdentity.x);gl_Position=clip;
 }`;
 export const fragmentShader = `
 uniform vec3 uBone,uCream,uGold;

@@ -10,8 +10,9 @@ import { site, bookingUrl } from '@/content/site';
 export function Opening() {
   const root = useRef<HTMLElement>(null);
   useEffect(() => {
-    const media = gsap.matchMedia();
-    const timer = setTimeout(() => media.add('(prefers-reduced-motion: no-preference)', () => {
+    let cleanup: (()=>void)|undefined;
+    const start=()=>{
+      if(cleanup)return;
       if (scene.fallback || !root.current) return;
       const element = root.current;
       const copy = element.querySelector('.hero-copy');
@@ -36,14 +37,16 @@ export function Opening() {
       const lost = () => { disposeScroll(); render(); };
       window.addEventListener('asl:webgl-lost', lost);
       gsap.ticker.add(render);
-      return () => { window.removeEventListener('asl:webgl-lost', lost); gsap.ticker.remove(render); disposeScroll(); context.revert(); };
-    }), 120);
-    return () => { clearTimeout(timer); media.revert(); };
+      cleanup = () => { window.removeEventListener('asl:webgl-lost', lost); gsap.ticker.remove(render); disposeScroll(); context.revert(); };
+    };
+    if(scene.checked)start();
+    window.addEventListener('asl:capability-ready',start);
+    return()=>{window.removeEventListener('asl:capability-ready',start);cleanup?.();};
   }, []);
   return <section className="opening" ref={root} aria-label="Mutable Matter opening">
     <div className="opening-label eyebrow">{site.label}</div>
     <a className="skip-sequence eyebrow" href="#introduction">{site.skipLabel} <span aria-hidden="true">↘</span></a>
-    <div className="hero-copy" id="introduction">
+    <div className="hero-copy" id="introduction" tabIndex={-1}>
       <h1>{site.headlineFirst}<br /><em>{site.headlineLast}</em></h1>
       <div className="hero-details"><div className="eyebrow hero-specialism">{site.specialism}</div><p>{site.description}</p>
         <div className="cta-row"><Link className="button" href={bookingUrl}>{site.primary}<span aria-hidden="true">↗</span></Link><Link className="text-link" href="/work">{site.secondary}<span aria-hidden="true">↗</span></Link></div>

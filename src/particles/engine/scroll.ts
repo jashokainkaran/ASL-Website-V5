@@ -1,6 +1,6 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { scene } from '@/lib/scene-store';
+import { scene, tuning } from '@/lib/scene-store';
 import { OPENING_END } from '../states';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 /** One smoothed scroll driver writes the canonical progress for the entire page. */
 export function createSceneScroll(opening: HTMLElement) {
   if (!scene.manual) scene.sceneProgress = 0;
-  const pin = ScrollTrigger.create({ trigger: opening, start: 'top top', end: '+=600%', pin: true, invalidateOnRefresh: true });
+  const pin = ScrollTrigger.create({ trigger: opening, start: 'top top', end: () => `+=${tuning.openingScreens*100}%`, pin: true, invalidateOnRefresh: true, refreshPriority: 1 });
   let anchors: { position: number; progress: number }[] = [];
   let distance = 1;
   const measure = () => {
@@ -30,7 +30,7 @@ export function createSceneScroll(opening: HTMLElement) {
   const cursor = { value: 0 };
   const tween = gsap.to(cursor, {
     value: 1, ease: 'none',
-    scrollTrigger: { trigger: opening.parentElement, start: 0, end: () => distance, scrub: .8, invalidateOnRefresh: true, onRefreshInit: measure },
+    scrollTrigger: { trigger: opening.parentElement, start: () => pin.start, end: () => { measure(); return pin.start + distance; }, scrub: .65, invalidateOnRefresh: true },
     onUpdate: () => {
       if (scene.manual) return;
       const current = pin.start + cursor.value * distance;
@@ -42,8 +42,11 @@ export function createSceneScroll(opening: HTMLElement) {
     },
   });
   const skip = opening.querySelector<HTMLAnchorElement>('.skip-sequence');
-  const jump = (event: Event) => { event.preventDefault(); window.scrollTo({ top: pin.end, behavior: 'smooth' }); };
+  let pendingFocus=false;
+  const focusWhenVisible=()=>{if(pendingFocus&&scene.sceneProgress>=OPENING_END*.995){pendingFocus=false;opening.querySelector<HTMLElement>('#introduction')?.focus({preventScroll:true});}};
+  gsap.ticker.add(focusWhenVisible);
+  const jump = (event: Event) => { event.preventDefault(); pendingFocus=true; window.scrollTo({ top: pin.end, behavior: 'smooth' }); };
   skip?.addEventListener('click', jump);
   ScrollTrigger.refresh();
-  return () => { skip?.removeEventListener('click', jump); tween.scrollTrigger?.kill(); tween.kill(); pin.kill(); };
+  return () => { gsap.ticker.remove(focusWhenVisible); skip?.removeEventListener('click', jump); tween.scrollTrigger?.kill(); tween.kill(); pin.kill(); };
 }

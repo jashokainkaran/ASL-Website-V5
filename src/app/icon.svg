@@ -1,1 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -108 324 324"><path d="M 0 95 C 18 65 38 30 56 5 C 65 35 73 65 82 95 C 79 83 76 72 73 61 C 59 61 44 61 28 61 C 52 61 78 61 102 61 C 99 86 119 96 144 96 C 168 96 186 84 185 69 C 184 56 166 49 146 43 C 126 37 112 31 116 20 C 121 5 139 4 158 5 C 180 5 205 5 235 5 C 230 34 225 65 220 95 C 245 95 276 95 300 95" fill="none" stroke="#F6F1E8" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 48" fill="none" role="img" aria-labelledby="title">
+  <title id="title">ASL geometric mark</title>
+  <path d="M5 38 18 8l9 23H15" stroke="#F5F3F1" stroke-width="2.2" stroke-linecap="square"/>
+  <path d="M27 12h15L29 24l14 13H25" stroke="#F5F3F1" stroke-width="2.2" stroke-linecap="square"/>
+  <path d="M43 9v29" stroke="#F5F3F1" stroke-width="2.2" stroke-linecap="square"/>
+  <path d="M5 43h38" stroke="#F5F3F1" stroke-width="2.2"/>
+</svg>
