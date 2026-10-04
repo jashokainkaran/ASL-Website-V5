@@ -4,7 +4,7 @@ Read this file fully before every implementation, refinement, QA, or maintenance
 
 These rules are permanent unless a task explicitly overrides a specific rule. Brand story, page flow, and approved copy direction live in `docs/ASL_BRAND_AND_STORY.md`. If there is a conflict, this file wins on engineering/architecture and the brand document wins on brand/story/copy.
 
-This is now an active project. Tasks 00–02 have already produced a working implementation. Preserve sound existing architecture and working behaviour unless a later task deliberately replaces it.
+This is an active project. Tasks 00–02 and the Builder 2 refinement have already produced a working implementation. Preserve sound existing architecture and working behaviour unless a later task deliberately replaces it.
 
 ---
 
@@ -54,7 +54,7 @@ Emotional progression:
 
 **freedom → attraction → concentration → intelligence → structure → decomposition → movement → convergence → identity → calm**
 
-The same visual language should continue into capability states and later route-driven experiences.
+The same visual language should continue into capability states, section transitions, residual matter, and later route-driven experiences.
 
 ---
 
@@ -97,37 +97,9 @@ Rules:
 - Use lockups only where a standalone asset is useful.
 - In React UI, prefer the vector mark plus real DOM text for the `ASL` wordmark rather than relying on SVG `<text>`.
 - The mark's baseline/accent colour must be tokenised, not hard-coded, so the same mark can work on space-black, charcoal, burgundy, and light surfaces.
-- The particle engine must use the actual ASL mark geometry as the logo target. Do not keep a provisional procedural monogram once the canonical vector asset is available.
+- The particle engine must use the actual ASL mark geometry as the logo target.
 - Keep the particle logo target behind a modular API such as `getLogoPoints(count)` or `getASLMarkPoints(count)` so future brand-asset changes do not require particle-engine rewrites.
-
-For particle formation, sample the actual mark-only vector paths. Do not sample the lockup wordmark as text.
-
----
-
-## Loader Direction
-
-The existing Anime.js loader is a useful foundation and should be adapted rather than discarded.
-
-Current direction: **Incomplete Signal**.
-
-The loader should suggest the ASL identity without exhausting the full hero payoff.
-
-Desired sequence:
-
-**space-black → sparse ambient matter → fragments/strokes of the ASL mark begin forming → signal/path motion → near-alignment → loader dissolves into the Mutable Matter hero**
-
-Rules:
-
-- Use the canonical ASL vector geometry.
-- Space-black + bone/pale neutral only during the loader.
-- No burgundy in the loader or opening Mutable Matter sequence.
-- Sparse ambient specks may already exist behind the loader so the transition into the hero feels continuous.
-- The loader should feel integrated with the site, not like a separate splash screen.
-- Target roughly 1.4–1.8 seconds unless visual testing proves a different duration is better.
-- Default behaviour: play once per browser tab/session.
-- Never replay on every internal route navigation.
-- Anime.js is appropriate for the loader's SVG/DOM motion.
-- Do not make the loader block the application indefinitely if an animation callback fails; provide a safe completion path.
+- For particle formation, sample the actual mark-only vector paths. Do not sample the lockup wordmark as text.
 
 ---
 
@@ -181,12 +153,13 @@ Responsible for:
 - scroll choreography
 - scroll-linked DOM/WebGL synchronisation
 - major scene/environment timing
+- scroll-linked typography and section transitions
 
 ### Anime.js
 
 Responsible for event-driven or non-scroll DOM/SVG motion where it adds real value, including:
 
-- loader animation
+- inner-route loader animation
 - navigation underline and hover details
 - button/link microinteractions
 - SVG path drawing
@@ -200,6 +173,55 @@ Anime.js must never animate the WebGL particle population and must not duplicate
 If a reveal is tied directly to `sceneProgress`, GSAP owns it.
 
 Every material Anime.js use should have a clear reason and be documented in implementation reports.
+
+---
+
+## ASL Motion Language
+
+ASL uses three motion levels.
+
+### Level 1 — Spatial / spectacular
+
+Reserved for Mutable Matter:
+
+- cloud formation
+- DNA formation
+- helix unravelling
+- filaments
+- particle logo formation
+- route-driven particle state changes
+
+This level is rare and visually dominant.
+
+### Level 2 — Editorial choreography
+
+Used across the DOM layer:
+
+- clipped/masked headline reveals
+- line-by-line or phrase-by-phrase typography
+- large editorial numbering
+- rules extending/retracting
+- section wipes
+- surface transitions
+- sticky capability choreography
+- coordinated text + material state changes
+- subtle parallax and depth in editorial compositions
+
+This is the main missing luxury layer. It should make the HTML experience feel authored rather than static.
+
+### Level 3 — Microinteraction
+
+Used quietly throughout:
+
+- nav link indicators
+- button arrows
+- restrained magnetic CTA response
+- logo/mark hover detail
+- menu transitions
+- small line/path movement
+- form-field feedback
+
+Luxury comes from consistency and restraint, not from animating everything.
 
 ---
 
@@ -307,7 +329,7 @@ Semantic palette:
 
 | Token | Value | Role |
 |---|---|---|
-| `--color-void` | #050506 to #09090A | hero / loader space-black |
+| `--color-void` | #050506 to #09090A | hero / route-loader space-black |
 | `--color-ink` | #111214 | charcoal sections |
 | `--color-burgundy` | #621B2A | major later-page surfaces |
 | `--color-bone` | #F6F1E8 | particles and primary type |
@@ -320,8 +342,8 @@ Use semantic tokens rather than raw colour literals throughout components.
 
 Do not use burgundy in:
 
-- the loader
 - the opening Mutable Matter sequence
+- the route loader / identity transition
 
 Opening treatment:
 
@@ -332,6 +354,106 @@ Opening treatment:
 Burgundy enters later through substantial section surfaces, typography environments, navigation states, transitions, and CTA environments.
 
 Do not make the main particle population burgundy.
+
+---
+
+## Environmental Texture and Residual Matter
+
+The ASL experience must not consist of a high-detail WebGL hero followed by flat HTML sections.
+
+Mutable Matter leaves visual residue throughout the site.
+
+Later sections may contain a restrained secondary population of small bone-coloured particles or fragments derived from the persistent particle world.
+
+These must remain subtle and compositional rather than becoming another particle spectacle.
+
+Use residual matter to:
+
+- maintain continuity between sections;
+- support typography composition;
+- create depth;
+- connect section transitions;
+- reinforce the idea that the entire site is made from one digital material.
+
+Outside the main hero sequence, particle activity should generally decrease rather than disappear completely.
+
+Section backgrounds should also have subtle physical texture.
+
+Use combinations of:
+
+- very fine low-opacity grain;
+- broad restrained lighting gradients;
+- slight vignetting;
+- subtle tonal variation;
+- occasional soft illumination near particle density;
+- quiet directional light fields.
+
+Avoid:
+
+- obvious noise overlays;
+- grunge;
+- visible repeating texture patterns;
+- gradient blobs;
+- neon glows;
+- animated noise that materially harms performance;
+- decorative starfields.
+
+The intended result is tactile, cinematic, premium, and dimensional rather than flat.
+
+Suggested environmental rhythm:
+
+**Hero**
+- space-black
+- atmospheric depth
+- grain
+- ambient specks
+
+**Capabilities**
+- charcoal
+- fine grain
+- residual particles
+- architectural light
+- editorial rules/lines
+
+**Statement**
+- textured deep burgundy
+- near-still matter
+- sparse bone points
+- strong editorial typography
+
+**Final CTA**
+- near-black / dark burgundy
+- perimeter particles
+- restrained convergence
+- directional light toward the conversion area
+
+Particles may visibly cross section boundaries where useful so transitions feel continuous rather than like separate stacked webpage blocks.
+
+Residual particles outside the hero should usually be sparse enough that typography remains dominant.
+
+---
+
+## Section Continuity
+
+The homepage should feel like one authored environment, not stacked sections.
+
+Avoid hard visual resets between:
+
+- hero → capabilities
+- capabilities → burgundy statement
+- burgundy statement → final CTA
+
+Prefer transitions where one visual system becomes the next.
+
+Examples:
+
+- a filament becomes an editorial rule;
+- residual particles cross into the next section;
+- particle density recedes while typography takes over;
+- a dark surface gradually warms into burgundy;
+- near-still burgundy matter begins gathering again before the final CTA.
+
+The user should feel a continuous material journey even when the composition changes radically.
 
 ---
 
@@ -487,7 +609,7 @@ The persistent WebGL `ExperienceCanvas` should remain app-level so route transit
 
 Do not mount separate canvases per page without a strong technical reason.
 
-Client-only WebGL mounting must use an architecture compatible with the installed Next.js version. If `dynamic(..., { ssr: false })` cannot be used directly in a Server Component layout, use an appropriate Client Component wrapper.
+Client-only WebGL mounting must use an architecture compatible with the installed Next.js version.
 
 All meaningful content remains server-readable DOM.
 
@@ -545,6 +667,134 @@ Do not use plain system-font `ASL` as the final particle identity.
 
 ---
 
+## Route Loader and Identity Transition
+
+### Home
+
+The homepage (`/`) does **not** use a branded loader.
+
+The Mutable Matter opening sequence is the homepage arrival experience and must begin directly.
+
+Do not delay the homepage with a separate logo intro.
+
+### Inner-route direct entry
+
+The branded particle loader is reserved for direct entry to inner routes:
+
+- `/work`
+- `/work/[slug]`
+- `/capabilities`
+- `/about`
+- `/contact`
+
+The loader uses the canonical ASL vector mark.
+
+### Loader behaviour
+
+Begin in the same space-black material environment used by Mutable Matter.
+
+A sparse population of warm bone-coloured particles exists around the viewport and through depth.
+
+Particles progressively accelerate inward.
+
+The motion must NOT resemble:
+
+- a black hole
+- galaxy spiral
+- reverse explosion
+- portal
+- generic particle vortex
+
+Initial motion is broad attraction.
+
+As the animation progresses, particles transition from centre-directed movement into target-directed curved trajectories toward sampled coordinates of the canonical ASL mark.
+
+The mark progressively resolves from the incoming matter.
+
+Different mark regions should form at slightly different times.
+
+Particles may slightly overshoot their target positions before recovering and settling so the mark feels physical rather than mathematically snapped into place.
+
+Once formed:
+
+- most particles settle;
+- a small residual population may continue subtle movement;
+- the mark remains clearly legible;
+- route content reveals quickly.
+
+The loader is an identity transition, not a fake progress indicator.
+
+Do not display percentages or invented loading progress.
+
+### Timing
+
+A direct inner-page entry should target roughly 1.0–1.4 seconds, subject to visual tuning.
+
+Do not unnecessarily delay usable page content.
+
+### Client-side navigation
+
+Do not replay the complete direct-entry loader on every internal navigation.
+
+Because the `ExperienceCanvas` persists across routes, use a shorter material transition where appropriate:
+
+```text
+current route state
+→ brief inward convergence
+→ canonical ASL mark
+→ release into target route state
+```
+
+Target roughly 0.5–0.8 seconds where appropriate.
+
+### Route release states
+
+After ASL forms, its particles may release differently according to route:
+
+- Work: recede toward the frame edges so project imagery can dominate.
+- Capabilities: reorganise toward structured material states.
+- About: release into very quiet atmospheric drift.
+- Contact: remain relatively concentrated around the conversion environment.
+
+These are one visual system, not separate loaders.
+
+### Colour
+
+Loader and inner-route identity transitions use:
+
+- space black;
+- warm bone / cream particles;
+- subtle pale highlights.
+
+Do not introduce burgundy into the loader.
+
+### Reduced motion
+
+The loader remains animated when `prefers-reduced-motion` is enabled.
+
+Reduced-motion mode may lower:
+
+- travel distance;
+- acceleration;
+- depth movement;
+- overshoot;
+- particle velocity.
+
+It must not remove the identity-formation sequence.
+
+### No-WebGL
+
+The no-WebGL fallback should reproduce the same conceptual sequence with SVG / CSS / Anime.js as far as practical:
+
+```text
+scattered points / line fragments
+→ inward movement
+→ canonical ASL mark formation
+→ page reveal
+```
+
+---
+
 ## Homepage Structure
 
 Do not add sections without a deliberate brief.
@@ -566,6 +816,45 @@ Do not automatically add:
 - large testimonial carousels
 - fabricated proof
 - unnecessary filler sections
+
+### Capabilities
+
+Capabilities are a continuous editorial sequence, not four repeated cards.
+
+The material states remain:
+
+- Design → lattice
+- Development → strata
+- Deployment → directed stream
+- Digital Products → living cluster
+
+Their DOM compositions should feel materially different enough to avoid repetition while remaining part of one system.
+
+Use typography, numbering, rules, placement, and controlled motion to strengthen differentiation.
+
+### Burgundy statement
+
+This is a deliberate visual-rest moment, not a dead section.
+
+Use:
+
+- textured burgundy environment
+- near-still residual matter
+- strong editorial typography
+- subtle rule/line choreography
+- minimal but deliberate motion
+
+### Final CTA
+
+Treat the final conversion as a callback to the hero rather than a replay.
+
+Prefer:
+
+- quieter convergence
+- perimeter/residual particles
+- CTA-led composition
+- partial or offset brand geometry
+- calm motion
 
 ---
 
@@ -617,7 +906,7 @@ Do not disable the core visual storytelling and do not replace Mutable Matter wi
 
 The following should still work:
 
-- loader animation
+- inner-route loader animation
 - Mutable Matter movement
 - cloud formation
 - DNA formation
@@ -678,6 +967,8 @@ Distinguish performance findings as:
 
 Code-split the 3D bundle and avoid making WebGL block first paint/LCP.
 
+Environmental grain/texture should be implemented cheaply. Avoid large animated noise shaders or huge texture assets when a lightweight CSS/SVG/repeating-noise solution can achieve the same result.
+
 ---
 
 ## How Agents Should Work
@@ -717,7 +1008,12 @@ Visual QA should inspect objective issues such as:
 - missing states;
 - broken reverse scroll;
 - mobile collisions;
-- poor logo legibility.
+- poor logo legibility;
+- hard section seams;
+- flat backgrounds;
+- motionless DOM compositions that feel disconnected from WebGL;
+- residual particles overpowering text;
+- grain/noise that is visibly obvious.
 
 Subjective aesthetic decisions should be presented for creative review rather than endlessly retuned without evidence.
 
@@ -747,3 +1043,340 @@ When a coding/refinement task uses external creative-development resources, incl
 - Do not push to a remote unless the user explicitly asks or a task explicitly authorises it.
 - Local commits are acceptable and encouraged at meaningful checkpoints.
 - Never expose secrets, tokens, credentials, or private keys in the repository.
+
+==================================================
+CURRENT CREATIVE DIRECTION UPDATE
+APPLIES FROM TASK 04 ONWARD
+==================================================
+
+The implementation completed through Task 03 is the current baseline.
+
+DO NOT restart the application.
+DO NOT recreate existing architecture unnecessarily.
+DO NOT replace working particle/shader/route/brand systems merely to conform
+to newer wording in this document.
+
+From Task 04 onward, modify and extend the existing implementation.
+
+If an older rule conflicts with this update, THIS UPDATE wins.
+
+
+==================================================
+1. OPENING ENVIRONMENT
+==================================================
+
+The Mutable Matter opening remains predominantly SPACE BLACK.
+
+Use a very deep black such as approximately:
+
+#050506
+to
+#09090A
+
+The environment should contain a subtle layer of tiny ambient particles
+distributed throughout depth.
+
+These particles:
+
+- are much smaller than the main Mutable Matter particles
+- are much dimmer
+- move extremely slowly
+- create spatial depth
+- remain visually secondary
+- do not participate in the primary morph sequence
+
+The visual result may suggest an infinite dark digital space but must NOT
+become literal astronomy.
+
+Avoid:
+
+- visible galaxies
+- nebula imagery
+- obvious constellations
+- colourful stars
+- sci-fi space photography
+
+The main Mutable Matter remains warm bone / pale neutral.
+
+
+==================================================
+2. BURGUNDY
+==================================================
+
+DO NOT introduce burgundy into the opening Mutable Matter sequence.
+
+The opening remains:
+
+space black
++
+bone/pale particles
++
+subtle pale ambient particles
+
+Burgundy becomes important AFTER the opening experience.
+
+It should appear substantially in later homepage environments.
+
+It must not be treated merely as a tiny accent colour.
+
+
+==================================================
+3. HORIZONTAL DNA
+==================================================
+
+The DNA formation is now canonically HORIZONTAL.
+
+The main helix axis runs approximately:
+
+LEFT → RIGHT
+
+across the viewport.
+
+It should have:
+
+- substantial horizontal length
+- strong three-dimensional depth
+- elegant twist
+- slight yaw/perspective
+- clear silhouette
+- room around it for negative space
+
+It must not look like a flat side-on biology diagram.
+
+A small amount of perspective rotation is encouraged.
+
+The camera may gently move:
+
+- along the helix axis
+- slightly around the structure
+- or with restrained parallax
+
+Do not use aggressive orbiting.
+
+
+==================================================
+4. INITIAL SITE AWAKENING
+==================================================
+
+The website should not simply appear fully rendered on first load.
+
+Introduce a short SITE AWAKENING sequence before the main scroll experience.
+
+Target duration:
+
+approximately 1.2–1.8 seconds.
+
+Conceptual progression:
+
+BLACK
+→
+background texture becomes faintly perceptible
+→
+a few ambient depth particles appear
+→
+a restrained spatial / particle disturbance occurs
+→
+Mutable Matter becomes visible
+→
+navigation / interface settles into place
+
+This should feel like the digital environment waking up.
+
+DO NOT create:
+
+- loading spinner
+- fake loading percentage
+- progress bar unless actual loading requires it
+- ENTER WEBSITE button
+- long intro
+- unskippable animation
+- audio requirement
+
+The user must be able to interact quickly.
+
+Do not replay the complete awakening during normal internal route navigation.
+
+For prefers-reduced-motion:
+
+use an elegant short fade/state reveal instead.
+
+
+==================================================
+5. SECTION LAYOUT RHYTHM
+==================================================
+
+After the full-screen opening, major homepage editorial sections should
+generally alternate composition.
+
+Preferred rhythm:
+
+SECTION A
+TEXT LEFT
+VISUAL / INTERACTIVE CONTENT RIGHT
+
+SECTION B
+VISUAL / INTERACTIVE CONTENT LEFT
+TEXT RIGHT
+
+SECTION C
+TEXT LEFT
+VISUAL / INTERACTIVE CONTENT RIGHT
+
+SECTION D
+VISUAL / INTERACTIVE CONTENT LEFT
+TEXT RIGHT
+
+Continue this rhythm where compositionally appropriate.
+
+Do NOT mechanically alternate every tiny content block.
+
+The final CTA, footer and special cinematic moments may use centred or other
+layouts when stronger.
+
+
+==================================================
+6. TEXTURED BACKGROUNDS
+==================================================
+
+Do not use perfectly flat large colour backgrounds for major editorial
+sections.
+
+Create a reusable premium environment texture system.
+
+CHARCOAL / BLACK SECTIONS may use:
+
+- extremely fine grain
+- graphite/mineral tonal texture
+- subtle low-frequency noise
+- controlled directional falloff
+- faint cloudy variation
+- extremely subtle burgundy undertone where useful
+
+BURGUNDY SECTIONS may use:
+
+- deep pigment-like tonal variation
+- subtle grain
+- charcoal shadowing
+- low-frequency texture
+- restrained directional light falloff
+
+The goal is MATERIAL DEPTH, not visible texture effects.
+
+Avoid:
+
+- grunge
+- obvious paper texture
+- distressed surfaces
+- strong film noise
+- looping/repeating texture patterns
+- visible JPG-style overlays
+- anything that reduces text readability
+
+Implement texture economically using CSS, gradients, procedural noise,
+small reusable assets or shaders as appropriate.
+
+Do not add a heavy texture library solely for this purpose.
+
+
+==================================================
+7. SUBTLE COLOUR CROSS-CONTAMINATION
+==================================================
+
+Sections should not feel like isolated blocks of unrelated colour.
+
+Allow controlled cross-contamination.
+
+Examples:
+
+charcoal sections may contain:
+- a very faint burgundy undertone
+- burgundy reflected light
+- low-opacity burgundy gradients
+
+burgundy sections may contain:
+- charcoal shadow regions
+- near-black falloff
+- graphite depth
+
+Keep the effect restrained and premium.
+
+
+==================================================
+8. STYLISED ASL MARK
+==================================================
+
+There is currently no requirement for an approved final production SVG logo
+during the visual-development stage.
+
+Where the particle system needs an ASL target, maintain a stylised,
+provisional ASL mark that can later be replaced.
+
+Requirements:
+
+- clearly connected to A / S / L
+- custom rather than ordinary typed text
+- strong silhouette
+- premium technology character
+- visually cohesive
+- modular target-generation implementation
+
+Do not treat the current generated/procedural mark as permanently approved
+brand identity unless explicitly confirmed later.
+
+
+==================================================
+9. DEVELOPMENT CONTROLS
+==================================================
+
+The existing development controls may be extended.
+
+Useful controls include:
+
+scene state:
+- ROAM
+- CLOUD
+- DNA
+- FILAMENTS
+- ASL
+
+and:
+
+- sceneProgress
+- point size
+- ambient particle density
+- ambient particle brightness
+- ambient depth spread
+- pointer radius
+- pointer strength
+- cloud density
+- cloud spread
+- DNA length
+- DNA radius
+- DNA turns
+- DNA twist
+- DNA perspective/yaw
+- filament count
+- filament spread
+- logo scale
+- texture intensity
+- quality tier
+- DPR
+
+These are DEVELOPMENT-ONLY controls.
+
+Do not expose them to production visitors.
+
+
+==================================================
+10. PRESERVATION RULE
+==================================================
+
+Before modifying a system introduced during Tasks 00–03:
+
+1. inspect the existing implementation;
+2. understand why it exists;
+3. preserve working behaviour where possible;
+4. make the smallest clean architectural change;
+5. avoid parallel duplicate implementations.
+
+Do not leave old and new versions of the same system running simultaneously.
