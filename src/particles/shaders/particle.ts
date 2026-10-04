@@ -2,6 +2,7 @@ import {formations} from '../states';
 export const vertexShader = `
 ${[...new Set(formations.map(f=>f.attribute))].map(attribute=>`attribute vec3 ${attribute};`).join('\n')}
 attribute vec4 aIdentity; attribute vec4 aCharacter; attribute vec3 aOffset;
+uniform float uRouteMix;
 uniform float uTime,uProgress,uRate,uDpr,uSize,uDistribution,uLargeShare,uFocus,uBlur,uStretch,uTwinkle,uIdle,uCurve,uRadius,uStrength,uFalloff,uSwirl,uRecovery,uTrailWidth,uOctaves;
 uniform int uTrailLength;
 uniform vec3 uHistory[24];
@@ -49,6 +50,10 @@ vec3 positionAt(float time,float progress){
  p+=aOffset*sin(time*.5+aIdentity.y*PI*6.)*.18*clusterLife;
  p+=curl(p*.35,time*.12+aIdentity.w*.04)*uIdle*rest;
  p+=aOffset*sin(time*.2+aIdentity.w)*uIdle;
+ vec3 identity=aLogoTarget;
+ identity.y-=11.547*(uViewport.x<uViewport.y?.20:.16);
+ float arrival=smoothstep(aIdentity.x*.12,1.,uRouteMix);
+ p=mix(p,identity,arrival)+aOffset*sin(arrival*PI)*.25;
  return p;
 }
 void main(){
@@ -66,7 +71,7 @@ void main(){
  float size=(1.+medium*1.3*uDistribution+large*9.*uDistribution)*(1.+vBlur);
  gl_PointSize=clamp(uSize*uDpr*clamp(uViewport.y/900.,.85,1.25)*size*(10./-mv.z)*sqrt(vStretch),1.,26.*uDpr);
  vBrightness=(.30+aCharacter.z*.55+length(aOffset.xy)*.12)*(1.+uTwinkle*sin(uTime*.7+aIdentity.w))*exp(-max(0.,-mv.z-8.)*.04)/(1.+vBlur*.6);
- vBrightness*=mix(1.,.25,large);vWarm=aCharacter.w;vGold=step(.52,uProgress)*step(.998,aIdentity.x);gl_Position=clip;
+ vBrightness*=mix(1.,.25,large);vWarm=aCharacter.w;vGold=(1.-uRouteMix)*step(.52,uProgress)*step(.998,aIdentity.x);gl_Position=clip;
 }`;
 export const fragmentShader = `
 uniform vec3 uBone,uCream,uGold;

@@ -1,10 +1,6 @@
-.asl-brand-loader { position:fixed; inset:0; z-index:90; display:grid; place-items:center; background:var(--color-void); color:var(--color-bone); --brand-accent:var(--color-bone); pointer-events:none; animation:loader-safety 0s 1.9s forwards; }
+.asl-brand-loader { position:fixed; inset:0; z-index:90; display:grid; place-items:center; background:var(--color-void); color:var(--color-bone); pointer-events:none; animation:loader-safety 0s 1.5s forwards; }
 .asl-brand-loader[hidden] { display:none; }
-.asl-loader-lockup { width:110px; display:grid; justify-items:center; gap:30px; }
-.asl-loader-mark { width:90px; }
-.asl-loader-mark .asl-stroke { stroke-dasharray:1; stroke-dashoffset:1; opacity:0; }
-.asl-loader-signal { width:110px; height:1px; background:var(--color-bone); transform:scaleX(0); opacity:0; }
-.asl-loader-specks { position:absolute; inset:0; }
-.asl-loader-specks i { position:absolute; width:1px; height:1px; background:var(--color-bone); opacity:.25; animation:signal-drift 2.8s ease-in-out infinite alternate; }
-@keyframes signal-drift { to { transform:translate(3px,-5px); opacity:.1; } }
+.identity-field { width:100%; height:100%; fill:currentColor; overflow:visible; }
+.identity-particle,.identity-residue { transform-box:view-box; transform-origin:0 0; }
+@media(max-width:700px){.identity-field{width:180%;max-width:none;justify-self:center;}}
 @keyframes loader-safety { to { visibility:hidden; } }

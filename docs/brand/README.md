@@ -6,8 +6,10 @@ The four supplied files in `public/brand/` remain the canonical source assets, p
 - The loader explicitly uses bone for `--brand-accent`. Opening particle material uses pale neutral/bone; no burgundy or gold highlights enter the opening.
 - The favicon uses the canonical mark with a monochrome baseline.
 - `src/legacy-brand/` remains untouched source material, not imported by production.
-- `ASLLoader` adapts the legacy per-stroke Anime.js choreography into a 1.6-second Incomplete Signal intro. It never completes the whole stroke drawing, never adds a loading percentage, and never gates the application.
-- Session storage is optional and guarded. Completion has a 1.85-second timer and a 1.9-second CSS safety cutoff. Root-layout mounting preserves session behavior across routes. The loader is noninteractive and cannot trap focus or pointer input.
+- `ASLLoader` now runs only on direct inner-route entry. Home begins directly in Mutable Matter. The superseded Incomplete Signal behavior is retained only in historical Builder 2 documentation.
+- 360 canonical sampled SVG particles gather, curve toward targets, overshoot and settle, with 18 residual points. Anime.js owns the 1.27-second non-scroll sequence; no second WebGL canvas is created. This also provides the no-WebGL identity path.
+- No session storage is needed. The root instance prevents client-navigation replay. Timer/CSS safety cutoffs are 1.45/1.5 seconds. Focus or pointer interaction dismisses the noninteractive overlay immediately.
+- Internal route transitions converge the existing primary canvas through its canonical mark using a shader uniform, then release to the existing route state over 0.7 seconds.
 - Reduced motion reduces spatial displacement and retains drawing, navigation, CTA, and particle motion.
 
-See `docs/BUILDER_2_REPORT.md` for implementation and verification evidence.
+See `docs/TASK_03_REPORT.md` for implementation and verification evidence.
