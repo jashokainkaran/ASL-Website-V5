@@ -1,7 +1,8 @@
 import {formations} from '../states';
 export const vertexShader = `
-${[...new Set(formations.map(f=>f.attribute))].map(attribute=>`attribute vec3 ${attribute};`).join('\n')}
-attribute vec4 aIdentity; attribute vec4 aCharacter; attribute vec3 aOffset;
+${[...new Set(formations.map(f=>f.attribute))].filter(attribute=>attribute!=='position').map(attribute=>`attribute vec3 ${attribute};`).join('\n')}
+attribute vec4 aIdentity; attribute vec4 aCharacter;
+#define aOffset (vec3(fract(aIdentity.x*17.3),fract(aCharacter.z*13.7),fract(aIdentity.w*5.1))-.5)
 uniform float uRouteMix,uAwakening,uWakeMotion;
 uniform float uTime,uProgress,uRate,uDpr,uSize,uDistribution,uLargeShare,uFocus,uBlur,uStretch,uTwinkle,uIdle,uCurve,uRadius,uStrength,uFalloff,uSwirl,uRecovery,uTrailWidth,uOctaves;
 uniform int uTrailLength;
@@ -25,7 +26,7 @@ vec3 transit(vec3 from,vec3 target,float p,float start,float end,float time){
 // Release travels from the ends toward the core. The original strand is pulled and
 // untwisted before any flight toward a filament, preserving volume and continuity.
 vec3 unravel(vec3 helix,float progress){
- float release=smoothstep(0.,1.,clamp((progress-.2704)/.050- (1.-abs(aIdentity.y*2.-1.))*.4,0.,1.));
+ float release=smoothstep(0.,1.,clamp((progress-.245)/.038- (1.-abs(aIdentity.y*2.-1.))*.4,0.,1.));
  float turn=release*(aIdentity.y-.5)*2.8;
  mat2 rotation=mat2(cos(turn),-sin(turn),sin(turn),cos(turn));
  helix.yz=rotation*helix.yz;
@@ -42,14 +43,16 @@ vec3 finalTarget(vec3 logo){
 }
 vec3 positionAt(float time,float progress){
  vec3 p=${formations[0].attribute};
- ${formations.slice(1).map(f=>f.name==='filaments'?`p=transit(unravel(p,progress),aFilamentTarget,progress,.313,.374,time);`:`p=transit(p,${f.name==='final'?'finalTarget(aLogoTarget)':f.attribute},progress,${f.window[0].toFixed(4)},${f.window[1].toFixed(4)},time);`).join('\n')}
- float rest=1.-smoothstep(.4576,.4992,progress)*.82;
+ ${formations.slice(1).map(f=>f.name==='filaments'?`p=transit(unravel(p,progress),aFilamentTarget,progress,.27,.322,time);`:`p=transit(p,${f.name==='final'?'finalTarget(aLogoTarget)':f.attribute},progress,${f.window[0].toFixed(4)},${f.window[1].toFixed(4)},time);`).join('\n')}
+ float dnaHold=smoothstep(.20,.218,progress)*(1.-smoothstep(.242,.27,progress));
+ float sculptureHold=smoothstep(.432,.438,progress)*(1.-smoothstep(.451,.46,progress));
+ float rest=(1.-smoothstep(.48,.505,progress)*.9)*(1.-dnaHold*.7)*(1.-sculptureHold*.8);
  float streamLife=smoothstep(.69,.75,progress)*(1.-smoothstep(.77,.84,progress));
  p.x+=sin(time*.65+aIdentity.y*18.)*.12*streamLife;
  float clusterLife=smoothstep(.77,.84,progress)*(1.-smoothstep(.86,.91,progress));
  p+=aOffset*sin(time*.5+aIdentity.y*PI*6.)*.18*clusterLife;
  p+=curl(p*.35,time*.12+aIdentity.w*.04)*uIdle*rest;
- p+=aOffset*sin(time*.2+aIdentity.w)*uIdle;
+ p+=aOffset*sin(time*.2+aIdentity.w)*uIdle*rest;
  vec3 identity=aLogoTarget;
  identity.y-=11.547*(uViewport.x<uViewport.y?.20:.16);
  float arrival=smoothstep(aIdentity.x*.12,1.,uRouteMix);

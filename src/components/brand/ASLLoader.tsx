@@ -1,43 +1,55 @@
 'use client';
 import {useEffect,useRef} from 'react';
-import {usePathname} from 'next/navigation';
-import {createTimeline,stagger} from 'animejs';
-import {getASLMarkPoints} from '@/particles/logo/path';
+import {createTimeline,animate,stagger,type JSAnimation} from 'animejs';
+import gsap from 'gsap';
 import {awakenEnvironment} from '@/lib/awakening';
+import {scene} from '@/lib/scene-store';
 import {hash} from '@/particles/formations/shared';
-const targets=getASLMarkPoints(360);
-/** SVG matter is intentionally shared by direct entry and the no-WebGL path. */
+
+/** Server-visible entry veil. The root instance survives all client navigation. */
 export function ASLLoader(){
- const path=usePathname(),initial=useRef(path),departed=useRef(false),root=useRef<HTMLDivElement>(null);
+ const root=useRef<HTMLDivElement>(null);
  useEffect(()=>{
-  const el=root.current!;
-  if(path!==initial.current)departed.current=true;
-  if(departed.current||initial.current.startsWith('/lab')){el.hidden=true;return;}
-  if(initial.current==='/'){el.hidden=true;return awakenEnvironment();}
-  el.hidden=false;
+  const el=root.current!,html=document.documentElement,content=document.getElementById('site-interface')!;
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const dots=Array.from(el.querySelectorAll<SVGCircleElement>('.identity-particle'));
-  const complete=()=>{el.hidden=true;};
-  const score=createTimeline({onComplete:complete});
-  // Independent regional delays and two curved legs, followed by physical recovery.
-  dots.forEach((dot,i)=>{
-   const tx=targets[i*3]*110,ty=-targets[i*3+1]*110;
-   const sx=(hash(i,71)-.5)*(reduced?390:940),sy=(hash(i,72)-.5)*(reduced?300:640);
-   const bend=(hash(i,73)-.5)*(reduced?18:58);
-   dot.setAttribute('cx',String(tx));dot.setAttribute('cy',String(ty));
-   score.add(dot,{translateX:[sx-tx,sx*.42-tx],translateY:[sy-ty,sy*.42-ty],opacity:[.3,.65],duration:340,ease:'inQuad'},Math.floor(i/90)*24)
-    .add(dot,{translateX:[{to:(sx*.42-tx)*.45+bend,duration:180},{to:(tx-sx)*.025,duration:210}],translateY:[sy*.42-ty,(ty-sy)*.025],duration:390,ease:'inOutSine'},340+Math.floor(i/90)*24)
-    .add(dot,{translateX:0,translateY:0,opacity:.85,duration:190,ease:'outCubic'},730+Math.floor(i/90)*24);
-  });
-  score.add(el.querySelectorAll('.identity-residue'),{translateY:[0,reduced?-2:-7],opacity:[.2,.4],duration:1000,delay:stagger(4),ease:'inOutSine'},0)
-   .add(el,{opacity:[1,0],duration:220,ease:'inOutSine'},1050);
-  const safety=setTimeout(complete,1450);
-  const dismiss=()=>complete();
-  document.addEventListener('focusin',dismiss);document.addEventListener('pointerdown',dismiss);
-  return()=>{clearTimeout(safety);score.revert();document.removeEventListener('focusin',dismiss);document.removeEventListener('pointerdown',dismiss);};
- },[path]);
- return <div ref={root} className="asl-brand-loader" hidden aria-hidden="true"><svg className="identity-field" viewBox="-500 -350 1000 700">
- {Array.from({length:360},(_,i)=><circle className="identity-particle" key={i} r={i%9===0?1.5:.85}/>)}
- {Array.from({length:18},(_,i)=><circle className="identity-residue" key={i} cx={(hash(i,81)-.5)*700} cy={(hash(i,82)-.5)*500} r=".7"/>)}
- </svg></div>;
+  const start=performance.now();let fontsReady=false,exiting=false,disposed=false,skipped=false;
+  let exitMotion:JSAnimation|undefined;
+  content.inert=true;html.dataset.entry='pending';
+  document.fonts.ready.then(()=>{if(!disposed)fontsReady=true;});
+  const wake=awakenEnvironment(reduced);
+  const score=createTimeline();
+  score.add(el.querySelector('.entry-texture')!,{opacity:[0,.025],duration:reduced?300:900,ease:'inOutSine'},0)
+   .add(el.querySelectorAll('.entry-speck'),{opacity:[0,.28],translateX:[reduced?0:-12,0],delay:stagger(12),duration:reduced?300:1100,ease:'inOutSine'},reduced?0:240);
+  if(!reduced)score.add(el.querySelector('.entry-disturbance')!,{translateX:['-110%','110%'],opacity:[0,.3,0],duration:1500,ease:'inOutSine'},350);
+  const finish=()=>{
+   html.dataset.entry='ready';el.hidden=true;content.inert=false;scene.awakening=1;
+   if(skipped)content.querySelector<HTMLAnchorElement>('.skip-link')?.focus();
+  };
+  const reveal=()=>{
+   if(exiting)return;exiting=true;gsap.ticker.remove(check);
+   el.dataset.phase='reveal';
+   exitMotion=animate(el,reduced||skipped?{opacity:[1,0],duration:reduced?350:180,ease:'inOutSine',onComplete:finish}:{
+    '--entry-clear':['-15%','120%'],duration:850,ease:'inOutSine',onComplete:finish,
+   });
+  };
+  const check=()=>{
+   const elapsed=performance.now()-start;
+   // A failed/blocked renderer degrades to the existing fallback, never an endless gate.
+   if(elapsed>8000&&!scene.rendered&&!scene.fallback){scene.fallback=true;window.dispatchEvent(new Event('asl:webgl-lost'));}
+   if(elapsed>(skipped?0:reduced?450:1350)&&fontsReady&&(scene.rendered||scene.fallback))reveal();
+   if(elapsed>10000)reveal();
+  };
+  const skip=()=>{skipped=true;wake.progress(1);check();};
+  const button=el.querySelector('button')!;button.addEventListener('click',skip);
+  gsap.ticker.add(check);
+  return()=>{disposed=true;gsap.ticker.remove(check);button.removeEventListener('click',skip);score.revert();exitMotion?.revert();wake.kill();content.inert=false;};
+ },[]);
+ return <div ref={root} className="asl-brand-loader" data-phase="prepare" role="status" aria-label="Preparing ASL experience">
+  <div className="entry-texture" aria-hidden="true"/>
+  <svg className="entry-atmosphere" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+   {Array.from({length:48},(_,i)=><circle className="entry-speck" key={i} cx={Math.round(hash(i,71)*1000)} cy={Math.round(hash(i,72)*700)} r={i%7===0?.8:.45}/>)}
+  </svg>
+  <div className="entry-disturbance" aria-hidden="true"/>
+  <button className="entry-skip" type="button">Skip introduction <span aria-hidden="true">↗</span></button>
+ </div>;
 }

@@ -3,13 +3,13 @@
 The four supplied files in `public/brand/` remain the implementation source assets, preserved as supplied. Under the Task 04 direction, the identity is provisional pending approval; no replacement mark has been invented. These files remain unchanged. Their baseline colours are retained in standalone assets. Production React UI uses their exact path geometry through `ASLMark` and real DOM text through `ASLLogo`.
 
 - ASLMark inherits `currentColor`; its baseline uses `--brand-accent`, falling back to currentColor. Set these semantic contextual colours on a parent for light, charcoal or burgundy surfaces.
-- The loader explicitly uses bone for `--brand-accent`. Opening particle material uses pale neutral/bone; no burgundy or gold highlights enter the opening.
+- Entry specks and opening particle material use pale neutral/bone; no burgundy or gold highlights enter the opening.
 - The favicon uses the canonical mark with a monochrome baseline.
 - `src/legacy-brand/` remains untouched source material, not imported by production.
-- `ASLLoader` coordinates entry modes: the branded SVG sequence runs only on direct inner-route entry. Home begins directly in Mutable Matter with a nonblocking 1.6-second environment awakening (0.65 seconds and fade only under reduced motion). No branded homepage overlay is shown. The superseded Incomplete Signal behavior is retained only in historical Builder 2 documentation.
-- 360 canonical sampled SVG particles gather, curve toward targets, overshoot and settle, with 18 residual points. Anime.js owns the 1.27-second non-scroll sequence; no second WebGL canvas is created. This also provides the no-WebGL identity path.
-- No session storage is needed. The root instance prevents client-navigation replay. Timer/CSS safety cutoffs are 1.45/1.5 seconds. Focus or pointer interaction dismisses the noninteractive overlay immediately.
+- Task 05 uses one server-visible environmental entry veil on full app entry, including direct inner-route entry. It replaces the earlier branded inner SVG loader and the nonblocking homepage awakening. The homepage veil uses space-black, faint grain and tiny specks without a logo intro.
+- The root instance prevents client-navigation replay. It gates interface DOM from server markup until fonts and renderer/fallback are ready, then clears a soft mask. Normal preparation/exit is about 2.2 seconds plus UI settle; delayed readiness extends the hold. Reduced motion uses a short animated fade. Failure bounds are 8 seconds to renderer fallback and 10 seconds to release.
+- Keyboard Skip introduction restores focus to Skip to content after release. No-JS CSS exposes page content directly.
 - Internal route transitions converge the existing primary canvas through its canonical mark using a shader uniform, then release to the existing route state over 0.7 seconds.
 - Reduced motion reduces spatial displacement and retains drawing, navigation, CTA, and particle motion.
 
-See `docs/TASK_03_REPORT.md` for implementation and verification evidence.
+See `docs/handoffs/TASK_05_HANDOFF.md` for current architecture and verification. Task 03 reports describe historical behavior.

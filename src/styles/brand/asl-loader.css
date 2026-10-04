@@ -1,6 +1,16 @@
-.asl-brand-loader { position:fixed; inset:0; z-index:90; display:grid; place-items:center; background:var(--color-void); color:var(--color-bone); pointer-events:none; animation:loader-safety 0s 1.5s forwards; }
+html { scrollbar-gutter:stable; }
+/* Stacking: canvas 0, content 1, navigation 30, grain 35, entry 50, dev 60. */
+html[data-entry="pending"] { overflow:hidden; }
+#site-interface { opacity:1; transition:opacity 350ms ease; }
+html[data-entry="pending"] #site-interface { opacity:0; visibility:hidden; pointer-events:none; }
+html[data-entry="pending"] .dev-tools,html[data-entry="pending"] body>div:has(>canvas) { visibility:hidden; }
+.asl-brand-loader { --entry-clear:-15%; position:fixed; inset:0; z-index:50; overflow:hidden; background:var(--color-void); color:var(--color-bone); mask-image:linear-gradient(102deg,transparent calc(var(--entry-clear) - 15%),black var(--entry-clear)); }
 .asl-brand-loader[hidden] { display:none; }
-.identity-field { width:100%; height:100%; fill:currentColor; overflow:visible; }
-.identity-particle,.identity-residue { transform-box:view-box; transform-origin:0 0; }
-@media(max-width:700px){.identity-field{width:180%;max-width:none;justify-self:center;}}
-@keyframes loader-safety { to { visibility:hidden; } }
+.entry-texture { position:absolute; inset:0; opacity:0; background:url('/textures/grain.png'),linear-gradient(112deg,transparent,color-mix(in srgb,var(--color-bone) 7%,transparent),transparent); }
+.entry-atmosphere { position:absolute; inset:0; width:100%;height:100%;fill:currentColor; }
+.entry-speck { opacity:0; }
+.entry-disturbance { position:absolute; inset:30% 0; opacity:0; background:linear-gradient(95deg,transparent 20%,color-mix(in srgb,var(--color-bone) 8%,transparent) 50%,transparent 80%); filter:blur(24px); }
+.entry-skip { position:absolute; right:4vw; bottom:36px; padding:16px; border:0; background:none; color:var(--color-muted); font:10px var(--font-geist-mono),monospace; letter-spacing:.12em; text-transform:uppercase; }
+.entry-skip span { margin-left:18px; }
+.asl-brand-loader[data-phase="reveal"] .entry-skip { visibility:hidden; }
+@media(prefers-reduced-motion:reduce){#site-interface{transition-duration:150ms}}

@@ -19,7 +19,7 @@ for (const count of [18000, 40000, 60000]) {
     assert.ok(points.every(Number.isFinite), `${name} contains non-finite coordinates`);
   }
   assert.equal(targets.final, targets.logo, 'Final must reuse the logo buffer');
-  assert.ok(Object.keys(geometry.attributes).length <= 16, 'Vertex attribute budget exceeded');
+  assert.ok(Object.keys(geometry.attributes).length + 2 <= 16, 'Vertex attribute budget exceeded including Three normal/uv declarations');
   assert.deepEqual(getASLMarkPoints(count), getASLMarkPoints(count), 'Logo sampling must be deterministic');
   geometry.dispose();
   console.log(`${count}: all formation sizes, finite coordinates, deterministic identity and buffer reuse passed`);
@@ -41,3 +41,16 @@ for (const [width, height] of [[18.47,11.547],[8.02,11.547],[5.34,11.547]]) {
   assert.ok(bounds[2]>.5,'DNA must retain volumetric depth');
   console.log(`${width}/${height}: horizontal DNA silhouette and depth passed`);
 }
+
+const {surface} = require('../src/particles/formations/surface.ts');
+const {sculpture} = require('../src/particles/formations/sculpture.ts');
+for(const generate of [surface,sculpture]) {
+ const c={...tuning,width:18.47,height:11.547};
+ const points=generate(18000,c);
+ assert.deepEqual(points,generate(18000,c),'New FORM targets must preserve deterministic correspondence');
+ let minZ=Infinity,maxZ=-Infinity;
+ for(let i=2;i<points.length;i+=3){minZ=Math.min(minZ,points[i]);maxZ=Math.max(maxZ,points[i]);}
+ assert.ok(maxZ-minZ>2,'Folded forms must occupy depth, not a flat plane');
+ assert.ok(maxZ<7,'Form must stay in front of the camera near plane');
+}
+console.log('Surface/sculpture determinism, depth and camera clearance passed');

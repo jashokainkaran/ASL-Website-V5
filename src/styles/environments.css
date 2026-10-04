@@ -20,3 +20,29 @@
 /* Do not flash the fallback identity while the asynchronous renderer starts. */
 .canvas-layer .static-mark { visibility:hidden; }
 [data-motion="static"] .canvas-layer .static-mark { visibility:visible; }
+
+/* Continuous material lives with the persistent canvas, beneath all editorial DOM. */
+.material-field { position:absolute; inset:0; z-index:1; pointer-events:none; opacity:var(--material-presence,0); background:linear-gradient(112deg,color-mix(in srgb,var(--color-void) 60%,transparent),transparent 43%,color-mix(in srgb,var(--color-void) 48%,transparent)); }
+.material-field::before { content:''; position:absolute; inset:-5%; background:var(--color-ink) url('/textures/mineral.png') center/cover no-repeat; background-blend-mode:soft-light; opacity:var(--material-intensity,.3); transform:translateX(var(--material-shift,0%)); }
+.material-field::after { content:''; position:absolute; inset:0; opacity:var(--material-light,.07); background:linear-gradient(118deg,transparent 15%,var(--color-slate) 48%,transparent 72%); mask-image:url('/textures/mineral.png'); mask-size:cover; mask-mode:luminance; }
+.material-field { box-shadow:inset 0 0 18vw color-mix(in srgb,var(--color-void) 35%,transparent); }
+.capabilities .capability[data-environment]::after { opacity:var(--material-contamination,.18); }
+.statement.production-statement[data-environment],.final-conversion[data-environment] { background:transparent; }
+.statement.production-statement[data-environment]::before { background:linear-gradient(110deg,color-mix(in srgb,var(--color-wine) 38%,transparent),transparent 60%,color-mix(in srgb,var(--color-void) 24%,transparent)); }
+@media(min-width:1000px){
+ .capabilities .capability[data-chapter="0"] .capability-copy { width:42%; }
+ .capabilities .capability[data-chapter="1"] .capability-copy { width:45%; }
+ .capabilities .capability[data-chapter="2"] .capability-copy { width:49%; }
+ .capabilities .capability[data-chapter="3"] .capability-copy { width:43%; }
+}
+
+.canvas-layer { overflow:clip; }
+
+/* No-WebGL has no pinned scene driver: keep material colours in the document. */
+[data-motion="static"] .capabilities .capability[data-environment],
+[data-motion="static"] .statement.production-statement[data-environment],
+[data-motion="static"] .final-conversion[data-environment] {
+ background-color:var(--color-ink); background-image:url('/textures/mineral.png'); background-size:cover; background-blend-mode:soft-light;
+}
+[data-motion="static"] .statement.production-statement[data-environment] { background-color:var(--color-burgundy); }
+[data-motion="static"] .final-conversion[data-environment] { background-color:var(--color-wine); }

@@ -5,9 +5,9 @@ export function makeGeometry(count:number,context:Context) {
  const g=new BufferGeometry(); const targets:Record<string,Float32Array>={};
  for(const f of formations){const existing=g.getAttribute(f.attribute);const target=existing?existing.array as Float32Array:f.generate(count,context);targets[f.name]=target;if(!existing)g.setAttribute(f.attribute,new BufferAttribute(target,3));}
  g.setAttribute('position',new BufferAttribute(targets.roam,3));
- const a=new Float32Array(count*4), b=new Float32Array(count*4), offsets=new Float32Array(count*3);
- for(let i=0;i<count;i++){a.set([hash(i),i/(count-1),i%7,hash(i,10)*6.283],i*4);b.set([hash(i,11),.4+hash(i,12)*1.6,hash(i,13),hash(i,14)],i*4);offsets.set([hash(i,15)-.5,hash(i,16)-.5,hash(i,17)-.5],i*3);}
- g.setAttribute('aIdentity',new BufferAttribute(a,4));g.setAttribute('aCharacter',new BufferAttribute(b,4));g.setAttribute('aOffset',new BufferAttribute(offsets,3));
+ const a=new Float32Array(count*4), b=new Float32Array(count*4);
+ for(let i=0;i<count;i++){a.set([hash(i),i/(count-1),i%7,hash(i,10)*6.283],i*4);b.set([hash(i,11),.4+hash(i,12)*1.6,hash(i,13),hash(i,14)],i*4);}
+ g.setAttribute('aIdentity',new BufferAttribute(a,4));g.setAttribute('aCharacter',new BufferAttribute(b,4));
  return {geometry:g,targets};
 }
 export function projectedBounds(targets:Record<string,Float32Array>,aspect:number) {

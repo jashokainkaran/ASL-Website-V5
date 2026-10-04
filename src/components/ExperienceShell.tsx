@@ -23,5 +23,5 @@ export function ExperienceShell(){
   window.addEventListener('asl:webgl-lost',lost);media.addEventListener('change',intensity);
   return()=>{cancelAnimationFrame(frame);window.removeEventListener('asl:webgl-lost',lost);media.removeEventListener('change',intensity);};
  },[]);
- return <><SceneEnvironment/><div className="canvas-layer" aria-hidden="true"><div className="static-mark"><Logo/></div>{enabled&&<ExperienceCanvas/>}</div>{DevTools&&<DevTools/>}</>;
+ return <><SceneEnvironment/><div className="canvas-layer" aria-hidden="true"><div className="material-field"/><div className="static-mark"><Logo/></div>{enabled&&<ExperienceCanvas/>}</div>{DevTools&&<DevTools/>}</>;
 }
