@@ -1,215 +1,749 @@
-# AGENTS.md: ASL Website, Permanent Project Rules
+# AGENTS.md — ASL Website Permanent Project Rules
 
-Read this file fully before every task. These rules are permanent. A task prompt adds scope on top of them and never overrides them unless it says so explicitly. Brand, story flow and copy live in `docs/ASL_BRAND_AND_STORY.md`. If the two conflict, this file wins on engineering and the brand doc wins on brand.
+Read this file fully before every implementation, refinement, QA, or maintenance task.
 
-This is a fresh project. There is no legacy code to preserve.
+These rules are permanent unless a task explicitly overrides a specific rule. Brand story, page flow, and approved copy direction live in `docs/ASL_BRAND_AND_STORY.md`. If there is a conflict, this file wins on engineering/architecture and the brand document wins on brand/story/copy.
+
+This is now an active project. Tasks 00–02 have already produced a working implementation. Preserve sound existing architecture and working behaviour unless a later task deliberately replaces it.
+
+---
 
 ## Product
 
-ASL is a premium technology company currently focused on website design, development and deployment, and related digital services. It may later expand into broader software, digital solutions and SaaS, so the site must not feel like a small web-design agency.
+ASL is a premium technology company currently focused on website design, development, deployment, and related digital services. It may later expand into broader software, digital solutions, products, and SaaS, so the site must not feel like a small web-design agency.
 
-The site should feel premium, dark, cinematic, futuristic, sophisticated, luxury-tech, technically accomplished, refined, interactive, memorable and commercially credible.
+The site should feel:
 
-Avoid: generic SaaS landing pages, generic AI-startup aesthetics, purple or blue AI gradients, decorative particle backgrounds with no meaning, excessive glassmorphism, generic bento grids, dashboard mockups, cyberpunk styling, excessive glow, clutter, and animation for its own sake.
+- premium
+- dark
+- cinematic
+- futuristic
+- sophisticated
+- luxury-tech
+- technically accomplished
+- refined
+- interactive
+- memorable
+- commercially credible
 
-## Core visual concept: MUTABLE MATTER
+Avoid:
 
-A realtime particle system behaves as if the digital world is made from one intelligent substance. Particles are the main interactive material, never a background effect. The same primary particle population reorganises through every state.
+- generic SaaS landing pages
+- generic AI-startup aesthetics
+- purple/blue AI gradients
+- decorative particle backgrounds with no meaning
+- excessive glassmorphism
+- generic bento grids
+- dashboard mockups
+- cyberpunk styling
+- excessive glow
+- clutter
+- animation for its own sake
 
-Canonical opening sequence:
+---
 
-ROAMING FIELD, DENSE CLOUD, DNA HELIX, HELIX UNRAVELLING, SWEEPING FILAMENTS, STYLISED ASL MARK, HERO UI REVEAL
+## Core Visual Concept — MUTABLE MATTER
 
-Emotional progression: freedom, attraction, concentration, intelligence, structure, decomposition, movement, convergence, identity, calm.
+A realtime particle system behaves as if the digital world is made from one intelligent substance. The particles are a primary visual material, not a decorative background effect.
 
-## Stack (fixed, do not add to it without asking)
+The same primary particle population should reorganise through the canonical opening sequence:
 
-- Next.js (current stable, App Router), React 19, TypeScript strict
-- Tailwind CSS v4 with semantic design tokens
-- three, @react-three/fiber (v9, the React 19 line), @react-three/drei. Keep these mutually compatible
-- Custom GLSL `ShaderMaterial` on `BufferGeometry` with `BufferAttribute`s
-- gsap with ScrollTrigger (owns scroll choreography)
-- animejs (DOM and SVG micro-interactions and UI motion, see "Animation responsibilities" below). Install the current release and use its current API, do not assume the older v3 syntax
-- leva (dev tuning only, stripped from production builds)
-- stats-gl or r3f-perf (dev only)
-- pnpm. Commit the lockfile. Pin exact versions (no `^`) for three, R3F, drei and gsap
+**ROAMING FIELD → DENSE CLOUD → DNA HELIX → HELIX UNRAVELLING → SWEEPING FILAMENTS → ASL MARK → HERO UI REVEAL**
 
-Not in Phase 1 unless a proven technical blocker exists, and then only after you report it: Theatre.js, postprocessing packages, Motion or Framer Motion, Lenis, GPGPU helper frameworks, alternative renderers, component libraries (shadcn, Magic UI, Aceternity), CSS-in-JS, extra state libraries (a tiny zustand store is allowed). Do not add dependencies speculatively.
+Emotional progression:
 
-**Animation responsibilities**
-- Three.js, R3F and GLSL: all particle rendering, morphing, pointer forces, camera and depth.
-- GSAP + ScrollTrigger: `sceneProgress`, pinning, scroll choreography and anything whose timing is tied to scroll position.
-- Anime.js: use it wherever it adds real value to the HTML and SVG layer, for example navigation underline and hover details, button and link micro-interactions, SVG path drawing (such as the outline of the ASL mark in the fallback), text and heading reveals, decorative line animation, form field feedback, and menu open and close. It handles event-driven and non-scroll motion.
-- Anime.js must never animate WebGL particles and must not duplicate GSAP scroll choreography. Where a reveal is tied to `sceneProgress`, GSAP drives it.
-- Every Anime.js use must have a reason it improves the experience. List each use and its purpose in the report. Respect `prefers-reduced-motion` for all of it.
+**freedom → attraction → concentration → intelligence → structure → decomposition → movement → convergence → identity → calm**
 
-## Reference material
+The same visual language should continue into capability states and later route-driven experiences.
 
-Before any visual work, inspect:
+---
 
-- `docs/particle-reference/REFERENCE_NOTES.md`
-- `docs/particle-reference/reference_contact_sheet.png`
-- `docs/particle-reference/ref_*.png`
+## Canonical ASL Brand Assets
 
-If these files are missing, do not stop. Use the written behavioural description in the Phase 1 prompt and say in your report that the reference frames were absent.
+The supplied ASL geometric mark is the current canonical brand identity for this website.
 
-They are behavioural references only. Study convergence, density transitions, formation and dissolution, sweeping filaments, ribbon flow, terrain behaviour, spatial depth, negative space and continuity between states. Do not reproduce any artwork, geometry, formations, typography, copy, layout, branding or colour treatment. Translate the mechanics into an original ASL system.
+Do not invent, replace, or redesign the mark unless a task explicitly requests a brand redesign.
 
-## Environment and colour
+Canonical asset locations:
 
-Hero background is a deep space-black, about `#050506` to `#09090A`. This is not a literal galaxy or outer-space scene.
+```text
+public/
+  brand/
+    asl-mark-light.svg
+    asl-mark-dark.svg
+    asl-lockup-light.svg
+    asl-lockup-dark.svg
 
-Palette (semantic tokens in one file, never raw hex in components):
+src/
+  components/
+    brand/
+      ASLMark.tsx
+      ASLLogo.tsx
+      ASLLoader.tsx
+
+  styles/
+    brand/
+      asl-loader.css
+
+docs/
+  brand/
+    README.md
+```
+
+Rules:
+
+- Use `asl-mark-light.svg` / the equivalent inline path geometry on dark surfaces.
+- Use `asl-mark-dark.svg` on light surfaces.
+- Use lockups only where a standalone asset is useful.
+- In React UI, prefer the vector mark plus real DOM text for the `ASL` wordmark rather than relying on SVG `<text>`.
+- The mark's baseline/accent colour must be tokenised, not hard-coded, so the same mark can work on space-black, charcoal, burgundy, and light surfaces.
+- The particle engine must use the actual ASL mark geometry as the logo target. Do not keep a provisional procedural monogram once the canonical vector asset is available.
+- Keep the particle logo target behind a modular API such as `getLogoPoints(count)` or `getASLMarkPoints(count)` so future brand-asset changes do not require particle-engine rewrites.
+
+For particle formation, sample the actual mark-only vector paths. Do not sample the lockup wordmark as text.
+
+---
+
+## Loader Direction
+
+The existing Anime.js loader is a useful foundation and should be adapted rather than discarded.
+
+Current direction: **Incomplete Signal**.
+
+The loader should suggest the ASL identity without exhausting the full hero payoff.
+
+Desired sequence:
+
+**space-black → sparse ambient matter → fragments/strokes of the ASL mark begin forming → signal/path motion → near-alignment → loader dissolves into the Mutable Matter hero**
+
+Rules:
+
+- Use the canonical ASL vector geometry.
+- Space-black + bone/pale neutral only during the loader.
+- No burgundy in the loader or opening Mutable Matter sequence.
+- Sparse ambient specks may already exist behind the loader so the transition into the hero feels continuous.
+- The loader should feel integrated with the site, not like a separate splash screen.
+- Target roughly 1.4–1.8 seconds unless visual testing proves a different duration is better.
+- Default behaviour: play once per browser tab/session.
+- Never replay on every internal route navigation.
+- Anime.js is appropriate for the loader's SVG/DOM motion.
+- Do not make the loader block the application indefinitely if an animation callback fails; provide a safe completion path.
+
+---
+
+## Core Rendering and Application Stack
+
+Core rendering/architecture baseline:
+
+- Next.js App Router
+- React 19
+- TypeScript strict
+- Tailwind CSS v4 with semantic tokens
+- Three.js
+- `@react-three/fiber` compatible with the installed React version
+- `@react-three/drei` where useful
+- custom GLSL `ShaderMaterial`
+- `BufferGeometry` / `BufferAttribute`
+- GSAP + ScrollTrigger
+- Anime.js
+- Leva for development tuning only
+- a dev-only performance tool such as `stats-gl` or `r3f-perf`
+- pnpm with committed lockfile
+
+The core Mutable Matter renderer remains custom. Do not replace it with a packaged particle-background component.
+
+Additional libraries are allowed when they solve a concrete problem or materially improve the experience. They must be reviewed for dependency cost, accessibility, performance, and overlap with the current stack.
+
+Do not add dependencies merely because they are fashionable.
+
+---
+
+## Animation Responsibilities
+
+### Three.js / R3F / GLSL
+
+Responsible for:
+
+- particle rendering
+- particle formation geometry
+- particle morphing
+- pointer/touch forces
+- camera/depth behaviour
+- shader-driven procedural motion
+- particle colour/size/opacity behaviour
+
+### GSAP + ScrollTrigger
+
+Responsible for:
+
+- canonical `sceneProgress`
+- pinned sections
+- scroll choreography
+- scroll-linked DOM/WebGL synchronisation
+- major scene/environment timing
+
+### Anime.js
+
+Responsible for event-driven or non-scroll DOM/SVG motion where it adds real value, including:
+
+- loader animation
+- navigation underline and hover details
+- button/link microinteractions
+- SVG path drawing
+- decorative lines
+- menu open/close
+- form feedback
+- non-scroll text/heading reveals
+
+Anime.js must never animate the WebGL particle population and must not duplicate GSAP's scroll choreography.
+
+If a reveal is tied directly to `sceneProgress`, GSAP owns it.
+
+Every material Anime.js use should have a clear reason and be documented in implementation reports.
+
+---
+
+## External Component / Interaction Research
+
+Implementation agents are encouraged to actively research high-quality modern creative-development sources when they can improve ASL.
+
+Preferred sources include:
+
+- 21st.dev
+- Aceternity UI
+- React Bits
+- Magic UI
+- Motion Primitives
+- Cult UI
+- shadcn/ui
+- Radix primitives
+- other high-quality React, WebGL, shader, animation, and creative-coding resources
+
+Use them primarily for:
+
+- interaction mechanics
+- animation patterns
+- navigation behaviour
+- scroll choreography
+- typography transitions
+- SVG/path techniques
+- microinteractions
+- responsive behaviour
+- gallery/project transitions
+- accessibility patterns
+- performance techniques
+- supporting shader/WebGL ideas
+
+They are not the ASL visual identity.
+
+Before adopting a third-party component or pattern:
+
+1. inspect its source and dependencies;
+2. identify the exact behaviour worth using;
+3. decide whether adapting/reimplementing the mechanic is better than installing it;
+4. restyle/restructure it so it belongs to ASL;
+5. avoid unnecessary dependency chains;
+6. preserve accessibility and responsive behaviour;
+7. verify it does not conflict with Mutable Matter architecture;
+8. verify it does not duplicate responsibilities already handled cleanly by GLSL, GSAP, or Anime.js.
+
+Never:
+
+- paste a complete template and recolour it;
+- use a component just because it looks modern;
+- copy another site's recognisable visual identity;
+- introduce generic SaaS cards/bento layouts by default;
+- replace the custom Mutable Matter engine with a generic particle component;
+- install a new animation library for one trivial effect.
+
+When external work materially influences the implementation, document:
+
+- source/library
+- component/pattern studied
+- mechanic retained
+- whether it was installed, adapted, copied with modification, or independently reimplemented
+- dependencies introduced
+- changes made to make it ASL-specific
+
+---
+
+## Reference Material
+
+Before visual work, inspect:
+
+```text
+docs/particle-reference/REFERENCE_NOTES.md
+docs/particle-reference/reference_contact_sheet.png
+docs/particle-reference/ref_*.png
+```
+
+These are behavioural references only.
+
+Study:
+
+- convergence
+- density transitions
+- formation/dissolution
+- sweeping filaments
+- ribbon flow
+- terrain-like behaviour
+- spatial depth
+- negative space
+- continuity between states
+
+Do not reproduce the reference artwork, geometry, branding, layout, typography, copy, or colour treatment.
+
+If the files are missing, continue from the written specification and report that the frames were unavailable.
+
+---
+
+## Environment and Colour
+
+Hero environment: deep space-black, approximately `#050506` to `#09090A`.
+
+This is not a literal galaxy or outer-space scene.
+
+Semantic palette:
 
 | Token | Value | Role |
 |---|---|---|
-| `--color-void` | #050506 to #09090A | hero space-black |
+| `--color-void` | #050506 to #09090A | hero / loader space-black |
 | `--color-ink` | #111214 | charcoal sections |
-| `--color-burgundy` | #621B2A | large surfaces and section backgrounds, later in the page |
-| `--color-bone` | #F6F1E8 | main particles and primary type |
-| `--color-gold` | #C6A15B | rare accent: hairlines, CTA hover, the odd bright spark |
+| `--color-burgundy` | #621B2A | major later-page surfaces |
+| `--color-bone` | #F6F1E8 | particles and primary type |
+| `--color-gold` | #C6A15B | rare accent only |
 | `--color-slate` | #6C737D | secondary text |
 
-Burgundy rule: do NOT use burgundy in the opening Mutable Matter sequence. Hero background is space-black, main particles are warm bone or pale neutral, ambient specks are dim pale neutral. Burgundy enters later through sections, large surfaces, transitions, typography fields, navigation states and the final CTA. Never make the main particles burgundy: it has poor contrast on near-black. Check text contrast (WCAG AA) on every surface.
+Use semantic tokens rather than raw colour literals throughout components.
 
-## Particle model
+### Burgundy rule
 
-- One primary population, identical particle count in every formation. Desktop `high` default 60,000, tunable from 40,000 up to about 100,000 in the dev panel (see the Composition, scale and flow paragraph under Shader and motion rules).
-- Formation targets are deterministic `Float32Array` data: `aRoamTarget`, `aCloudTarget`, `aHelixTarget`, `aFilamentTarget`, `aLogoTarget`.
-- **Target correspondence is mandatory.** Particle `i` has a position in every formation. Do not assign them randomly. Reorder each formation's points by sorting along a shared key (for example polar angle around the vertical axis, then height, or a path parameter) so neighbouring particles stay neighbours across states. Random assignment makes particles cross the screen in chaotic straight lines.
-- Never create particles as React components or hold positions in React state. Never update particles individually from JavaScript per frame. All animation is in the shaders, driven by uniforms.
-- Per-particle attributes: random seed, activation threshold, group, phase, offset, size class, mass.
-- **Ambient layer:** a separate, cheap point layer of about 1,000 to 3,000 specks. Very small, low brightness, scattered through depth, extremely slow, with subtle parallax. They do not take part in morphs. They must never read as a galaxy, starfield screensaver, nebula or constellation, and must stay visually subordinate to the main particles.
+Do not use burgundy in:
 
-## Shader and motion rules
+- the loader
+- the opening Mutable Matter sequence
 
-**Progressive morphing.** Never mix all particles between states at once. Use per-particle thresholds and delays so formation and dissolution are staggered. Example: particles near the future core form the helix before the outer cloud does; logo regions resolve as their filament groups arrive.
+Opening treatment:
 
-**Curved transit.** Linear interpolation looks cheap. During each transition add per-particle curl-noise and spiral offsets whose amplitude peaks mid-transition and is zero at both endpoints (for example scaled by `sin(PI * localT)`).
+- space-black background
+- warm bone/pale primary particles
+- dim neutral ambient specks
 
-**Pointer and touch.** Map the pointer into a world-space interaction plane and pass it as a uniform. Compute local radial displacement plus a swirl component in the shader, and let particles recover toward the current target. Keep a short pointer history (last 16 to 32 positions) as a uniform array so the pointer leaves a soft, tapered trail of light. Feel: soft, tactile, material, restrained. No explosive scattering. Touch devices get a simplified equivalent and `touch-action: pan-y` so scrolling is never blocked.
+Burgundy enters later through substantial section surfaces, typography environments, navigation states, transitions, and CTA environments.
 
-**Velocity stretch.** There is no stored velocity, so compute apparent velocity in the vertex shader by evaluating the particle position at `t` and `t + dt`. Stretch the sprite along its screen-space velocity while moving fast, and return to round at rest.
+Do not make the main particle population burgundy.
 
-**Particle character (a requirement, not polish).** Uniform flat dots are a defect.
-1. Heavy-tailed size mix: most particles tiny (about 1 to 2 px), fewer medium, and 1 to 2 percent at most large, soft, out-of-focus discs near the camera. Cap large ones for fill-rate.
-2. Sprite shape: a crisp bright core with a soft falloff edge. Additive blending, `depthWrite: false`, so overlap brightens and density creates luminosity. Not soft glowing dust, not hard flat circles.
-3. Depth of field: dim and blur by distance from a focal plane (circle of confusion), with perspective parallax and slight depth fog.
-4. Per-particle variation in size, brightness, twinkle phase and mass. Heavy particles respond slowly, light ones quickly.
-5. Formed shapes never freeze: small breathing and shimmer, edge-weighted density, slightly brighter edges, a sparse halo of drifting sparks.
-6. Colour varies subtly between bone and warmer cream, with a very rare gold hint in the brightest sparks. No blue, violet or neon.
-7. Glow comes mainly from the sprites and additive overlap. No bloom in Phase 1.
+---
 
-**Composition, scale and flow (the scene owns the whole viewport).** The canvas is full-bleed and fixed. A small formation floating in the middle of an empty frame is a defect.
-1. **Camera and framing.** Use a fairly wide field of view (about 55 to 70 degrees) with the camera inside or close to the particle volume, so the matter wraps around the viewer and particles extend beyond every edge of the frame.
-2. **Scale targets (desktop, 16:9):** the roaming field fills the entire frame with a depth gradient. The cloud spans at least about 60 percent of viewport height. The helix spans about 85 to 100 percent of viewport height (it may run past the top and bottom edges) and about 25 to 30 percent of width. Filaments sweep edge to edge, with at least three streams crossing the central third of the screen and some entering or leaving the frame. The ASL mark spans roughly 40 to 55 percent of viewport width.
-3. **Offsetting is fine, shrinking is not.** A formation may sit left or right of centre to compose with HTML text, but it must stay large.
-4. **Negative space is intentional breathing room**, such as around the final mark for the hero text. It is never an empty middle with a tiny object in it.
-5. **Mass conservation.** The same particles are always visible and nothing disappears. Density stays high through every transition.
-6. **Unravelling keeps its volume.** The helix stretches into thick, voluminous ribbons (varying width and depth), not into hairlines. Filaments need body: a width profile (thick in the middle, tapering at the ends), cross-section thickness, and a halo of fine particles. Single-line trails are only for the pointer trail.
-7. **Overlapping transitions.** The next state starts forming while the previous one is still finishing (overlap of about 20 to 30 percent of each window), so the frame never resets to a sparse field between states.
-8. **Particle budget follows coverage.** A full-bleed scene needs more points than a centred object. The `high` tier default is 60,000, tested up to 100,000. Choose by screenshot review and measured fps. Scale point size with viewport and DPR so density reads the same on large monitors.
-9. **Measure it.** The dev panel must show, per state, the projected bounding box of the main particles as a percentage of viewport width and height. Report these numbers.
+## Particle Model
 
-**Stateless today, GPGPU later.** Phase 1 is shader-driven target interpolation. Move to GPGPU ping-pong textures only if a later requirement needs persistent velocity, collisions, fluid-like interaction or behaviour that target interpolation cannot express. Do not add GPGPU because it is impressive.
+- One primary particle population across all main formations.
+- Desktop high-tier starting point: approximately 60,000 particles, adjustable by quality/performance review.
+- Formation targets are deterministic `Float32Array` data such as `aRoamTarget`, `aCloudTarget`, `aHelixTarget`, `aFilamentTarget`, `aLogoTarget`.
+- Target correspondence is mandatory. Particle `i` must map meaningfully between states; avoid random target assignment.
+- Never render one React component per particle.
+- Never store per-particle positions in React state.
+- Never update the full particle population from JavaScript each frame.
+- Per-particle attributes may include seed, activation threshold, group, phase, offset, size class, mass, and other shader-friendly values.
 
-## One scene progress value
+### Ambient layer
 
-There is exactly one canonical value, `sceneProgress` from 0.0 to 1.0, owned by GSAP ScrollTrigger and written to a small shared store. Everything derives from it: particle morphs, cloud density, helix formation, filaments, camera, UI timing, logo formation and hero reveal. No unrelated scroll listeners, no reading `window.scrollY` in components.
+Use a separate inexpensive ambient point layer:
 
-The opening sequence is one pinned section about 700vh long, scrubbed with moderate smoothing (about 0.8 s). Default mapping (tunable, not permanent):
+- roughly 1,000–3,000 points on desktop as a starting target;
+- tiny, dim, slow;
+- scattered through depth;
+- subtle parallax;
+- not part of the morph targets;
+- visually subordinate to Mutable Matter.
+
+It must not read as a galaxy, starfield screensaver, nebula, constellation, or space photograph.
+
+---
+
+## Shader and Motion Rules
+
+### Progressive morphing
+
+Do not globally mix all particles simultaneously. Use per-particle thresholds/delays so states form and dissolve progressively.
+
+### Curved transit
+
+Straight-line lerps are visually weak. During transitions, use controlled curved/curl/spiral offsets whose amplitude peaks mid-transition and returns to zero at the endpoints.
+
+### Pointer and touch
+
+- Map interaction into world space.
+- Pass pointer/touch data into shaders through uniforms.
+- Use local radial displacement plus restrained swirl if appropriate.
+- Particles recover naturally toward the current formation.
+- A short pointer-history trail may be used if it materially improves the result.
+- Keep the feel soft, tactile, material, and restrained.
+- No explosive scattering.
+- Touch interaction must never block native vertical scrolling.
+
+### Velocity stretch
+
+Apparent motion may stretch particle sprites while moving fast and return them to rounder shapes at rest. Keep it subtle enough that particles still read as material, not laser streaks.
+
+### Particle character
+
+Uniform flat dots are a defect.
+
+Aim for:
+
+- mostly tiny particles;
+- fewer medium particles;
+- a very small number of larger soft near-camera particles;
+- crisp bright core with soft falloff;
+- additive overlap where appropriate;
+- depth-based dimming/softness;
+- perspective parallax;
+- variation in size, brightness, twinkle phase, and mass;
+- formed shapes that retain subtle life rather than freezing completely;
+- subtle bone-to-warm-cream variation;
+- extremely rare restrained gold highlights if useful;
+- no blue/violet/neon treatment;
+- no bloom dependency required by default.
+
+### Composition, scale and flow
+
+The canvas owns the viewport. Tiny centred formations floating in empty space are a defect.
+
+Guidelines:
+
+- wide-ish perspective suitable for immersive depth;
+- roaming field fills the viewport;
+- cloud is substantial and volumetric;
+- helix may span most of viewport height;
+- filaments travel edge-to-edge and through depth;
+- ASL mark should be large enough to function as a true identity reveal;
+- negative space is intentional composition for DOM content, not emptiness caused by underscaled geometry;
+- mass should feel conserved through transitions;
+- helix unravelling should retain volume and body rather than collapsing into hairlines;
+- transitions should overlap enough to avoid visual resets.
+
+Particle counts and numeric values are starting targets, not vanity metrics. Choose by visual result and real performance.
+
+---
+
+## Canonical Scene Progress
+
+There is exactly one canonical normalised value:
+
+```text
+sceneProgress = 0.0 → 1.0
+```
+
+GSAP ScrollTrigger owns it.
+
+Everything major derives from it:
+
+- particle morphs
+- cloud density
+- helix formation
+- filament states
+- camera behaviour
+- logo formation
+- hero reveal
+- scroll-linked DOM timing
+
+Do not create unrelated scroll listeners or read `window.scrollY` independently across components.
+
+Default opening map (tunable):
 
 | sceneProgress | State |
 |---|---|
-| 0.00 to 0.15 | Roaming field |
-| 0.15 to 0.28 | Roam to dense cloud |
-| 0.28 to 0.46 | Cloud to DNA helix |
-| 0.46 to 0.52 | Helix hold |
-| 0.52 to 0.69 | Helix to filaments |
-| 0.69 to 0.82 | Filament travel |
-| 0.82 to 0.94 | Filaments to stylised ASL mark |
-| 0.94 to 1.00 | Logo settle and hero DOM reveal |
+| 0.00–0.15 | Roaming field |
+| 0.15–0.28 | Roam → dense cloud |
+| 0.28–0.46 | Cloud → DNA helix |
+| 0.46–0.52 | Helix hold |
+| 0.52–0.69 | Helix → filaments |
+| 0.69–0.82 | Filament travel |
+| 0.82–0.94 | Filaments → canonical ASL mark |
+| 0.94–1.00 | Mark settle + hero DOM reveal |
 
-## Architecture
+The exact scroll length and smoothing are tuning values, not permanent laws.
 
-- Next.js App Router. Prepare routes: `/`, `/work`, `/work/[slug]`, `/capabilities`, `/about`, `/contact`.
-- The WebGL `ExperienceCanvas` lives in a persistent app-level shell (root layout) so route changes can morph the same particles. Pages never mount their own canvas.
-- Load the canvas client-side only. In current Next.js, `dynamic(..., { ssr: false })` cannot be used directly inside a Server Component such as the root layout, so mount it through a small Client Component wrapper (for example `ExperienceShell`) and use whatever pattern is valid for the installed Next.js version. The canvas must never block first paint or worsen LCP. All meaningful content is normal server-readable DOM.
-- Keep the renderer separate from business content. Content is typed data, never inline in JSX: `content/site.ts`, `content/navigation.ts`, `content/capabilities.ts`, `content/projects.ts`.
-- Dispose geometries, materials and render targets on unmount. No leaks across route changes.
+---
 
+## Application Architecture
+
+Use Next.js App Router.
+
+Primary routes:
+
+```text
+/
+/work
+/work/[slug]
+/capabilities
+/about
+/contact
+/lab/mutable-matter
 ```
+
+The persistent WebGL `ExperienceCanvas` should remain app-level so route transitions can retain visual continuity where practical.
+
+Do not mount separate canvases per page without a strong technical reason.
+
+Client-only WebGL mounting must use an architecture compatible with the installed Next.js version. If `dynamic(..., { ssr: false })` cannot be used directly in a Server Component layout, use an appropriate Client Component wrapper.
+
+All meaningful content remains server-readable DOM.
+
+Keep renderer code separate from business content.
+
+Recommended structure:
+
+```text
 src/
-  app/                  routes, root layout (hosts the persistent canvas)
-  components/           HTML UI
-  content/              typed copy and data
+  app/
+  components/
+    brand/
+  content/
   particles/
-    engine/             uniforms, tiers, scene progress wiring
-    formations/         roam, cloud, helix, filaments, logo (one file each)
-    logo/               logo target source (see The ASL mark section)
-    shaders/            vertex and fragment sources
+    engine/
+    formations/
+    logo/
+    shaders/
     states.ts
-  lib/                  store, utils
-  styles/               tokens, globals
-docs/                   brand doc, phase prompts, particle-reference/
+  lib/
+  styles/
+    brand/
+
+docs/
+  brand/
+  particle-reference/
+  screenshots/
+
+public/
+  brand/
 ```
 
-Adding a new formation must only require a new file in `formations/` and a registry entry. The system must later accept a custom model or point cloud as a formation.
+Dispose geometries/materials/resources correctly. Avoid leaks across route transitions.
 
-## The ASL mark (provisional)
+Adding a new particle formation should be modular rather than requiring renderer rewrites.
 
-There is no approved ASL logo file. For now create a temporary, original, procedural monogram target, clearly marked `PROVISIONAL` in code and content.
+---
 
-Build it as **one continuous spline path that passes through stylised A, S and L forms**, sampled into points with a small thickness. This matches the filament motif (filaments converge into one stroke) and is far more reliable than inventing three separate letter shapes. Requirements: recognisably A, S and L, custom, geometric and flowing, premium, strong silhouette, not a system font spelling "ASL", not visually copied from an existing company.
+## ASL Mark as Particle Target
 
-Keep the logo target source modular behind one function (`getLogoPoints(count)`), so an approved SVG or vector path can replace it without touching the particle engine. The same path is exported as SVG for the no-WebGL and reduced-motion fallbacks.
+The canonical geometric ASL mark replaces the earlier provisional procedural mark.
 
-The mark assembles progressively: different regions resolve at slightly different times as separate filament groups arrive. Once formed, most motion stops, tiny peripheral particles keep settling, and the mark stays visibly alive but calm.
+Particle target requirements:
 
-## Content integrity
+- sample the actual mark-only SVG/path geometry;
+- preserve its recognisable silhouette;
+- distribute enough points across the paths/shape to read clearly at large scale;
+- form progressively as filament groups arrive;
+- once formed, settle substantially while retaining subtle peripheral life;
+- remain modular behind a function such as `getASLMarkPoints(count)`.
 
-Realistic placeholder copy is allowed. Never fabricate client names, logos, testimonials, awards, partnerships, revenue, conversions, user numbers, project metrics or claimed outcomes. Label placeholder proof clearly and set `isPlaceholder: true` in the content files.
+The same canonical SVG/geometry should support no-WebGL fallbacks.
 
-Primary CTA label: **Book a Call**, linking to `/contact` until a real booking URL exists (keep the URL in one content constant so it is a one-line swap). Secondary CTA: **Explore Our Work**, linking to `/work`.
+Do not use plain system-font `ASL` as the final particle identity.
 
-**Placeholder proof is allowed for layout review.** A proof strip with obviously generic placeholder entries (`Project Name`, `Sector`, `Outcome`) may be rendered so the page layout can be judged. Every such entry carries `isPlaceholder: true` in the content data so it is trivial to find and replace. Never use real company names, logos, numbers, testimonials or awards in it.
+---
+
+## Homepage Structure
+
+Do not add sections without a deliberate brief.
+
+Current structure:
+
+1. Mutable Matter opening sequence
+2. canonical ASL mark + positioning / CTA reveal
+3. Capabilities
+4. calm burgundy statement/proof section
+5. final conversion experience
+6. Footer
+
+Do not automatically add:
+
+- How ASL Works
+- generic bento service grids
+- dashboard visuals
+- large testimonial carousels
+- fabricated proof
+- unnecessary filler sections
+
+---
+
+## Content Integrity
+
+Realistic placeholder copy is allowed where clearly identified.
+
+Never fabricate:
+
+- client names
+- client logos
+- testimonials
+- awards
+- partnerships
+- revenue
+- conversion numbers
+- user counts
+- project metrics
+- claimed outcomes
+
+Primary CTA:
+
+**Book a Call** → `/contact` until a real booking URL is supplied.
+
+Secondary CTA:
+
+**Explore Our Work** → `/work`.
+
+Keep business URLs/configuration centralised so they can be replaced easily.
+
+If proof content is not real, omit it or clearly label it as placeholder/forthcoming rather than presenting fake credibility.
+
+---
 
 ## Accessibility and SEO
 
-- Canvas is `aria-hidden="true"`. Essential copy is never rendered only in WebGL.
-- Semantic HTML, correct heading order, real links and buttons, full keyboard use, visible focus styles, skip link.
-- Next.js metadata per page, Open Graph tags, sitemap, robots.
-- `prefers-reduced-motion`: a calm, near-static render of the settled ASL mark. No WebGL: a designed static fallback using the exported SVG mark. In both cases the user still gets a designed hero, the ASL identity, all content, full navigation and working CTAs.
-- Mobile gets a lighter version (see the Performance section). It is lower priority for now.
+- WebGL canvas is decorative: `aria-hidden="true"`.
+- Essential copy is never rendered only inside WebGL.
+- Use semantic HTML, correct heading hierarchy, real links/buttons, keyboard support, visible focus styles, and a skip link.
+- Maintain page metadata, Open Graph, sitemap, robots, and crawlable page content.
+- Touch interactions must not interfere with scrolling.
+- Text contrast should meet WCAG AA where applicable.
+
+### Reduced Motion Behaviour
+
+ASL remains animated and interactive even when the operating system reports `prefers-reduced-motion: reduce`.
+
+Do not disable the core visual storytelling and do not replace Mutable Matter with a static screenshot solely because reduced-motion is enabled.
+
+The following should still work:
+
+- loader animation
+- Mutable Matter movement
+- cloud formation
+- DNA formation
+- helix unravelling
+- filament motion
+- ASL mark formation
+- navigation animation
+- page/section transitions
+- CTA microinteractions
+
+Reduced-motion mode may lower intensity by using:
+
+- less camera travel;
+- smaller parallax range;
+- reduced pointer displacement;
+- lower particle velocity;
+- shorter travel distances;
+- reduced blur/stretch intensity;
+- less dramatic depth movement.
+
+Reduced motion means **lower-intensity animation**, not **no animation**.
+
+### No-WebGL fallback
+
+No-WebGL remains a separate fallback path.
+
+Use designed SVG/CSS alternatives based on the canonical ASL mark and preserve as much of the motion language as practical while keeping all content/navigation/CTAs functional.
+
+---
 
 ## Performance
 
-- Desktop `high` tier: about 60,000 main particles (test up to 100,000) plus 1,000 to 3,000 ambient specks, 60fps on a capable modern laptop. If 60,000 cannot hold about 60fps, lower it and report the reason. Investigate and report any sustained drop below about 50fps.
-- Quality tiers `high`, `medium`, `low`, detected at startup with a manual dev override. They control particle count, DPR cap (max 2), noise octaves and interaction complexity.
-- Mobile target: about 15,000 to 20,000 main particles and fewer ambient specks, at least 30fps.
-- Prefer stable performance over arbitrary particle counts. Code-split the 3D bundle.
-- **Numbers are targets, not laws.** Particle counts, pointer-history length, scroll length, smoothing values and similar figures in these documents are starting targets. You may change one when the visual result or smoothness is clearly better, and you must report the change and why. The composition, scale and flow rules are NOT negotiable in this way.
-- **Headless and cloud fps is not real fps.** A headless, cloud or software-rendered browser has no real GPU, so WebGL runs far slower there than on a user's laptop. Never lower particle counts, quality or effects because of fps measured in such an environment. Report that number as "not representative" and keep the defaults. The user will tune on real hardware with the dev panel. An fps target that cannot be measured honestly is not a failed check.
+Starting quality tiers may use approximately:
 
-## Homepage structure (do not add sections)
+- high: ~60,000 primary particles + ambient layer
+- medium: ~40,000 primary particles
+- low/mobile: ~15,000–20,000 primary particles
 
-1. Mutable Matter opening sequence
-2. Stylised ASL mark with main positioning and CTA reveal
-3. Capabilities
-4. Calm statement and proof section (burgundy)
-5. Final conversion experience
-6. Footer
+These are targets, not laws.
 
-Do not add: How ASL Works, generic bento service grids, dashboard visuals, big testimonial carousels, fabricated proof, or unnecessary sections.
+Quality tiers may control:
 
-## How to work and review
+- particle count
+- DPR cap (max around 2 unless there is a reason otherwise)
+- shader complexity/noise octaves
+- interaction complexity
+- ambient count
 
-- Work task by task. Phase 1 is split into Task 00 (project bootstrap) and Task 01 (Mutable Matter engine). Every task has a stop gate: stop there, report, and wait for review. Never continue into the next task or phase on your own.
-- Before reporting, run lint, typecheck and a production build and fix everything. Verify at runtime, and capture desktop screenshots (Playwright) of every relevant state.
-- Report format: (1) what was built, (2) how to run it, (3) packages added, (4) measured fps and particle counts per tier with hardware, (5) screenshots, (6) accessibility notes, (7) known limitations and shortcuts, (8) recommended next step, (9) questions for creative review.
-- **Visual QA, honestly.** You cannot reliably judge aesthetics. Capture screenshots of every state at 1440x900, 1920x1080 (if practical) and 390x844, and inspect them for objective failures: a scene that is small or floating in an empty frame, hairline filaments, uniform identical dots, text over dense particles, overflow, broken layout, missing states. Fix those. Save screenshots to `docs/screenshots/<task>/`. Leave subjective polish to the user's review and do not spend the run re-tuning looks blind.
-- **Commit after each task** with the message `Task 0X complete` so the user can roll back to any stage.
-- **Stop rule.** If the Task 01 acceptance checks still fail after three repair attempts, stop, report exactly what fails, and do not start later tasks.
-- When a prompt says the task STOP lines are internal checkpoints, treat them as self-review points and continue only if the checks for that task pass.
-- Prefer small readable modules. No dead code or commented-out experiments.
-- If a requirement is ambiguous, take the most conservative choice, note it in the report and continue. Ask only when blocked.
+Prefer stable performance and visual quality over a vanity particle count.
+
+Do not downgrade defaults because of headless/cloud/software-rendered FPS. Such measurements are not representative of real GPU performance.
+
+Distinguish performance findings as:
+
+- measured
+- observed
+- inferred
+
+Code-split the 3D bundle and avoid making WebGL block first paint/LCP.
+
+---
+
+## How Agents Should Work
+
+Before changing code:
+
+1. inspect the current repository;
+2. read this file;
+3. read `docs/ASL_BRAND_AND_STORY.md`;
+4. read the current task/refinement/QA instructions;
+5. inspect relevant reports/screenshots/reference material;
+6. verify issues in the actual implementation before changing them.
+
+Do not assume previous implementation reports are automatically correct.
+
+For refinement work, preserve working architecture and make targeted changes unless a clear technical reason requires deeper refactoring.
+
+Before reporting completion:
+
+- run lint;
+- run typecheck;
+- run production build;
+- inspect browser console;
+- verify relevant routes;
+- visually inspect desktop and mobile;
+- capture screenshots where the task requires them;
+- report checks that could not be measured honestly.
+
+Visual QA should inspect objective issues such as:
+
+- underscaled formations;
+- uniform dots;
+- hairline filaments;
+- text over dense particles;
+- clipping/overflow;
+- broken spacing;
+- missing states;
+- broken reverse scroll;
+- mobile collisions;
+- poor logo legibility.
+
+Subjective aesthetic decisions should be presented for creative review rather than endlessly retuned without evidence.
+
+Use small readable modules. Remove dead code and abandoned experiments.
+
+If a requirement is ambiguous, choose the most conservative interpretation, note it, and continue unless truly blocked.
+
+---
+
+## Reporting External Influence
+
+When a coding/refinement task uses external creative-development resources, include in the final report:
+
+- source/library;
+- pattern/component studied;
+- why it was useful;
+- whether it was installed, adapted, or reimplemented;
+- dependencies introduced or removed;
+- how the result was made ASL-specific.
+
+---
+
+## Git / Safety
+
+- Keep the working tree clean at task completion where practical.
+- Do not rewrite published history unless explicitly instructed.
+- Do not push to a remote unless the user explicitly asks or a task explicitly authorises it.
+- Local commits are acceptable and encouraged at meaningful checkpoints.
+- Never expose secrets, tokens, credentials, or private keys in the repository.

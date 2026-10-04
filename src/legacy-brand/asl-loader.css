@@ -1,0 +1,82 @@
+:root {
+  --asl-burgundy: #812b45;
+  --asl-burgundy-highlight: #a94b69;
+  --asl-gold: #b69a61;
+  --asl-ivory: #f5f3f1;
+}
+
+.asl-logo-lockup {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: .72rem;
+  color: var(--asl-ivory);
+  font-family: Geist, Inter, system-ui, sans-serif;
+  font-size: .74rem;
+  font-weight: 760;
+  letter-spacing: .2em;
+}
+
+.asl-logo-mark {
+  width: 29px;
+  color: currentColor;
+}
+
+.asl-brand-loader {
+  position: fixed;
+  z-index: 110;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--asl-ivory);
+  background: rgba(19, 18, 22, .94);
+  backdrop-filter: blur(20px) saturate(120%);
+}
+
+.asl-loader-backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(42rem 34rem at 50% 48%, rgba(129, 43, 69, .34), transparent 68%),
+    linear-gradient(115deg, rgba(255, 255, 255, .025), transparent 45%);
+}
+
+.asl-loader-lockup {
+  position: relative;
+  width: 170px;
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+}
+
+.asl-loader-mark {
+  width: 92px;
+  color: var(--asl-ivory);
+  filter: drop-shadow(0 18px 32px rgba(73, 26, 43, .38));
+}
+
+.asl-loader-mark .asl-stroke {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.asl-loader-word {
+  opacity: 0;
+  margin-right: -.24em;
+  font-family: Geist, Inter, system-ui, sans-serif;
+  font-size: .76rem;
+  font-weight: 730;
+  letter-spacing: .24em;
+}
+
+.asl-loader-signal {
+  width: 100%;
+  height: 1px;
+  opacity: 0;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, transparent, var(--asl-burgundy-highlight), var(--asl-gold), transparent);
+  box-shadow: 0 0 25px rgba(169, 75, 105, .5);
+}
