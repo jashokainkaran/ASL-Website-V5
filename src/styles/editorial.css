@@ -1,5 +1,5 @@
 /* One inexpensive static grain plane, shared by all environments. */
-body::after { content:''; position:fixed; inset:0; z-index:35; pointer-events:none; background:url('/textures/grain.png'); opacity:.018; }
+body::after { content:''; position:fixed; inset:0; z-index:35; pointer-events:none; background:url('/textures/grain.png'); opacity:calc(var(--texture-intensity,.018)*var(--arrival-texture,1)); }
 .phrase-mask { display:block; overflow:clip; padding-bottom:.12em; margin-bottom:-.12em; }
 .phrase-mask>[data-reveal] { display:block; }
 .editorial-rule { display:block; position:relative; height:1px; width:100%; background:var(--line); }

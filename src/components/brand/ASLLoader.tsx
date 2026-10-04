@@ -3,6 +3,7 @@ import {useEffect,useRef} from 'react';
 import {usePathname} from 'next/navigation';
 import {createTimeline,stagger} from 'animejs';
 import {getASLMarkPoints} from '@/particles/logo/path';
+import {awakenEnvironment} from '@/lib/awakening';
 import {hash} from '@/particles/formations/shared';
 const targets=getASLMarkPoints(360);
 /** SVG matter is intentionally shared by direct entry and the no-WebGL path. */
@@ -11,7 +12,8 @@ export function ASLLoader(){
  useEffect(()=>{
   const el=root.current!;
   if(path!==initial.current)departed.current=true;
-  if(departed.current||initial.current==='/'||initial.current.startsWith('/lab')||path!==initial.current){el.hidden=true;return;}
+  if(departed.current||initial.current.startsWith('/lab')){el.hidden=true;return;}
+  if(initial.current==='/'){el.hidden=true;return awakenEnvironment();}
   el.hidden=false;
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const dots=Array.from(el.querySelectorAll<SVGCircleElement>('.identity-particle'));

@@ -1,0 +1,22 @@
+/* Shared material presets. All lighting is static and semantic-token based. */
+[data-environment="SPACE_BLACK"] { --environment-light:transparent; }
+[data-environment="CHARCOAL_TEXTURED"] { --environment-light:color-mix(in srgb,var(--color-bone) 3%,transparent); }
+[data-environment="CHARCOAL_WITH_BURGUNDY_UNDERTONE"] { --environment-light:color-mix(in srgb,var(--color-burgundy) 15%,transparent); }
+[data-environment="BURGUNDY_TEXTURED"] { --environment-top:var(--color-ink); --environment-core:var(--color-burgundy); --environment-bottom:var(--color-wine); }
+[data-environment="BURGUNDY_WITH_CHARCOAL_DEPTH"] { --environment-top:var(--color-wine); --environment-core:transparent; --environment-bottom:var(--color-ink); }
+.capabilities .capability[data-environment]::after { background:linear-gradient(118deg,transparent 8%,var(--environment-light) 44%,transparent 86%); mask-image:linear-gradient(transparent,black 20%,black 80%,transparent); }
+.statement.production-statement[data-environment],.final-conversion[data-environment] { background:linear-gradient(180deg,var(--environment-top),var(--environment-core) 24%,var(--environment-core) 70%,var(--environment-bottom)); }
+.statement.production-statement[data-environment]::before { background:linear-gradient(112deg,color-mix(in srgb,var(--color-ink) 66%,transparent),transparent 56%,color-mix(in srgb,var(--color-ink) 35%,transparent)); }
+.site-header { opacity:var(--arrival-ui,1); }
+.site-header:focus-within { opacity:1; }
+[data-page="home"] .static-mark { opacity:var(--arrival-ui,1); }
+@media(min-width:701px){
+ .capabilities .capability[data-chapter="1"] .capability-copy,.capabilities .capability[data-chapter="3"] .capability-copy { align-self:flex-end; }
+ .capabilities .capability[data-chapter="1"] .chapter-number { left:auto; right:4vw; top:23%; }
+ .capabilities .capability[data-chapter="3"] .chapter-number { left:auto; right:5vw; top:20%; }
+ .capabilities .capability[data-chapter="1"]::before,.capabilities .capability[data-chapter="3"]::before { background:linear-gradient(270deg,var(--color-ink),color-mix(in srgb,var(--color-ink) 96%,transparent) 29%,transparent 57%); }
+}
+
+/* Do not flash the fallback identity while the asynchronous renderer starts. */
+.canvas-layer .static-mark { visibility:hidden; }
+[data-motion="static"] .canvas-layer .static-mark { visibility:visible; }

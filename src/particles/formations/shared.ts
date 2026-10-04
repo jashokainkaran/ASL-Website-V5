@@ -1,4 +1,4 @@
-export type Context = { width:number; height:number; cloudDensity:number; cloudSpread:number; helixRadius:number; helixHeight:number; helixTurns:number; filamentCount:number; filamentSpread:number; logoScale:number };
+export type Context = { width:number; height:number; cloudDensity:number; cloudSpread:number; helixRadius:number; helixLength:number; helixTwist:number; helixYaw:number; helixOffset:number; helixDepth:number; helixTurns:number; filamentCount:number; filamentSpread:number; logoScale:number };
 export type Generator = (count:number, context:Context) => Float32Array;
 export const hash = (i:number, salt=0) => { const x=Math.sin(i*127.1+salt*311.7)*43758.5453123; return x-Math.floor(x); };
 // Every generator is sampled in the same ascending longitudinal path parameter u.

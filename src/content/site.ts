@@ -11,7 +11,7 @@ export const site = {
  statement: 'Most websites are assembled. Ours are shaped.',
  closing: "Let’s build something that holds its shape.",
  email: 'hello@example.com', emailIsPlaceholder: true,
- provisionalLogo: false,
+ provisionalLogo: true,
 } as const;
 export const pages: Record<string, { title: string; description: string; isPlaceholder: true }> = {
  home: {title: 'Digital matter, given form.', description: 'A new expression of ASL is taking shape.', isPlaceholder: true},

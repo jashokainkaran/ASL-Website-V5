@@ -2,7 +2,7 @@ import {formations} from '../states';
 export const vertexShader = `
 ${[...new Set(formations.map(f=>f.attribute))].map(attribute=>`attribute vec3 ${attribute};`).join('\n')}
 attribute vec4 aIdentity; attribute vec4 aCharacter; attribute vec3 aOffset;
-uniform float uRouteMix;
+uniform float uRouteMix,uAwakening,uWakeMotion;
 uniform float uTime,uProgress,uRate,uDpr,uSize,uDistribution,uLargeShare,uFocus,uBlur,uStretch,uTwinkle,uIdle,uCurve,uRadius,uStrength,uFalloff,uSwirl,uRecovery,uTrailWidth,uOctaves;
 uniform int uTrailLength;
 uniform vec3 uHistory[24];
@@ -28,9 +28,9 @@ vec3 unravel(vec3 helix,float progress){
  float release=smoothstep(0.,1.,clamp((progress-.2704)/.050- (1.-abs(aIdentity.y*2.-1.))*.4,0.,1.));
  float turn=release*(aIdentity.y-.5)*2.8;
  mat2 rotation=mat2(cos(turn),-sin(turn),sin(turn),cos(turn));
- helix.xz=rotation*helix.xz;
- helix.x*=1.+release*1.1;
- helix.y*=1.-release*.30;
+ helix.yz=rotation*helix.yz;
+ helix.y*=1.+release*.8;
+ helix.x*=1.-release*.15;
  helix.x+=release*(aIdentity.y-.5)*5.;
  helix.z+=sin(aIdentity.y*PI*2.)*release*.8;
  return helix;
@@ -54,6 +54,8 @@ vec3 positionAt(float time,float progress){
  identity.y-=11.547*(uViewport.x<uViewport.y?.20:.16);
  float arrival=smoothstep(aIdentity.x*.12,1.,uRouteMix);
  p=mix(p,identity,arrival)+aOffset*sin(arrival*PI)*.25;
+ float wake=sin(clamp(uAwakening,0.,1.)*PI);
+ p.y+=sin(p.x*.45-uAwakening*7.)*wake*.16*uWakeMotion;
  return p;
 }
 void main(){
@@ -71,7 +73,7 @@ void main(){
  float size=(1.+medium*1.3*uDistribution+large*9.*uDistribution)*(1.+vBlur);
  gl_PointSize=clamp(uSize*uDpr*clamp(uViewport.y/900.,.85,1.25)*size*(10./-mv.z)*sqrt(vStretch),1.,26.*uDpr);
  vBrightness=(.30+aCharacter.z*.55+length(aOffset.xy)*.12)*(1.+uTwinkle*sin(uTime*.7+aIdentity.w))*exp(-max(0.,-mv.z-8.)*.04)/(1.+vBlur*.6);
- vBrightness*=mix(1.,.25,large);vWarm=aCharacter.w;vGold=(1.-uRouteMix)*step(.52,uProgress)*step(.998,aIdentity.x);gl_Position=clip;
+ vBrightness*=mix(1.,.25,large)*smoothstep(.30,.9,uAwakening);vWarm=aCharacter.w;vGold=(1.-uRouteMix)*step(.52,uProgress)*step(.998,aIdentity.x);gl_Position=clip;
 }`;
 export const fragmentShader = `
 uniform vec3 uBone,uCream,uGold;

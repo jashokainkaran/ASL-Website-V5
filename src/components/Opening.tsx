@@ -49,7 +49,7 @@ export function Opening() {
     window.addEventListener('asl:capability-ready',start);
     return()=>{window.removeEventListener('asl:capability-ready',start);cleanup?.();};
   }, []);
-  return <section className="opening" ref={root} aria-label="Mutable Matter opening">
+  return <section className="opening" data-environment="SPACE_BLACK" ref={root} aria-label="Mutable Matter opening">
     <div className="opening-label eyebrow">{site.label}</div>
     <a className="skip-sequence eyebrow" href="#introduction">{site.skipLabel} <span aria-hidden="true">↘</span></a>
     <div className="hero-copy" id="introduction" tabIndex={-1}>

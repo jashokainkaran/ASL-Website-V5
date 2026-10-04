@@ -26,3 +26,18 @@ for (const count of [18000, 40000, 60000]) {
 }
 assert.equal(getASLMarkPoints(0).length, 0);
 assert.ok(getASLMarkPoints(1).every(Number.isFinite));
+
+const {helix} = require('../src/particles/formations/helix.ts');
+for (const [width, height] of [[18.47,11.547],[8.02,11.547],[5.34,11.547]]) {
+  const context = {...tuning,width,height};
+  const points = helix(18000,context);
+  assert.deepEqual(points,helix(18000,context),'DNA correspondence must stay deterministic');
+  const bounds = [0,1,2].map(axis => {
+    let min=Infinity,max=-Infinity;
+    for(let i=axis;i<points.length;i+=3){min=Math.min(min,points[i]);max=Math.max(max,points[i]);}
+    return max-min;
+  });
+  assert.ok(bounds[0]>bounds[1]*2,'DNA must retain a horizontal silhouette');
+  assert.ok(bounds[2]>.5,'DNA must retain volumetric depth');
+  console.log(`${width}/${height}: horizontal DNA silhouette and depth passed`);
+}
