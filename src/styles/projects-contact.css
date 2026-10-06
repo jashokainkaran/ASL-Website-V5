@@ -1,0 +1,182 @@
+/* Production routes share the existing mineral/grain environment and type families. */
+.projects-page,.contact-page { overflow:clip; }
+.route-heading { display:flex; justify-content:space-between; gap:24px; color:var(--color-muted); border-top:1px solid var(--line); padding-top:20px; }
+.projects-intro { min-height:94svh; padding:160px 6vw 70px; display:flex; flex-direction:column; justify-content:space-between; gap:65px; background:linear-gradient(110deg,color-mix(in srgb,var(--color-void) 92%,transparent),transparent 90%); }
+.projects-intro h1 { max-width:1100px; font-size:clamp(72px,7.9vw,132px); text-wrap:balance; }
+.projects-intro h1 em { color:var(--color-muted); }
+.projects-intro-bottom { display:flex; justify-content:space-between; align-items:end; gap:40px; }
+.projects-intro-bottom p { max-width:470px; font-size:17px; line-height:1.7; color:var(--color-muted); }
+.project-archive { scroll-margin-top:100px; }
+.archive-publication { min-height:100svh; padding:70px 6vw 95px; position:relative; display:grid; grid-template-columns:1fr 1fr; gap:65px 8vw; align-items:center; background:linear-gradient(115deg,color-mix(in srgb,var(--color-ink) 75%,transparent),transparent 78%); }
+.publication-meta { grid-column:1/-1; display:flex; justify-content:space-between; border-top:1px solid var(--line); padding-top:22px; color:var(--color-muted); }
+.archive-aperture { height:380px; position:relative; perspective:800px; }
+.archive-aperture::before,.archive-aperture::after { content:''; position:absolute; width:40px; height:40px; border:1px solid var(--line); }
+.archive-aperture::before { left:0; top:0; border-right:0; border-bottom:0; }
+.archive-aperture::after { right:0; bottom:0; border-left:0; border-top:0; }
+.aperture-line { position:absolute; inset:8% 10%; border:1px solid color-mix(in srgb,var(--color-bone) 14%,transparent); transform:rotateY(-24deg) rotateX(8deg); }
+.aperture-line:nth-child(2) { inset:17% 19%; transform:translateZ(-40px) rotateY(-24deg) rotateX(8deg); opacity:.65; }
+.aperture-line:nth-child(3) { inset:26% 28%; transform:translateZ(-80px) rotateY(-24deg) rotateX(8deg); opacity:.35; }
+.publication-copy { max-width:600px; }
+.publication-copy h2 { font:400 clamp(40px,4.1vw,66px)/1.05 var(--font-instrument),serif; letter-spacing:-.025em; text-wrap:balance; }
+.publication-copy p { max-width:520px; margin-top:28px; font-size:16px; line-height:1.8; color:var(--color-muted); }
+.publication-copy .cta-row { flex-wrap:wrap; }
+.projects-conversion { min-height:78svh; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:30px; padding:100px 10vw; position:relative; background:linear-gradient(110deg,color-mix(in srgb,var(--color-wine) 92%,transparent),color-mix(in srgb,var(--color-ink) 85%,transparent)); }
+.projects-conversion::before { content:''; position:absolute; inset:0; background:url('/textures/mineral.png') center/cover; opacity:.12; mix-blend-mode:soft-light; pointer-events:none; }
+.projects-conversion h2 { font:400 clamp(65px,7.7vw,120px)/1 var(--font-instrument),serif; letter-spacing:-.03em; text-wrap:balance; }
+.projects-conversion p { max-width:450px; font-size:17px; color:var(--color-muted); line-height:1.7; }
+.projects-conversion .button { margin-top:12px; }
+.project-entry { min-height:110svh; padding:80px 6vw 100px; display:grid; grid-template-columns:1fr 1.8fr; gap:50px 6vw; align-items:center; position:relative; }
+.project-index { grid-column:1/-1; display:flex; justify-content:space-between; padding-top:20px; border-top:1px solid var(--line); color:var(--color-muted); }
+.project-copy h2 { font:400 clamp(44px,4.5vw,80px)/1.03 var(--font-instrument),serif; margin:20px 0; letter-spacing:-.03em; overflow-wrap:anywhere; }
+.project-copy p { font-size:16px; line-height:1.75; color:var(--color-muted); }
+.project-status { color:var(--color-muted); min-height:16px; }
+.project-disciplines { padding:0; margin:25px 0; list-style:none; display:flex; flex-wrap:wrap; gap:8px 16px; font-size:12px; color:var(--color-muted); }
+.project-media { will-change:transform; }
+.project-media-depth { position:relative; overflow:hidden; border:1px solid var(--line); transition:transform 300ms ease; }
+.project-media img,.project-media video { width:100%; height:auto; display:block; }
+.project-media video { margin-top:16px; }
+.project-media a:hover .project-media-depth,.project-media a:focus-visible .project-media-depth { transform:scale(1.012); }
+.project-media-action { position:absolute; right:24px; bottom:24px; width:52px; height:52px; display:grid; place-items:center; border:1px solid var(--line); background:var(--color-void); font-size:20px; transition:background 220ms; }
+.project-media a:hover .project-media-action { background:var(--color-burgundy); }
+.project-entry[data-composition="1"] { grid-template-columns:1.8fr 1fr; }
+.project-entry[data-composition="1"] .project-copy { grid-column:2; grid-row:2; }
+.project-entry[data-composition="1"] .project-media { grid-column:1; grid-row:2; }
+.project-entry[data-composition="2"] { grid-template-columns:1fr; }
+.project-entry[data-composition="2"] .project-copy { max-width:700px; }
+.project-entry[data-composition="2"] .project-media { width:85%; justify-self:end; }
+.concepts-intro { padding:80px 6vw 0; }
+.concepts-intro h2 { font:400 clamp(48px,5vw,80px)/1.1 var(--font-instrument),serif; }
+.concepts-intro p { max-width:500px; margin-top:24px; color:var(--color-muted); line-height:1.7; }
+
+.contact-page { padding:165px 6vw 105px; display:grid; grid-template-columns:1fr 1.1fr; gap:8vw; min-height:100svh; position:relative; background:linear-gradient(112deg,color-mix(in srgb,var(--color-wine) 82%,transparent),color-mix(in srgb,var(--color-burgundy) 68%,transparent) 47%,color-mix(in srgb,var(--color-void) 70%,transparent)); }
+.contact-page::before { content:''; position:absolute; inset:0; z-index:-1; opacity:.18; background:url('/textures/mineral.png') center/cover; mix-blend-mode:soft-light; pointer-events:none; }
+.contact-intro { align-self:start; position:sticky; top:150px; }
+.contact-intro>.eyebrow { margin-bottom:48px; color:var(--color-muted); }
+.contact-intro h1 { font-size:clamp(68px,6.6vw,104px); text-wrap:balance; }
+.contact-intro>p { font-size:17px; line-height:1.8; color:var(--color-muted); max-width:420px; margin-top:36px; }
+.contact-conversation { margin-top:65px; padding-top:26px; border-top:1px solid var(--line); max-width:420px; display:flex; flex-direction:column; align-items:start; gap:16px; }
+.contact-conversation>.eyebrow { color:var(--color-muted); }
+.contact-conversation p { font-size:13px; line-height:1.7; color:var(--color-muted); max-width:310px; }
+.contact-form-region { position:relative; background:color-mix(in srgb,var(--color-wine) 86%,transparent); padding:32px 36px 36px; border-top:1px solid var(--line); box-shadow:0 25px 100px color-mix(in srgb,var(--color-void) 16%,transparent); }
+.enquiry-form { scroll-margin-top:120px; }
+.form-heading { display:flex; justify-content:space-between; gap:16px; margin-bottom:30px; color:var(--color-muted); font-size:9px; }
+.delivery-notice { border-left:1px solid var(--color-gold); padding-left:15px; margin-bottom:26px; font-size:13px; line-height:1.65; color:var(--color-muted); }
+.form-pair { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.enquiry-field { margin-bottom:27px; min-width:0; }
+.enquiry-field label { display:flex; justify-content:space-between; align-items:baseline; gap:12px; font-size:13px; line-height:1.5; margin-bottom:10px; }
+.enquiry-field label span { font-size:10px; color:var(--color-muted); }
+.enquiry-field input,.enquiry-field select,.enquiry-field textarea { display:block; width:100%; min-height:48px; border:0; border-bottom:1px solid color-mix(in srgb,var(--color-bone) 42%,transparent); border-radius:0; padding:10px 0; background:transparent; color:var(--color-bone); font:400 16px/1.5 var(--font-geist),sans-serif; transition:border-color 220ms; scroll-margin-top:135px; }
+.enquiry-field select { color-scheme:dark; padding-right:24px; }
+.enquiry-field select option { background:var(--color-wine); }
+.enquiry-field textarea { resize:vertical; min-height:100px; }
+.enquiry-field input:hover,.enquiry-field select:hover,.enquiry-field textarea:hover { border-color:var(--color-muted); }
+.enquiry-field :focus-visible { outline-offset:4px; }
+.enquiry-field [aria-invalid="true"] { border-color:var(--color-gold); }
+.field-helper { color:var(--color-muted); font-size:12px; line-height:1.65; margin-bottom:8px; }
+.field-error { font-size:12px; line-height:1.6; margin-top:9px; color:var(--color-bone); }
+.enquiry-feedback { margin-bottom:30px; padding:18px; border:1px solid var(--color-gold); background:var(--color-wine); scroll-margin-top:120px; }
+.enquiry-feedback h2 { font-size:15px; font-weight:400; line-height:1.6; }
+.enquiry-feedback ul { margin:12px 0 0; padding-left:18px; font-size:13px; line-height:1.8; }
+.enquiry-feedback a { text-decoration:underline; text-underline-offset:4px; }
+.enquiry-trap { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+.enquiry-submit { display:flex; align-items:center; gap:20px; }
+.enquiry-submit>span { color:var(--color-muted); font-size:10px; line-height:1.65; }
+.enquiry-submit button { border:0; }
+.enquiry-submit button:disabled { opacity:.65; cursor:wait; }
+.form-data-note { margin-top:22px; color:var(--color-muted); font-size:11px; line-height:1.7; }
+.enquiry-success { padding:40px 0 70px; min-height:430px; }
+.enquiry-success h2 { font:400 64px/1.05 var(--font-instrument),serif; margin:40px 0 25px; }
+.enquiry-success p { color:var(--color-muted); line-height:1.8; max-width:400px; }
+@media (max-width:1100px) {
+ .route-heading span:last-child { display:none; }
+ .contact-page { gap:5vw; padding-inline:5vw; grid-template-columns:.9fr 1.1fr; }
+ .contact-intro h1 { font-size:70px; }
+ .contact-form-region { padding:28px 24px; }
+ .form-pair { gap:18px; }
+ .form-heading span:last-child,.enquiry-submit>span { display:none; }
+}
+@media (max-width:800px) {
+ .contact-page { grid-template-columns:1fr; gap:55px; }
+ .contact-intro { position:relative; top:auto; }
+ .contact-intro h1 { font-size:80px; }
+ .contact-intro>p { max-width:560px; }
+ .contact-conversation { margin-top:32px; }
+ .archive-publication { gap:40px; }
+ .archive-aperture { height:260px; }
+}
+@media (max-width:700px) {
+ .projects-intro { min-height:82svh; padding:130px 6vw 50px; gap:50px; }
+ .projects-intro h1 { font-size:58px; }
+ .projects-intro-bottom { flex-direction:column; align-items:start; gap:28px; }
+ .projects-intro-bottom p { font-size:15px; }
+ .route-heading { font-size:9px; }
+ .archive-publication { min-height:auto; padding:45px 6vw 75px; grid-template-columns:1fr; gap:35px; }
+ .publication-meta { font-size:9px; }
+ .archive-aperture { height:200px; width:85%; }
+ .publication-copy h2 { font-size:43px; }
+ .publication-copy p { font-size:15px; }
+ .publication-copy .cta-row { gap:12px 25px; }
+ .projects-conversion { min-height:70svh; padding:80px 6vw; gap:25px; }
+ .projects-conversion h2 { font-size:64px; }
+ .projects-conversion p { font-size:15px; }
+ .project-entry,.project-entry[data-composition="1"],.project-entry[data-composition="2"] { min-height:auto; grid-template-columns:1fr; padding:55px 6vw 70px; gap:30px; }
+ .project-entry[data-composition="1"] .project-copy,.project-entry[data-composition="1"] .project-media { grid-column:auto; grid-row:auto; }
+ .project-entry[data-composition="2"] .project-media { width:100%; }
+ .project-copy h2 { font-size:48px; }
+ .project-copy p { font-size:15px; }
+ .project-media-action { width:44px; height:44px; right:14px; bottom:14px; }
+ .contact-page { padding:130px 6vw 70px; gap:40px; }
+ .contact-intro>.eyebrow { margin-bottom:32px; font-size:9px; }
+ .contact-intro h1 { font-size:63px; }
+ .contact-intro>p { font-size:15px; margin-top:26px; }
+ .contact-form-region { padding:25px 20px; }
+ .form-pair { grid-template-columns:1fr; gap:0; }
+ .enquiry-submit { display:block; }
+ .enquiry-submit button { width:100%; }
+}
+@media(prefers-reduced-motion:reduce) { .project-media-depth { transition:opacity 180ms; } .project-media a:hover .project-media-depth { transform:none; } }
+/* Task07 creative refinement: a material stage, with typography in its negative space. */
+.editorial-mask { display:block; overflow:hidden; padding-bottom:.12em; margin-bottom:-.12em; }
+.editorial-mask>[data-editorial-line] { display:block; }
+[data-editorial="pending"] [data-editorial-line], [data-editorial="pending"] [data-editorial-detail] { opacity:0; }
+.projects-intro { min-height:100svh; position:relative; background:linear-gradient(90deg,color-mix(in srgb,var(--color-void) 96%,transparent),color-mix(in srgb,var(--color-void) 72%,transparent) 38%,transparent 68%); gap:45px; }
+.projects-intro h1 { width:64%; max-width:940px; font-size:clamp(72px,7.7vw,126px); line-height:.98; letter-spacing:-.045em; }
+.projects-intro h1 em { color:var(--color-bone); }
+.projects-intro-bottom { border-top:1px solid var(--line); padding-top:25px; }
+.projects-intro-bottom p { max-width:430px; }
+.archive-publication { background:linear-gradient(90deg,transparent 20%,color-mix(in srgb,var(--color-ink) 85%,transparent) 68%); min-height:110svh; }
+.archive-aperture { height:470px; }
+.archive-coordinate { position:absolute; bottom:0; left:0; color:var(--color-muted); }
+.archive-trace { width:100%; height:100%; overflow:visible; }
+.archive-trace path { fill:none; stroke:var(--color-bone); stroke-opacity:.22; stroke-width:.7; stroke-dasharray:900; }
+.publication-copy { border-left:1px solid var(--line); padding-left:40px; }
+.publication-copy h2 { font-size:clamp(44px,4.8vw,76px); }
+.projects-conversion { min-height:90svh; padding-left:16vw; border-top:1px solid var(--line); }
+.projects-conversion h2 { max-width:800px; }
+.projects-conversion::after { content:''; position:absolute; width:22vw; height:22vw; right:-8vw; top:25%; border:1px solid var(--line); transform:rotate(45deg); pointer-events:none; }
+.contact-intro h1 { line-height:1; }
+.enquiry-field:focus-within label { color:var(--color-gold); transition:color 220ms; }
+.enquiry-field:focus-within input,.enquiry-field:focus-within textarea,.enquiry-field:focus-within select { border-color:var(--color-gold); }
+@media(max-width:700px) {
+ .projects-intro { min-height:100svh; background:linear-gradient(90deg,color-mix(in srgb,var(--color-void) 90%,transparent),transparent); }
+ .projects-intro h1 { width:100%; font-size:clamp(48px,12.5vw,82px); }
+ .projects-intro-bottom { align-items:start; }
+ .archive-publication { min-height:110svh; background:linear-gradient(0deg,color-mix(in srgb,var(--color-ink) 92%,transparent),transparent); }
+ .archive-aperture { height:260px; width:100%; }
+ .publication-copy { border-left:0; padding-left:0; }
+ .publication-copy h2 { font-size:43px; }
+ .projects-conversion { min-height:80svh; padding-left:6vw; }
+ .projects-conversion::after { width:50vw; height:50vw; opacity:.3; }
+}
+/* The conversion environment develops beneath the persistent route matter. */
+.contact-page { background:radial-gradient(ellipse at 66% 35%,color-mix(in srgb,var(--color-burgundy) 50%,transparent),transparent 65%),linear-gradient(112deg,color-mix(in srgb,var(--color-wine) 45%,transparent),color-mix(in srgb,var(--color-void) 70%,transparent)); }
+.contact-form-region { background:linear-gradient(105deg,color-mix(in srgb,var(--color-wine) 45%,transparent),color-mix(in srgb,var(--color-void) 20%,transparent)); box-shadow:none; }
+.contact-page:has(.enquiry-field :focus) .contact-form-region { border-top-color:var(--color-gold); }
+.contact-form-region { transition:border-color 350ms; }
+[data-editorial="pending"].contact-page .enquiry-form>.form-pair,[data-editorial="pending"].contact-page .enquiry-form>.enquiry-field,[data-editorial="pending"].contact-page .enquiry-submit { opacity:0; }
+.project-entry { perspective:1400px; }
+.project-media-depth { background:var(--color-ink); }
+.project-entry[data-active="true"] .project-index { border-color:color-mix(in srgb,var(--color-bone) 45%,transparent); }
+.project-index { transition:border-color 350ms; }
+@media(prefers-reduced-motion:reduce) { .contact-form-region { transition-duration:180ms; } }
+.contact-page .enquiry-form>.form-pair:focus-within,.contact-page .enquiry-form>.enquiry-field:focus-within,.contact-page .enquiry-submit:focus-within { opacity:1!important; transform:none!important; }

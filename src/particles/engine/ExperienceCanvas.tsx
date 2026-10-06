@@ -8,7 +8,7 @@ import {tiers,detectTier,type Tier} from './tiers';
 import {scene,tuning} from '@/lib/scene-store';
 export default function ExperienceCanvas() {const [tier,setTier]=useState<Tier>(detectTier);const [revision,setRevision]=useState(0);const [paused,setPaused]=useState(false);
  useEffect(()=>{const media=matchMedia('(max-width:700px), (pointer:coarse)');const resize=()=>{if(tuning.tier==='auto')setTier(detectTier());};media.addEventListener('change',resize);return()=>media.removeEventListener('change',resize);},[]);
- useEffect(()=>{let previous=false;const check=()=>{const next=scene.routeMix===0&&scene.sceneProgress>.911&&scene.sceneProgress<.922;if(next!==previous){previous=next;setPaused(next);}};gsap.ticker.add(check);return()=>gsap.ticker.remove(check);},[]);
+ useEffect(()=>{let previous=false;const check=()=>{const next=!scene.routeActive&&scene.routeMix===0&&scene.sceneProgress>.911&&scene.sceneProgress<.922;if(next!==previous){previous=next;setPaused(next);}};gsap.ticker.add(check);return()=>gsap.ticker.remove(check);},[]);
  const ambientCount=Math.min(3000,Math.round(tiers[tier].ambient*tuning.ambientDensity));
  useEffect(()=>{scene.ambient=ambientCount;},[ambientCount]);
  useEffect(()=>{const update=()=>{setTier(tuning.tier==='auto'?detectTier():tuning.tier as Tier);setRevision(v=>v+1);};window.addEventListener('asl:geometry',update);return()=>window.removeEventListener('asl:geometry',update);},[tier]);

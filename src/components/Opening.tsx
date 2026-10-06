@@ -31,7 +31,7 @@ export function Opening() {
       let last = -1;
       const render = () => {
         const p = scene.fallback ? 1 : scene.sceneProgress / OPENING_END;
-        const reveal = gsap.utils.clamp(0, 1, (p - .925) / .073);
+        const reveal = gsap.utils.clamp(0, 1, (p - .95) / .048);
         (copy as HTMLElement).style.setProperty("--handoff",String(gsap.utils.clamp(0,1,(scene.sceneProgress-OPENING_END)/.025)));
         if (reveal === last) return;
         last = reveal;
@@ -55,7 +55,7 @@ export function Opening() {
     <div className="hero-copy" id="introduction" tabIndex={-1}>
       <Rule className="hero-rule"/><h1><Phrase>{site.headlineFirst}</Phrase><Phrase><em>{site.headlineLast}</em></Phrase></h1>
       <div className="hero-details"><div data-reveal="detail" className="eyebrow hero-specialism">{site.specialism}</div><p data-reveal="detail">{site.description}</p>
-        <div data-reveal="action" className="cta-row"><Link className="button" href={bookingUrl}>{site.primary}<span aria-hidden="true">↗</span></Link><Link className="text-link" href="/work">{site.secondary}<span aria-hidden="true">↗</span></Link></div>
+        <div data-reveal="action" className="cta-row"><Link className="button" href={bookingUrl}>{site.primary}<span aria-hidden="true">↗</span></Link><Link className="text-link" href="/projects">{site.secondary}<span aria-hidden="true">↗</span></Link></div>
       </div>
     </div>
     <div className="opening-foot eyebrow"><span>{site.openingLine}</span><span>{site.scrollLabel} <span aria-hidden="true">↓</span></span></div>

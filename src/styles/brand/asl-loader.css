@@ -3,8 +3,8 @@ html { scrollbar-gutter:stable; }
 html[data-entry="pending"] { overflow:hidden; }
 #site-interface { opacity:1; transition:opacity 350ms ease; }
 html[data-entry="pending"] #site-interface { opacity:0; visibility:hidden; pointer-events:none; }
-html[data-entry="pending"] .dev-tools,html[data-entry="pending"] body>div:has(>canvas) { visibility:hidden; }
-.asl-brand-loader { --entry-clear:-15%; position:fixed; inset:0; z-index:50; overflow:hidden; background:var(--color-void); color:var(--color-bone); mask-image:linear-gradient(102deg,transparent calc(var(--entry-clear) - 15%),black var(--entry-clear)); }
+html[data-entry="pending"] .dev-tools,html[data-entry="pending"] .dev-performance { visibility:hidden; }
+.asl-brand-loader { --entry-clear:-15%; position:fixed; inset:0; z-index:50; overflow:hidden; background:var(--color-void); color:var(--color-bone);  }
 .asl-brand-loader[hidden] { display:none; }
 .entry-texture { position:absolute; inset:0; opacity:0; background:url('/textures/grain.png'),linear-gradient(112deg,transparent,color-mix(in srgb,var(--color-bone) 7%,transparent),transparent); }
 .entry-atmosphere { position:absolute; inset:0; width:100%;height:100%;fill:currentColor; }
@@ -14,3 +14,13 @@ html[data-entry="pending"] .dev-tools,html[data-entry="pending"] body>div:has(>c
 .entry-skip span { margin-left:18px; }
 .asl-brand-loader[data-phase="reveal"] .entry-skip { visibility:hidden; }
 @media(prefers-reduced-motion:reduce){#site-interface{transition-duration:150ms}}
+
+/* The application is one isolated stacking context below the root cover. */
+#site-interface { position:relative; z-index:1; isolation:isolate; }
+.entry-identity { position:absolute; width:76px; height:70px; left:50%; top:50%; transform:translate(-50%,-50%); visibility:hidden; }
+.entry-identity path { opacity:0; stroke-dasharray:1; stroke-dashoffset:1; }
+html[data-entry="pending"] .canvas-layer { pointer-events:none; }
+[data-entry="ready"][data-page="home"][data-motion="static"] .static-mark { animation:home-fallback-emerge 1.4s ease both; }
+@keyframes home-fallback-emerge { from { opacity:0; transform:translateY(12px) scale(.95); } to { opacity:1; transform:none; } }
+.entry-material { position:absolute; width:240px; height:200px; left:50%; top:50%; transform:translate(-50%,-50%); visibility:hidden; fill:var(--color-bone); overflow:visible; }
+.entry-matter { opacity:0; }

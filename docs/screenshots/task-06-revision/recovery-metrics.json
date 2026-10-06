@@ -1,0 +1,22 @@
+{
+  "filaments": {
+    "during_mean_difference": 0.0203,
+    "after_700ms_mean_difference": 0.0,
+    "remaining_difference_ratio": 0.0
+  },
+  "cloud": {
+    "during_mean_difference": 2.0288,
+    "after_700ms_mean_difference": 0.0,
+    "remaining_difference_ratio": 0.0
+  },
+  "dna": {
+    "during_mean_difference": 0.285,
+    "after_700ms_mean_difference": 0.0,
+    "remaining_difference_ratio": 0.0
+  },
+  "asl": {
+    "during_mean_difference": 0.7115,
+    "after_700ms_mean_difference": 0.0,
+    "remaining_difference_ratio": 0.0
+  }
+}

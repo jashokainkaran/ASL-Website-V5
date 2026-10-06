@@ -1,0 +1,11 @@
+# Task 07 — reference study and implementation intent
+
+Inspected the live [ARC AI portfolio](https://www.arcai.agency/portfolio) in the browser on 2026-10-06, including successive scroll positions and desktop/mobile viewport overrides. No source or assets were copied.
+
+The inspected live desktop page uses a two-column media-led grid. Mobile becomes a single column. Large screenshot panels precede titles and descriptions, with modest vertical spacing and the next panel entering the viewport before the current description leaves. A fixed floating header stays present. Pointer placement over a linked media panel exposes a centred external-link affordance and darkened media. Status labels distinguish live/in-development entries with coloured pills. No dominant pinned cinematic camera sequence was evident in the inspected scroll samples; exact animation easing, duration, and final-project exit were not measured.
+
+Retain: media dominance, clear project-to-project rhythm, visible onward discovery, explicit destinations, truthful status hierarchy. Reinterpret: alternating large ASL editorial entries, warm-bone type, mineral/graphite depth, restrained GSAP approach/hold/recede, existing perimeter Mutable Matter and an understated link affordance. Avoid the reference's compact repeated grid, bright status pills, glass header, orange/green identity, copy, screenshots, client content, and chat overlays.
+
+Repository provenance audit found only three explicitly flagged layout placeholders in `src/content/projects.ts`; no actual project imagery, video, external destinations, or publishable commissions. Existing ASL development screenshots and behavioural reference frames are not portfolio work. Use the brief's honest publication state, without fictional entries or repackaging the particle laboratory as approved commercial work. Build the structured archive renderer and choreography for future verified entries.
+
+UI/UX Pro Max's design-system query returned an unsuitable glass/card direction; the established ASL design system wins. Its targeted error-summary guidance fits this form: focusable summary, links to invalid fields, inline associated errors, values retained. No new libraries or external component code.

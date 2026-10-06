@@ -1,6 +1,7 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { scene, tuning } from '@/lib/scene-store';
+import {resolveHomeIntro} from '@/lib/home-intro';
 import { OPENING_END } from '../states';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -39,6 +40,7 @@ export function createSceneScroll(opening: HTMLElement) {
       const from = anchors[index - 1], to = anchors[index];
       const local = gsap.utils.clamp(0, 1, (current - from.position) / Math.max(1, to.position - from.position));
       scene.sceneProgress = gsap.utils.interpolate(from.progress, to.progress, local);
+      if(scene.sceneProgress>.002)resolveHomeIntro();
     },
   });
   const skip = opening.querySelector<HTMLAnchorElement>('.skip-sequence');

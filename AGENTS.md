@@ -1380,3 +1380,595 @@ Before modifying a system introduced during Tasks 00–03:
 5. avoid parallel duplicate implementations.
 
 Do not leave old and new versions of the same system running simultaneously.
+
+==================================================
+MUTABLE MATTER — FORMATION LANGUAGE
+APPLIES FROM TASK 05 ONWARD
+==================================================
+
+Particle transformations must not become a collection of unrelated
+"cool objects."
+
+Every formation must belong to the ASL Mutable Matter visual language and
+communicate one of:
+
+- transformation
+- structure
+- flow
+- connection
+- precision
+- scale
+- systems
+- identity
+
+Avoid literal technology icons and obvious metaphors.
+
+
+==================================================
+FORMATION FAMILIES
+==================================================
+
+ASL Mutable Matter uses three principal formation families.
+
+
+### FORM
+
+Used for:
+identity, transformation, design, emergence.
+
+Examples:
+
+- roaming field
+- dense cloud
+- folded surface
+- hollow shell
+- architectural monolith
+- ASL mark
+
+
+### FLOW
+
+Used for:
+movement, communication, deployment, transition.
+
+Examples:
+
+- sweeping filaments
+- braided streams
+- flow fields
+- wavefronts
+- directional streams
+
+
+### STRUCTURE
+
+Used for:
+engineering, systems, development, organisation.
+
+Examples:
+
+- woven lattice
+- strata
+- spatial frames
+- tensegrity-like systems
+- distributed structural fields
+
+
+==================================================
+FORMATION DESIGN RULE
+==================================================
+
+Before adding any new particle state, be able to answer:
+
+1. What does this formation communicate?
+2. Which formation family does it belong to?
+3. Why does it belong at this point in the user journey?
+4. How does it transform naturally from the preceding state?
+5. How does it transition naturally into the following state?
+
+If those questions cannot be answered, do not add the formation.
+
+
+==================================================
+AVOID LITERAL OBJECTS
+==================================================
+
+Do not transform Mutable Matter into generic objects such as:
+
+- globe
+- brain
+- light bulb
+- rocket
+- laptop
+- computer
+- cloud icon
+- server rack
+- code brackets
+- handshake
+- generic cube
+- AI head
+- circuit board
+- literal network sphere
+
+ASL should use abstract computational forms rather than stock technology
+metaphors.
+
+
+==================================================
+SPATIAL DNA
+==================================================
+
+The DNA helix remains part of the opening transformation sequence.
+
+It is SPATIALLY HORIZONTAL, not perfectly horizontal on a flat plane.
+
+Its overall axis should span broadly left-to-right while existing clearly
+in three-dimensional space.
+
+Preferred characteristics:
+
+- approximately 15–25 degrees yaw as a starting point
+- approximately 5–10 degrees pitch as a starting point
+- subtle roll if composition benefits
+- one end may sit closer to camera
+- opposite end may recede
+- clear perspective foreshortening
+- overlapping depth between strands
+- subtle variation in radius/density
+
+These values are starting points only and should remain visually tunable.
+
+The result should resemble a suspended computational sculpture rather than
+a biology illustration.
+
+
+==================================================
+HOMEPAGE OPENING FORMATION SEQUENCE
+==================================================
+
+Current intended opening:
+
+SITE AWAKENING
+→
+ROAMING FIELD
+→
+DENSE CLOUD
+→
+SPATIAL DNA
+→
+DNA UNRAVELS
+→
+SWEEPING / BRAIDED FILAMENTS
+→
+FOLDED PARTICLE SURFACE
+→
+ABSTRACT SCULPTURAL FORM
+→
+STYLISED ASL MARK
+→
+CALM HERO REVEAL
+
+Not every intermediate formation needs equal duration.
+
+The DNA, filament system and final ASL mark remain the primary readable
+moments.
+
+The folded surface / sculpture exists to enrich the transformation and must
+not make the opening unnecessarily long.
+
+
+==================================================
+FOLDED PARTICLE SURFACE
+==================================================
+
+The filament streams may progressively flatten and merge into one broad
+particle surface.
+
+The surface should then:
+
+- bend
+- fold
+- twist
+- overlap itself in depth
+- create architectural negative space
+
+It should feel like computational fabric / digital material.
+
+Do not make it literal cloth, paper or origami.
+
+The folded surface may briefly resolve into an abstract sculptural form
+before collapsing / reorganising into the ASL identity.
+
+
+==================================================
+MOTION RHYTHM
+==================================================
+
+Do not keep Mutable Matter at maximum movement continuously.
+
+Use rhythm:
+
+activity
+→
+formation
+→
+brief stillness
+→
+release
+→
+activity
+→
+formation
+→
+calm
+
+Readable moments are as important as movement.
+
+The site should feel confident enough to become still.
+
+==================================================
+TASK 06 — CANONICAL ENTRY AND ROUTE FOUNDATION
+==================================================
+
+This update overrides earlier opening/loader wording.
+
+- Home direct entry uses a server-rendered, logo-free, opaque space-black cover.
+- Non-home direct entry uses the same cover; a compact supplied ASL identity is allowed.
+- The cover and initial document CSS gate content from the first paint. Keep it at root level above the persistent canvas and the isolated application interface.
+- Entry runs once per document load, never on normal client navigation. Fonts and renderer/fallback may prepare underneath. Normal ready choreography is about 1.6s Home / 1.5s inner entry; readiness may extend a quiet hold.
+- Reduced-motion entry is a short material/fade reveal without disturbance, particle travel or complex identity assembly.
+- Home emergence is separate creative content, starts after the cover clears, and lasts about 1.4s. Immediate scroll resolves it in about .22s while canonical scroll control continues.
+- Canonical hero: EMERGENCE → FILAMENTS → CLOUD → SPATIAL DNA → ASL → CALM HERO UI. No surface/sculpture or other major forms inside the hero.
+- heroProgress is derived as sceneProgress / .52 during the opening; it is not a second scroll listener or independent scroll state.
+- Hero mapping: filaments hold 0–.20; cloud formation .20–.42; cloud hold .42–.49; DNA formation .49–.72; DNA hold .72–.81; direct DNA-to-ASL .81–.95; settle/UI .95–1.
+- Preserve the formation library. Following the post-Task-06 user refinement, live section defaults are Design/folded membrane, Development/interlocking curved layers, Deployment/ribbon flow, Products/open shell. Earlier lattice, strata, stream, cluster and alternative forms remain development previews. Preserve existing section URL anchors.
+- Section targets use two reusable buffers, generated at section boundaries; do not restore all section formations as resident hero attributes.
+- Internal navigation uses transitionTo semantic presets and the existing persistent canvas, with no entry veil or intervening identity loader. Keep real Next links, history, direct URLs and focus management.
+- Home→Work opens existing matter through depth, settles it toward the frame, and reveals the placeholder destination. Full Work archive belongs to Task 07.
+- No-JS must restore visibility AND pointer events; no-WebGL retains meaningful DOM, navigation and CTAs.
+- Entry/intro replays and formation previews are development-only. Read docs/handoffs/TASK_06_STATUS.md before extending this foundation.
+
+
+==================================================
+PRODUCTION CONTENT + PUBLIC ROUTES
+APPLIES FROM TASK 07 ONWARD
+==================================================
+
+The ASL website is now being shown to prospective clients.
+
+From Task 07 onward, visible customer-facing content is PRODUCTION CONTENT,
+not prototype copy.
+
+Do not insert filler with the expectation that it will automatically be
+rewritten later.
+
+
+==================================================
+1. CONTENT INTEGRITY
+==================================================
+
+Never invent:
+
+- client names
+- client logos
+- delivered projects
+- testimonials
+- awards
+- certifications
+- partnerships
+- project outcomes
+- performance metrics
+- conversion improvements
+- revenue figures
+- user counts
+- years of experience
+- team size
+- locations
+- response-time guarantees
+- availability claims
+
+If factual information is unavailable:
+
+1. omit it;
+2. design around it;
+3. use an honestly labelled ASL Concept only if a real concept/demo exists;
+4. flag the missing information internally for approval.
+
+Never create a fictional project simply to fill the Projects page.
+
+
+==================================================
+2. COPY STYLE
+==================================================
+
+ASL copy should be:
+
+- concise
+- confident
+- precise
+- modern
+- premium
+- technically credible
+- human
+- commercially understandable
+
+Avoid generic agency language such as:
+
+- transforming ideas into digital excellence
+- where innovation meets creativity
+- experiences that matter
+- empowering businesses through technology
+- building the future together
+- cutting-edge solutions
+- world-class solutions
+- your digital transformation partner
+
+Prefer plain, specific statements about what ASL actually does.
+
+
+==================================================
+3. PAGE PURPOSE
+==================================================
+
+HOME answers:
+
+Who is ASL and what does it create?
+
+
+PROJECTS answers:
+
+What can ASL actually make?
+
+
+CAPABILITIES answers:
+
+What can ASL do for my project?
+
+
+CONTACT answers:
+
+How do I start a conversation with ASL?
+
+
+ABOUT answers:
+
+Who is behind ASL and how does the company think?
+
+
+==================================================
+4. PUBLIC PROJECT ROUTE
+==================================================
+
+The canonical public portfolio route is:
+
+/projects
+
+The navigation label may be:
+
+Projects
+
+or:
+
+Work
+
+depending on composition.
+
+The Home secondary CTA remains:
+
+Explore Our Work
+
+and should route to:
+
+/projects
+
+
+If `/work` already exists:
+
+do not leave two competing portfolio pages.
+
+Either:
+
+- redirect `/work` → `/projects`;
+
+or preserve `/work` only as an implementation alias if architecture
+requires it.
+
+Canonical metadata and user-facing navigation should use `/projects`.
+
+
+==================================================
+5. PROJECT CLASSIFICATION
+==================================================
+
+Projects must be classified truthfully where relevant.
+
+Approved categories include:
+
+CLIENT PROJECT
+
+A real commissioned engagement.
+
+
+ASL CONCEPT
+
+An internally created concept/demo intended to demonstrate capability.
+
+It must never be presented as commissioned client work.
+
+
+IN DEVELOPMENT
+
+A genuine project currently being developed.
+
+Do not label fictional work as "In Development."
+
+
+LIVE
+
+Use only for a real publicly live project.
+
+
+==================================================
+6. PROJECT DATA
+==================================================
+
+Project content must live in structured data rather than being hard-coded
+into visual renderer components.
+
+Prefer a structure such as:
+
+content/projects.ts
+
+Each project may include:
+
+- slug
+- title
+- type
+- status
+- shortDescription
+- disciplines
+- year if known
+- cover media
+- gallery media
+- external URL if real
+- case-study availability
+- featured flag
+
+Do not require fields where factual information is unavailable.
+
+
+==================================================
+7. ARC AI REFERENCE RULE
+==================================================
+
+For the Projects page, ARC AI's live Portfolio page may be studied as an
+INTERACTION REFERENCE:
+
+https://www.arcai.agency/portfolio
+
+Study:
+
+- project-to-project scroll rhythm
+- media movement
+- image scaling
+- active/inactive project hierarchy
+- text/media relationship
+- project transitions
+- hover behaviour
+- cursor behaviour
+- desktop/mobile adaptation
+
+Do NOT copy:
+
+- branding
+- source code
+- exact layout
+- typography
+- colours
+- project content
+- client names
+- metrics
+- page copy
+
+Translate useful interaction principles into ASL's own:
+
+- Mutable Matter
+- textured environments
+- warm-bone particles
+- charcoal
+- burgundy
+- spatial depth
+- typography
+- route-transition language
+
+
+==================================================
+8. CONTACT CONTENT RULE
+==================================================
+
+Contact copy is production copy.
+
+Do not claim a response time unless explicitly approved.
+
+Do not invent office locations or phone numbers.
+
+Do not show an email address unless a real approved business address exists.
+
+Never simulate successful form submission if no backend/action actually
+received the enquiry.
+
+
+==================================================
+9. FORM BEHAVIOUR
+==================================================
+
+Forms must:
+
+- use semantic labels
+- provide validation
+- provide accessible error messages
+- support keyboard use
+- expose real success only after successful submission
+- expose a meaningful error if submission fails
+
+Never show a fake "Message sent" state.
+
+
+==================================================
+10. PROJECTS VISUAL PRINCIPLE
+==================================================
+
+Projects is a cinematic discovery page.
+
+It may use:
+
+- large project media
+- movement through depth
+- image scaling
+- scroll-linked transitions
+- persistent Mutable Matter
+- active-project focus
+- strong typography
+
+But project names, descriptions, statuses and links remain real DOM content.
+
+Do not sacrifice readability for animation.
+
+
+==================================================
+11. CONTACT VISUAL PRINCIPLE
+==================================================
+
+Contact is intentionally calmer than Home and Projects.
+
+Behavioural verb:
+
+ATTRACT
+
+Possible Mutable Matter behaviour:
+
+- sparse particles
+- subtle gravitational pull
+- quiet directional movement toward the form/CTA
+
+Use a rich textured environment.
+
+Do not create another large cinematic particle show.
+
+
+==================================================
+12. PRODUCTION QUALITY
+==================================================
+
+From Task 07 onward every implemented public page must include:
+
+- final visible copy
+- responsive design
+- mobile treatment
+- metadata/title/description
+- semantic HTML
+- accessible interaction
+- reduced-motion treatment
+- no-WebGL fallback where relevant
+- working navigation
+- no knowingly broken public CTA

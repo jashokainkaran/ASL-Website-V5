@@ -118,3 +118,41 @@ Phase 1 builds 1 to 5. The rest come with the Capabilities phase.
 3. **Phase 3:** Capabilities, Work, About and Contact pages with route-driven particle states
 4. **Phase 4:** mobile pass, reduced-motion and fallback polish, performance, SEO and accessibility audit
 5. **Phase 5:** CMS for Work, real copy and logo, link Book a Call
+
+
+## Post-Task-06 section refinement
+
+The user requested richer section formations and more substantial particles, especially on burgundy. This supersedes the original capability formation defaults above: Design uses a folded membrane, Development uses interlocking curved layers, Deployment uses broad flowing ribbons, and Digital Products uses an open sculptural shell. Existing capability copy and URL anchors remain. The burgundy statement retains clear space for typography, with more visible perimeter matter. The hero narrative remains unchanged.
+
+
+## Task 06 revision — current working production homepage copy
+
+This addendum supersedes older homepage placeholders. The hero narrative and post-Task-06 capability forms remain unchanged.
+
+**Hero:** Digital matter, given form.
+
+ASL designs, develops and launches distinctive websites and digital products — combining design, engineering and technology into one considered experience.
+
+**Design:** We turn ideas into clear, distinctive digital experiences — from structure and interface to motion and interaction.
+
+Optional descriptor: Experience shaped with intention.
+
+**Development:** We engineer those experiences into fast, responsive and maintainable websites and digital products.
+
+Optional descriptor: Built to hold up beyond launch.
+
+**Deployment:** We take the work from local build to live product, handling the infrastructure and technical details needed for a clean launch.
+
+Optional descriptor: From build to production.
+
+**Digital Products:** When the idea goes beyond a website, we design and build product experiences, prototypes and web-based tools.
+
+Optional descriptor: Ideas shaped into working products.
+
+**Statement:** Most websites are assembled. Ours are shaped.
+
+No unapproved proof strip, fabricated outcomes, clients, statistics or awards.
+
+**Final CTA:** Let's build something that holds its shape.
+
+Book a Call → /contact. Explore Our Work → /work. Unapproved company contact details are omitted until supplied.

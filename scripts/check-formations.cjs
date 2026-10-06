@@ -54,3 +54,20 @@ for(const generate of [surface,sculpture]) {
  assert.ok(maxZ<7,'Form must stay in front of the camera near plane');
 }
 console.log('Surface/sculpture determinism, depth and camera clearance passed');
+
+const {sectionFormations} = require('../src/particles/section-formations.ts');
+for(const [name,generate] of Object.entries(sectionFormations)) {
+ for(const width of [18.47,5.34]) {
+  const context={...tuning,width,height:11.547};
+  const points=generate(18000,context);
+  assert.ok(points.every(Number.isFinite),`${name}: section coordinates must be finite`);
+  assert.deepEqual(points,generate(18000,context),`${name}: lazy regeneration must preserve correspondence`);
+  for(let i=2;i<points.length;i+=3)assert.ok(points[i]<9,`${name}: camera clearance`);
+ }
+}
+const resident=makeGeometry(60000,{...tuning,width:18.47,height:11.547});
+assert.ok(!resident.geometry.hasAttribute('aSurfaceTarget')&&!resident.geometry.hasAttribute('aSculptureTarget'),'Section forms must not remain resident hero targets');
+const bytes=Object.values(resident.geometry.attributes).reduce((sum,a)=>sum+a.array.byteLength,0);
+assert.ok(bytes<=8400000,'Primary attribute memory must remain bounded at high tier');
+resident.geometry.dispose();
+console.log(`${Object.keys(sectionFormations).length} lazy section formations passed; high-tier primary attributes ${bytes} bytes`);

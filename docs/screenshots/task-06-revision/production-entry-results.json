@@ -1,0 +1,38 @@
+{
+  "samples": 24,
+  "pending": 21,
+  "exposedPending": 0,
+  "visibleHomeMarks": 0,
+  "first": {
+    "t": 127.29999995231628,
+    "entry": "pending",
+    "cover": "block",
+    "coverOpacity": "1",
+    "ui": "hidden",
+    "nav": "hidden",
+    "mark": "hidden",
+    "top": "entry-disturbance"
+  },
+  "firstReady": {
+    "t": 7598.5,
+    "entry": "ready",
+    "cover": "none",
+    "coverOpacity": "0",
+    "ui": "visible",
+    "nav": "visible",
+    "mark": "hidden",
+    "top": "opening"
+  },
+  "productionDevApi": false,
+  "navigation": {
+    "sameCanvas": true,
+    "entry": "ready",
+    "cover": "none"
+  },
+  "reduced": {
+    "reduced": true,
+    "entry": "ready",
+    "count": 60000,
+    "progress": 0.397
+  }
+}
