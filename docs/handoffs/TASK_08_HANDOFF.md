@@ -194,3 +194,62 @@ Both pages inspected at 1440×900, 1024×768, 768×1024 and 390×844 without hor
 Keyboard Tab focused Start a Project with a solid outline and Return navigated to Contact. All seven outbound links opened their exact approved destinations in separate tabs. Design screenshot samples local pointer disruption; automated recovery tests pass. Viewport overrides and task-owned external tabs were cleaned up. See evidence README for file mapping and limits.
 
 Task 08 ends here. Preserve this work for Task 09; do not infer authorization to start it.
+
+## TASK 08 MOTION / VISUAL REVISION
+
+Completed 2026-10-07, strictly a revision. Actual brief: `docs/TASK_08_REVISION_SYSTEMS_AND_MOTION.md`; requested `docs/tasks/` directory is absent. This section supersedes the earlier Capabilities shape mapping and entry/route timings. Original commercial copy and Projects tables remain authoritative.
+
+### Audit before edits
+
+A, D, E, F: Direct entry already had a server-rendered opaque root cover and critical CSS hiding the interface. The initial browser state exposed only preparing/skip. No content-before-loader flash was reproduced. The cover sits above the isolated interface/navigation and canvas. Existing ready inner entry was 1200ms preparation plus 400ms opacity exit. The interface stayed hidden throughout that exit, and destination GPU arrival began only after completion. That sequential handoff and short exit made the arrival disconnected. Timeline seeking also used rescaled progress rather than elapsed milliseconds.
+
+B, C: Normal internal Next links already kept the branded cover hidden. Capture-phase semantic requests and the persistent controller changed material without a document loader. Route pacing was 1.05s normal, .45s reduced; reduced timing was especially abrupt. Preserve this architecture and correct its pacing, rather than invent another loader.
+
+G–J: Membrane suggested malleability, curved layers engineering depth, ribbons release, and shell coherent volume. These were indirect associations: four sculptures did not clearly demonstrate composition, structural relationships, propagation and coordination. Browser inspection confirmed membrane/layers; source and existing Task08 evidence confirmed ribbons/shell. Deterministic correspondence was sound but insufficient to make the shapes purposeful.
+
+K: Preserved seven Projects records/media/order/classification/live links and archive story; Contact form/delivery honesty; native links/history/focus; root first-paint gate; one canvas; Home sequence/approved section library; canonical mark sampler; pointer recovery; ambient material; semantic palette/textures; quality tiers; server copy/SEO and native chapter scroll score.
+
+### Loader root cause, fixes and timing
+
+Inner direct entry now uses 1300ms preparation/formation/hold plus 700ms exit: approximately 2.0s when ready. The 240 canonical sampled SVG particles resolve from 220ms through about 1025ms, leaving about 275ms identity hold. Readiness changes `data-entry` to `revealing`: the prepared destination becomes visible under the still-opaque cover while inertness and scroll lock remain. Its existing canvas arrival starts immediately. Loader particles loosen over 680ms while cover opacity recedes over 700ms. Completion hides cover, releases inertness/scroll lock and enables interaction. No flying logo, zoom, wipe or invented progress indicator.
+
+Delayed readiness holds at the completed identity/pre-exit phase without restarting. Existing fallback timeout and skip escape remain. Wall-time seeking avoids timing distortion. Home remains logo-free and retains its opening story. Anime.js owns SVG loader formation/separation/cover opacity; GSAP owns route material and scroll scores. Anime.js never animates the WebGL population.
+
+Internal navigation remains loader-free. Timing is now 1.3s normal and .9s reduced, with immediate response and existing progressive DOM reveal. Home→Capabilities orders matter; Capabilities→Projects stretches depth; Projects→Contact sparsifies toward attraction; Contact→Home releases into the Home story. No navigation lock or cover is added.
+
+### Retired forms and new physical behaviours
+
+| Capability | Revised system | Physical logic |
+|---|---|---|
+| Design | Composition field | Eight paths, six on mobile, bend under tension into two crossing families. Taper, depth and asymmetric spacing establish deliberate gaps. Existing .59–.61 hold supports reading. |
+| Development | Spatial architecture | Selective paths connect suspended anchors across three depth planes. Open relationships replace the first-pass closed polygon; no bounding cube, rack or wireframe box. Existing .67–.69 hold remains. |
+| Deployment | Propagation field | Structure opens into seven trajectories and three depth fronts. GPU longitudinal travel has different lane speeds and delayed impulses. Individual endpoints soften before recycling. Existing .75–.77 hold keeps geometry readable while propagation continues. |
+| Digital Products | Coordinated system | Distributed matter collects into four differently sized tapered modules, sparse relationships and shared low-energy rhythm. Independent phase reduces with synchronisation; no shell/globe/atom/orbits. Existing .84–.86 hold supports reading. |
+
+Membrane, lamellae, decorative ribbons and shell are retired on `/capabilities`. Approved Home section library is unchanged; none was placed into the hero. `capability-systems.ts` owns the route-only generators. Every state retains the ascending particle index, longitudinal coordinate and local sampling identities. Existing progressive curved GPU transit morphs adjacent arrays and supports reverse scroll. No object fade, extra canvas or separate particle population. Deployment motion tapers as modules collect and coordinate.
+
+### Pointer, environment and responsive behaviour
+
+The existing camera-projected, bounded eight-sample pointer law remains: local weave strands bend/separate; architecture paths bow without global collapse; propagation diverts locally; a module separates while distant modules stay stable. Decaying history restores target positions. No new interaction engine or scroll-blocking touch handler. Design drag was exercised and CPU recovery/history checks passed.
+
+Graphite/charcoal, mineral texture, fine grain, lighting and increasing burgundy remain. Task06 warm-bone cores, size distribution and restrained halo are unchanged; ambient particles stay subordinate. Desktop behaviour labels now stay in the editorial half when the fixed material crosses chapter headers. Mobile framing lowers the field into its reserved visual slot, uses six weave paths and at most four modules. All copy, native anchors and CTAs remain available without hover.
+
+Reduced capabilities suppress propagation/module motion through `uWakeMotion=0`, retaining very low idle, reduced pointer/camera/transit intensity, final compositions and complete service copy. Inner identity still forms with reduced travel and .7s exit; internal transition is .9s. No-WebGL vector equivalents now depict weave, architecture, distribution and modules. Decorative SVGs remain aria-hidden. OS reduced-motion, forced no-WebGL/no-JS and physical touch could not be forced in this browser tooling; those branches were code-reviewed, not reported as device-tested.
+
+### Controls, files and performance
+
+Development-only Leva folders expose all requested Design, Development, Deployment and Products controls. Existing Interaction/Particle character folders provide common radius, strength, recovery, core size and density brightness. Geometry parameters regenerate only on explicit dev changes; speed/synchronisation use uniforms. Production never mounts the controls.
+
+Added `src/particles/formations/capability-systems.ts` and `src/particles/shaders/capability.ts`. Changed ASLLoader, loader CSS, route-transition, ParticleField, particle shader, DevTools, CapabilityFallback, capability material labels, capabilities CSS and formation checks. Removed abandoned `capability-placement.ts`; new generators incorporate framing. Updated this handoff and revision evidence. No dependency/lockfile, Projects/media, Contact form or Home-content changes.
+
+Measured CPU checks still report 8,400,000 high-tier attribute bytes. No new attribute/population, CPU per-frame positions or GPGPU. New shader arithmetic is bounded procedural travel/rhythm. Counts, DPR and quality defaults are unchanged. Browser rendering, scrolling and pointer response are observations; real GPU FPS, CWV and device performance are unmeasured.
+
+### Validation, evidence and remaining weaknesses
+
+Lint, typecheck, production build with existing `ASL_BUILD_CPUS=1`, formation checks (including revised route/mobile determinism, camera clearance and module extrema), pointer checks and Contact checks passed. Hard refresh of Capabilities/Projects/Contact showed an opaque pending cover with hidden interface. Formation/hold/exit/arrival frames and DOM phase/opacity evidence are saved. Home→Capabilities, Capabilities→Projects, Projects→Contact, Contact→Capabilities, Back and Forward kept the cover hidden; one canvas and all seven ordered Projects records observed. Projects source/media diff is empty. No enquiry submitted.
+
+Evidence index: `docs/screenshots/task-08/revision/README.md`. These are sampled screenshots, not a motion recording or exact first-raster measurement. The first observed refresh frame plus server markup/critical CSS establish the gate; no content flash was observed. Console has inherited THREE.Clock deprecation only, no shader/runtime errors.
+
+Creative review remains appropriate: explicit architecture/module relationships are deliberately diagrammatic, and some propagation reaches the viewport edge. Screenshots do not prove the full perceived cadence. Reduced-motion/fallback and actual touch/GPU checks need real-device review. Contact delivery remains unconfigured. No Task09, remote push or deployment.
+
+Final responsive QA: all four states inspected at 390×844, Design at 768×1024 and 1024×768, four final states at 1440×900. No horizontal document overflow; mobile formation labels/headings clear. Mobile Projects retains seven entries and safe external-link attributes. Contact→Home attraction release also exercised. Latest production build includes the mobile vertical correction and desktop label adjustment. Revision used existing local UI/UX Pro Max guidance on reduced intensity and restrained motion; no external component/code/identity was adopted and no dependencies changed.

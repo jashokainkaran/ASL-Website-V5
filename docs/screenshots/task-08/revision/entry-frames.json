@@ -1,0 +1,58 @@
+[
+  {
+    "file": "entry-0.jpg",
+    "entry": "pending",
+    "hidden": false,
+    "interface": "hidden",
+    "opacity": "1",
+    "phase": "prepare"
+  },
+  {
+    "file": "entry-1.jpg",
+    "entry": "pending",
+    "hidden": false,
+    "interface": "hidden",
+    "opacity": "1",
+    "phase": "prepare"
+  },
+  {
+    "file": "entry-2.jpg",
+    "entry": "pending",
+    "hidden": false,
+    "interface": "hidden",
+    "opacity": "1",
+    "phase": "prepare"
+  },
+  {
+    "file": "entry-3.jpg",
+    "entry": "pending",
+    "hidden": false,
+    "interface": "hidden",
+    "opacity": "1",
+    "phase": "prepare"
+  },
+  {
+    "file": "entry-4.jpg",
+    "entry": "pending",
+    "hidden": false,
+    "interface": "hidden",
+    "opacity": "1",
+    "phase": "prepare"
+  },
+  {
+    "file": "entry-5.jpg",
+    "entry": "pending",
+    "hidden": false,
+    "interface": "hidden",
+    "opacity": "1",
+    "phase": "prepare"
+  },
+  {
+    "file": "entry-6.jpg",
+    "entry": "pending",
+    "hidden": false,
+    "interface": "hidden",
+    "opacity": "1",
+    "phase": "prepare"
+  }
+]

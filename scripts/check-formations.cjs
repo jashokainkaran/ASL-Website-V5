@@ -27,6 +27,24 @@ for (const count of [18000, 40000, 60000]) {
 assert.equal(getASLMarkPoints(0).length, 0);
 assert.ok(getASLMarkPoints(1).every(Number.isFinite));
 
+const {capabilitySystem,capabilityTuning}=require('../src/particles/formations/capability-systems.ts');
+for(const width of [18.47,5.34]) {
+ const context={...tuning,width,height:11.547};
+ for(let state=0;state<4;state++) {
+  const target=capabilitySystem(state,18000,context);
+  assert.equal(target.length,54000);
+  assert.ok(target.every(Number.isFinite),'Capability inputs must be finite');
+  assert.deepEqual(target,capabilitySystem(state,18000,context),'Stable identity on regeneration');
+  for(let i=2;i<target.length;i+=3)assert.ok(target[i]<7,'Capability camera clearance');
+ }
+ for(const modules of [3,6]) {
+  capabilityTuning.moduleCount=modules;
+  assert.ok(capabilitySystem(3,18000,context).every(Number.isFinite),'Module control extrema');
+ }
+ capabilityTuning.moduleCount=4;
+}
+console.log('Four route-only capability systems: determinism, mobile, camera clearance and module extrema passed');
+
 const {helix} = require('../src/particles/formations/helix.ts');
 for (const [width, height] of [[18.47,11.547],[8.02,11.547],[5.34,11.547]]) {
   const context = {...tuning,width,height};

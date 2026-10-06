@@ -1,11 +1,12 @@
-/** Vector material for no-WebGL; essential information remains in surrounding DOM. */
+/** Quiet vector equivalents; all commercial content remains server-readable DOM. */
 export function CapabilityFallback({index}: {index: number}) {
-  const paths = Array.from({length: 18}, (_, i) => {
-    const n = i * 5;
-    return index === 0 ? `M35 ${95+n} C150 ${-20+n} 220 ${320-n} 365 ${110+n}`
-      : index === 1 ? `M${70+n} 225 C${-20+n} 140 ${110+n} 5 ${255+n/2} 65 C${340-n} 110 ${190+n} 220 ${70+n} 225`
-      : index === 2 ? `M5 ${70+n} C115 ${180+n} 255 ${-30+n} 395 ${155+n}`
-      : `M${255+n/3} ${35+n/4} C${65-n/3} ${-10+n} ${30+n} ${260-n/2} ${250+n/2} ${240-n/3} C${360-n/2} ${215-n} ${335-n/2} ${90+n} ${255+n/3} ${80+n/2}`;
-  });
-  return <svg className="capability-vector" viewBox="0 0 400 280" fill="none">{paths.map((d, i) => <path d={d} key={i} stroke="currentColor" strokeWidth=".8" strokeDasharray={i % 3 === 0 ? '1 4' : '2 3'}/>)}</svg>;
+  const nodes=[[45,185],[135,45],[225,155],[340,65],[365,225],[100,245]];
+  const edges=[[0,1],[1,2],[2,3],[3,4],[4,5],[5,0],[1,3]];
+  const modules=[[80,75],[275,65],[145,205],[330,190]];
+  return <svg className="capability-vector" viewBox="0 0 400 280" fill="none" aria-hidden="true">
+    {index===0&&Array.from({length:8},(_,i)=><path key={i} d={`M25 ${70+i*18} C140 ${i%2?220-i*12:10+i*9} 260 ${i%2?30+i*16:240-i*8} 375 ${75+i*15}`} stroke="currentColor" strokeDasharray="1 3"/>)}
+    {index===1&&<>{edges.map(([a,b],i)=><path key={i} d={`M${nodes[a]} L${nodes[b]}`} stroke="currentColor" strokeDasharray="1 3"/>)}{nodes.map(([x,y],i)=><circle key={i} cx={x} cy={y} r="4" fill="currentColor"/>)}</>}
+    {index===2&&Array.from({length:7},(_,i)=><path key={i} d={`M40 140 Q180 ${90+i*14} 375 ${25+i*38}`} stroke="currentColor" strokeWidth={i%2?1:2} strokeDasharray="2 5 1 9"/>)}
+    {index===3&&<>{modules.map(([x,y],i)=><g key={i}><path d={`M${x} ${y} L${modules[(i+1)%4]}`} stroke="currentColor" strokeDasharray="1 5"/><rect x={x-14-i*2} y={y-10} width={28+i*4} height={20+i*3} rx="3" stroke="currentColor" strokeDasharray="1 2"/></g>)}</>}
+  </svg>;
 }

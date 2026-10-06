@@ -1,0 +1,146 @@
+[
+  {
+    "file": "loader-0.jpg",
+    "entry": "pending",
+    "hidden": false,
+    "interface": "hidden",
+    "opacity": "1",
+    "phase": "prepare"
+  },
+  {
+    "file": "loader-1.jpg",
+    "entry": "pending",
+    "hidden": false,
+    "interface": "hidden",
+    "opacity": "1",
+    "phase": "prepare"
+  },
+  {
+    "file": "loader-2.jpg",
+    "entry": "revealing",
+    "hidden": false,
+    "interface": "visible",
+    "opacity": "1",
+    "phase": "reveal"
+  },
+  {
+    "file": "loader-3.jpg",
+    "entry": "revealing",
+    "hidden": false,
+    "interface": "visible",
+    "opacity": "0.6861",
+    "phase": "reveal"
+  },
+  {
+    "file": "loader-4.jpg",
+    "entry": "revealing",
+    "hidden": false,
+    "interface": "visible",
+    "opacity": "0.1918",
+    "phase": "reveal"
+  },
+  {
+    "file": "loader-5.jpg",
+    "entry": "revealing",
+    "hidden": false,
+    "interface": "visible",
+    "opacity": "0.0062",
+    "phase": "reveal"
+  },
+  {
+    "file": "loader-6.jpg",
+    "entry": "ready",
+    "hidden": true,
+    "interface": "visible",
+    "opacity": "0",
+    "phase": "reveal"
+  },
+  {
+    "file": "loader-7.jpg",
+    "entry": "ready",
+    "hidden": true,
+    "interface": "visible",
+    "opacity": "0",
+    "phase": "reveal"
+  },
+  {
+    "file": "loader-8.jpg",
+    "entry": "ready",
+    "hidden": true,
+    "interface": "visible",
+    "opacity": "0",
+    "phase": "reveal"
+  },
+  {
+    "file": "loader-9.jpg",
+    "entry": "ready",
+    "hidden": true,
+    "interface": "visible",
+    "opacity": "0",
+    "phase": "reveal"
+  },
+  {
+    "file": "loader-10.jpg",
+    "entry": "ready",
+    "hidden": true,
+    "interface": "visible",
+    "opacity": "0",
+    "phase": "reveal"
+  },
+  {
+    "file": "loader-11.jpg",
+    "entry": "ready",
+    "hidden": true,
+    "interface": "visible",
+    "opacity": "0",
+    "phase": "reveal"
+  },
+  {
+    "file": "loader-12.jpg",
+    "entry": "ready",
+    "hidden": true,
+    "interface": "visible",
+    "opacity": "0",
+    "phase": "reveal"
+  },
+  {
+    "file": "loader-13.jpg",
+    "entry": "ready",
+    "hidden": true,
+    "interface": "visible",
+    "opacity": "0",
+    "phase": "reveal"
+  },
+  {
+    "file": "loader-14.jpg",
+    "entry": "ready",
+    "hidden": true,
+    "interface": "visible",
+    "opacity": "0",
+    "phase": "reveal"
+  },
+  {
+    "file": "loader-15.jpg",
+    "entry": "ready",
+    "hidden": true,
+    "interface": "visible",
+    "opacity": "0",
+    "phase": "reveal"
+  },
+  {
+    "file": "loader-16.jpg",
+    "entry": "ready",
+    "hidden": true,
+    "interface": "visible",
+    "opacity": "0",
+    "phase": "reveal"
+  },
+  {
+    "file": "loader-17.jpg",
+    "entry": "ready",
+    "hidden": true,
+    "interface": "visible",
+    "opacity": "0",
+    "phase": "reveal"
+  }
+]

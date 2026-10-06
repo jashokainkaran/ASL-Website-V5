@@ -1,6 +1,7 @@
 import {formations} from '../states';
 import {pointerShader} from './pointer';
 import {archiveShader} from './archive';
+import {capabilityShader} from './capability';
 import {organiseShader} from './organise';
 export const vertexShader = `
 ${[...new Set(formations.map(f=>f.attribute))].filter(attribute=>attribute!=='position').map(attribute=>`attribute vec3 ${attribute};`).join('\n')}
@@ -18,6 +19,7 @@ ${pointerShader}
 const float PI=3.14159265;
 ${archiveShader}
 ${organiseShader}
+${capabilityShader}
 // Analytic divergence-free curl field; octave count is quality-tier controlled.
 vec3 curl(vec3 p,float t){vec3 result=vec3(0.);float amp=1.;for(int j=0;j<3;j++){if(float(j)>=uOctaves)break;result+=amp*vec3(sin(p.y+t)-cos(p.z-t),sin(p.z+t)-cos(p.x-t),sin(p.x+t)-cos(p.y-t));p*=1.9;amp*=.5;}return result;}
 vec3 transit(vec3 from,vec3 target,float p,float start,float end,float time){
@@ -48,10 +50,12 @@ vec3 positionAt(float time,float progress,float preset){
  p=transit(p,finalTarget(aLogoTarget),progress,.92,.99,time);
  float dnaHold=smoothstep(.3744,.385,progress)*(1.-smoothstep(.4212,.44,progress));
  float rest=(1.-smoothstep(.48,.505,progress)*.96)*(1.-dnaHold*.78);
- float streamLife=smoothstep(.69,.75,progress)*(1.-smoothstep(.77,.84,progress));
+ float routeLife=(preset>2.5&&preset<3.5)?0.:1.;
+ float streamLife=routeLife*smoothstep(.69,.75,progress)*(1.-smoothstep(.77,.84,progress));
  p.x+=sin(time*.65+aIdentity.y*18.)*.12*streamLife;
- float clusterLife=smoothstep(.77,.84,progress)*(1.-smoothstep(.86,.91,progress));
+ float clusterLife=routeLife*smoothstep(.77,.84,progress)*(1.-smoothstep(.86,.91,progress));
  p+=aOffset*sin(time*.5+aIdentity.y*PI*6.)*.18*clusterLife;
+ if(preset>2.5&&preset<3.5)p=capabilityMotion(p,time,progress);
  float capabilityRest=(preset>2.5&&preset<3.5)?mix(.06,.6,uWakeMotion):1.;
  p+=curl(p*.35,time*.12+aIdentity.w*.04)*uIdle*rest*capabilityRest;
  p+=aOffset*sin(time*.2+aIdentity.w)*uIdle*rest*capabilityRest;
@@ -125,6 +129,11 @@ void main(){
  float born=(uProgress<.104 && uRouteProgress>=1.)?smoothstep((aIdentity.x*.28+abs(aIdentity.y-.5)*.84),(aIdentity.x*.28+abs(aIdentity.y-.5)*.84)+.26,uHomeIntro):1.;
  gl_PointSize*=mix(.35,1.,born);
  vBrightness*=uBrightness*mix(1.,.4,large)*smoothstep(.30,.9,uAwakening)*born;vBrightness*=1.-edgeRest*.2;vWarm=aCharacter.w;vGold=(1.-uRouteMix)*step(.52,uProgress)*step(.998,aIdentity.x);gl_Position=clip;
+ if(uRoutePreset>2.5&&uRoutePreset<3.5){
+  float propagation=smoothstep(.69,.75,uProgress)*(1.-smoothstep(.77,.84,uProgress))*uWakeMotion;
+  float travel=fract(aIdentity.y*3.+uTime*uPropagationSpeed*(.7+aIdentity.z*.07));
+  vBrightness*=mix(1.,smoothstep(0.,.045,travel)*(1.-smoothstep(.955,1.,travel)),propagation);
+ }
  if(uRouteEntry>.5)vBrightness*=mix(.06,1.,smoothstep(0.,1.,uRouteProgress));
  if(uRouteFromPreset>4.5&&uRoutePreset<4.5)vBrightness*=mix(step(.96,aIdentity.x)*1.1,1.,smoothstep(0.,1.,uRouteProgress));
  // Keep Contact sparse and low energy. Incoming source matter recedes progressively.

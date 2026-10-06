@@ -1,0 +1,44 @@
+[
+  {
+    "level": "warn",
+    "message": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.",
+    "timestamp": "2026-10-06T18:28:07.470Z",
+    "url": "http://127.0.0.1:3002/_next/static/chunks/1wowo-ncfr1ha.js"
+  },
+  {
+    "level": "warn",
+    "message": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.",
+    "timestamp": "2026-10-06T18:32:37.593Z",
+    "url": "http://127.0.0.1:3002/_next/static/chunks/0j4x9aogfbo9x.js"
+  },
+  {
+    "level": "warn",
+    "message": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.",
+    "timestamp": "2026-10-06T18:32:50.393Z",
+    "url": "http://127.0.0.1:3002/_next/static/chunks/0j4x9aogfbo9x.js"
+  },
+  {
+    "level": "warn",
+    "message": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.",
+    "timestamp": "2026-10-06T18:39:16.838Z",
+    "url": "http://127.0.0.1:3002/_next/static/chunks/0lgyvwzvsekv7.js"
+  },
+  {
+    "level": "warn",
+    "message": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.",
+    "timestamp": "2026-10-06T18:41:08.519Z",
+    "url": "http://127.0.0.1:3002/_next/static/chunks/0lgyvwzvsekv7.js"
+  },
+  {
+    "level": "warn",
+    "message": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.",
+    "timestamp": "2026-10-06T18:41:22.510Z",
+    "url": "http://127.0.0.1:3002/_next/static/chunks/0lgyvwzvsekv7.js"
+  },
+  {
+    "level": "warn",
+    "message": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.",
+    "timestamp": "2026-10-06T18:45:15.694Z",
+    "url": "http://127.0.0.1:3002/_next/static/chunks/0x3eiehfmj4x3.js"
+  }
+]

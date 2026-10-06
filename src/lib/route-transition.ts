@@ -28,7 +28,7 @@ export function transitionTo(preset: RoutePreset, entry = false) {
   scene.routeProgress = 0;
   finishHomeIntro();
   motion = gsap.to(scene, {
-    routeProgress: 1, duration: scene.reduced ? .45 : 1.05, ease: 'sine.inOut',
+    routeProgress: 1, duration: scene.reduced ? .9 : 1.3, ease: 'sine.inOut',
     onUpdate: () => {scene.routeMix = Math.sin(scene.routeProgress * Math.PI);},
     onComplete: () => {scene.routeMix = 0; scene.routeActive = false;},
   });

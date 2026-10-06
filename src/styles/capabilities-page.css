@@ -14,6 +14,11 @@
 .service-chapter::after { content:''; position:absolute; inset:0; z-index:-2; opacity:.10; background:url('/textures/mineral.png') center/cover; mix-blend-mode:soft-light; pointer-events:none; mask-image:linear-gradient(transparent,black 20%,black 80%,transparent); }
 .service-rule { height:1px; background:var(--line); grid-column:1/-1; transform-origin:left; }
 .service-top { grid-column:1/-1; display:flex; justify-content:space-between; margin:24px 0 60px; color:var(--color-muted); }
+/* Behaviour labels stay in the editorial half while the fixed material crosses chapters. */
+@media(min-width:901px) {
+ .service-top { justify-content:flex-start; gap:28px; }
+ .service-chapter[data-service="1"] .service-top,.service-chapter[data-service="3"] .service-top { justify-content:flex-end; }
+}
 .service-copy { grid-column:1; grid-row:3; position:relative; }
 .service-number { position:absolute; right:0; top:5px; font:11px var(--font-geist-mono),monospace; color:var(--color-gold); }
 .service-copy h2 { font:400 clamp(54px,5.8vw,96px)/1.02 var(--font-instrument),serif; letter-spacing:-.035em; margin-bottom:28px; }
