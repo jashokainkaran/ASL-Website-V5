@@ -5,11 +5,11 @@ import {RouteEditorialMotion} from '@/components/RouteEditorialMotion';
 import {ProjectsMotion} from '@/components/projects/ProjectsMotion';
 import {SiteFooter} from '@/components/SiteFooter';
 import {pageMetadata} from '@/lib/metadata';
-export const metadata = {...pageMetadata('Projects', publishedProjects.length ? 'Explore selected websites, digital experiences and product work by ASL, created through design, development and technology.' : 'Selected ASL work is being prepared for publication. Explore our capabilities or start a conversation about your project.'), alternates: {canonical: '/projects'}};
+export const metadata = {...pageMetadata('Projects', 'Explore ASL concept websites across hospitality, automotive, beauty and food, shaped through design, development and technology.'), alternates: {canonical: '/projects'}};
 export default function ProjectsPage() {
   const clients = publishedProjects.filter(project => project.type === 'Client project');
   const concepts = publishedProjects.filter(project => project.type === 'ASL Concept');
-  return <><main id="main-content" tabIndex={-1} className="projects-page"><ProjectsMotion/><RouteEditorialMotion selector=".projects-page"/>
+  return <><main id="main-content" tabIndex={-1} className="projects-page"><ProjectsMotion populated={publishedProjects.length > 0}/><RouteEditorialMotion selector=".projects-page"/>
     <section className="projects-intro"><div className="route-heading eyebrow" data-editorial-detail><span>ASL / {copy.eyebrow}</span><span>Design · Engineering · Technology</span></div>
       <h1><span className="editorial-mask"><span data-editorial-line>Projects shaped</span></span><span className="editorial-mask"><span data-editorial-line>from idea to</span></span><span className="editorial-mask"><em data-editorial-line>experience.</em></span></h1>
       <div className="projects-intro-bottom" data-editorial-detail><p>{copy.introduction}</p><a className="text-link" href="#archive">Explore the archive <span aria-hidden="true">↓</span></a></div>

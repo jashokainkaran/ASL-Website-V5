@@ -1,13 +1,14 @@
 import {formations} from '../states';
 import {pointerShader} from './pointer';
 import {archiveShader} from './archive';
+import {organiseShader} from './organise';
 export const vertexShader = `
 ${[...new Set(formations.map(f=>f.attribute))].filter(attribute=>attribute!=='position').map(attribute=>`attribute vec3 ${attribute};`).join('\n')}
 attribute vec4 aIdentity; attribute vec4 aCharacter;
 #define aOffset (vec3(fract(aIdentity.x*17.3),fract(aCharacter.z*13.7),fract(aIdentity.w*5.1))-.5)
 attribute vec3 aSectionFrom,aSectionTarget,aRouteTarget;
 uniform float uRouteMix,uRouteProgress,uRouteFrom,uRouteFromPreset,uRoutePreset,uHomeIntro,uSectionStart,uSectionEnd,uSectionStrength,uAwakening,uWakeMotion;
-uniform float uBrightness,uRouteEntry,uContactReceipt;
+uniform float uBrightness,uRouteEntry,uContactReceipt,uArchivePopulated;
 uniform vec4 uContactFocus;
 uniform float uTime,uProgress,uRate,uDpr,uSize,uDistribution,uLargeShare,uFocus,uBlur,uStretch,uTwinkle,uIdle,uCurve,uOctaves;
 uniform vec2 uViewport;
@@ -16,6 +17,7 @@ varying vec2 vDirection;
 ${pointerShader}
 const float PI=3.14159265;
 ${archiveShader}
+${organiseShader}
 // Analytic divergence-free curl field; octave count is quality-tier controlled.
 vec3 curl(vec3 p,float t){vec3 result=vec3(0.);float amp=1.;for(int j=0;j<3;j++){if(float(j)>=uOctaves)break;result+=amp*vec3(sin(p.y+t)-cos(p.z-t),sin(p.z+t)-cos(p.x-t),sin(p.x+t)-cos(p.y-t));p*=1.9;amp*=.5;}return result;}
 vec3 transit(vec3 from,vec3 target,float p,float start,float end,float time){
@@ -33,11 +35,13 @@ vec3 finalTarget(vec3 logo){
  float width=11.547*uViewport.x/uViewport.y;
  return vec3(logo.x*(mobile?.65:1.15)+width*(mobile?.20:.30),logo.y*(mobile?.65:1.15)+(mobile?1.35:-.5),logo.z);
 }
-vec3 positionAt(float time,float progress){
+vec3 positionAt(float time,float progress,float preset){
  vec3 p=position;
  ${formations.filter(f=>['cloud','helix','logo'].includes(f.name)).map(f=>`p=transit(p,${f.attribute},progress,${f.window[0].toFixed(4)},${f.window[1].toFixed(4)},time);`).join('\n')}
  if(progress>=.52){
-  p=transit(aSectionFrom,aSectionTarget,progress,uSectionStart,uSectionEnd,time);
+  vec3 sectionSource=aSectionFrom;
+  if(preset>2.5&&preset<3.5&&uSectionStart<.53)sectionSource=organisedPosition();
+  p=transit(sectionSource,aSectionTarget,progress,uSectionStart,uSectionEnd,time);
   p=mix(aLogoTarget,p,uSectionStrength);
  }
  p=transit(p,aEdgeTarget,progress,.86,.91,time);
@@ -48,8 +52,9 @@ vec3 positionAt(float time,float progress){
  p.x+=sin(time*.65+aIdentity.y*18.)*.12*streamLife;
  float clusterLife=smoothstep(.77,.84,progress)*(1.-smoothstep(.86,.91,progress));
  p+=aOffset*sin(time*.5+aIdentity.y*PI*6.)*.18*clusterLife;
- p+=curl(p*.35,time*.12+aIdentity.w*.04)*uIdle*rest;
- p+=aOffset*sin(time*.2+aIdentity.w)*uIdle*rest;
+ float capabilityRest=(preset>2.5&&preset<3.5)?mix(.06,.6,uWakeMotion):1.;
+ p+=curl(p*.35,time*.12+aIdentity.w*.04)*uIdle*rest*capabilityRest;
+ p+=aOffset*sin(time*.2+aIdentity.w)*uIdle*rest*capabilityRest;
  // Spatial emergence: depth birth, delayed groups and short currents organise into paths.
  if(progress<.104 && uHomeIntro<1.){
   float born=smoothstep((aIdentity.x*.28+abs(aIdentity.y-.5)*.84),(aIdentity.x*.28+abs(aIdentity.y-.5)*.84)+.26,uHomeIntro);
@@ -72,8 +77,8 @@ vec3 contactPosition(float time){
  return p;
 }
 void main(){
- vec3 p=positionAt(uTime,uProgress);
- vec3 next=positionAt(uTime+.016,uProgress+uRate*.016);
+ vec3 p=positionAt(uTime,uProgress,uRoutePreset);
+ vec3 next=positionAt(uTime+.016,uProgress+uRate*.016,uRoutePreset);
  // Route-local targets use the existing lazy route buffer; the Home story is untouched.
  if(uRoutePreset>4.5){
   p=contactPosition(uTime);next=contactPosition(uTime+.016);
@@ -83,11 +88,11 @@ void main(){
   next=archivePosition(uTime+.016,uProgress+uRate*.016);
  }
  if(uRouteProgress<1.){
-  vec3 source=positionAt(uTime,uRouteFrom);
+  vec3 source=positionAt(uTime,uRouteFrom,uRouteFromPreset);
   if(uRouteFromPreset>4.5)source=contactPosition(uTime);
   if(uRouteEntry>.5)source=aLogoTarget*.16;
   if(uRouteEntry<.5&&uRouteFromPreset>.5&&uRouteFromPreset<1.5)source=archivePosition(uTime,uRouteFrom);
-  vec3 target=uRoutePreset<.5?p:uRoutePreset<1.5?p:uRoutePreset<2.5?aEdgeTarget:uRoutePreset<3.5?aRouteTarget:uRoutePreset<4.5?aEdgeTarget:aRouteTarget;
+  vec3 target=uRoutePreset<.5?p:uRoutePreset<1.5?p:uRoutePreset<2.5?aEdgeTarget:uRoutePreset<3.5?organisedPosition():uRoutePreset<4.5?aEdgeTarget:aRouteTarget;
   if(uRoutePreset>4.5&&uWakeMotion<.5)source=target;
   float arrival=smoothstep(aIdentity.x*.12,1.,uRouteProgress);
   p=mix(source,target,arrival);
@@ -96,6 +101,7 @@ void main(){
   float explore=step(.5,uRoutePreset)*(1.-step(2.5,uRoutePreset));
   p.z-=passage*(3.+aIdentity.y*9.)*explore;
   p.xy+=aOffset.xy*passage*explore*1.6;
+  if(uRoutePreset>2.5&&uRoutePreset<3.5)p.y+=sin(aIdentity.y*PI*2.)*passage*.16;
   p+=aOffset*sin(arrival*PI)*.25;
   next=p;
  }

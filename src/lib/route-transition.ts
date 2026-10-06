@@ -7,7 +7,7 @@ export const routePresets = {
   home: {verb: 'transform', target: 0, code: 0},
   work: {verb: 'explore', target: .91, code: 1},
   project: {verb: 'focus', target: .91, code: 2},
-  capabilities: {verb: 'organise', target: .60, code: 3},
+  capabilities: {verb: 'organise', target: .52, code: 3},
   about: {verb: 'connect', target: .91, code: 4},
   contact: {verb: 'attract', target: 1, code: 5},
 } as const;

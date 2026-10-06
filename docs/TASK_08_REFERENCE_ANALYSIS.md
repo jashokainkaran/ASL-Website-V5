@@ -1,0 +1,22 @@
+# Task 08 research and audit — 2026-10-06
+
+Read the complete project rules, brand story, Task06 status, Task07 handoff and its motion revision, original Task07 brief, and Task08 brief. Task briefs are in `docs/`, not the requested nonexistent `docs/tasks/`. Baseline Git status: only the user-supplied Task08 brief was untracked.
+
+Current implementation: Capabilities is a server-readable minimal page, without service lists or page choreography. Projects has zero published records and a genuine publication state; typed media, alternating compositions, GSAP approach/hold/recede, Anime.js arrival, persistent archive matter and conversion already exist. Contact retains its honest unconfigured delivery adapter. Root entry gates initial DOM; internal navigation uses semantic presets and one canvas. Task06 has all four requested capability formations with lazy adjacent buffers and bounded pointer recovery. Extend these systems.
+
+## Live visual research before coding
+
+- [AREA 17](https://area17.com/capabilities): desktop opening and scrolled offerings. Three categories, clear purpose statement and explicit service lists, work links beside offerings. Learn the hierarchy and separation of category from deliverables. Reject its expansive brand strategy, client proof and carousel for ASL. White/sans visual identity is not adopted.
+- [Clay](https://clay.global/services): desktop opening and scrolled Websites/Digital Products. Five categories, short descriptions and lists paired with large examples. Learn commercial specificity and alternating content/media. Reject branding/content production/emerging-tech expansion and industry/client rosters.
+- [ustwo](https://ustwo.com/services/): desktop opening, service detail and 390px stack. Stage-led explanation with activities/outcomes/engagement durations. Learn a concise explanation of how disciplines connect and readable mobile lists. Reject engagement promises, outcome guarantees, client endorsements and a long methodology.
+- [Instrument](https://www.instrument.com/services/): linked services destination attempted; sampled service-route frames remained a solid purple arrival surface. Homepage service summary and mobile navigation were inspectable. No detailed services-layout claim is made from the unavailable frames.
+- [Huge](https://www.hugeinc.com): mobile homepage and DOM solutions list inspected. Clear onward work/contact paths. Reject AI activation, broad consultancy claims and bold magenta identity. Dedicated solution page not studied.
+- [basement](https://basement.studio): mobile homepage, capabilities content and service-link attempted. Link did not settle to a separate service page in sampled state. Learn pairing capability labels with relevant work and concise scope. Reject branding/IRL/marketing expansion, tone, audio and immersive-room identity.
+
+No wording, code, template or agency assets copied. No dependencies added. Existing ASL fonts, semantic palette and mineral textures retained. UI/UX Pro Max search recommended generic Swiss/blue-on-light styling; that is incompatible and rejected. Retained practical guidance: meaningful media names, reserved image dimensions, visible keyboard focus, lazy offscreen media and minimum touch targets. Local particle reference notes/contact sheet inspected at the nested pack path; use continuity, volume and negative space only.
+
+## Supplied website inspection
+
+All seven opened at a desktop viewport. Local source captures are in `docs/screenshots/task-08/sources`. Branding/title/H1 inspected. Actual names: **Demo 1**, **Demo 2**, **ÉMBER**, **Nova Motor House**, **Salon**, **Atelier Noir**, **Burger Join**. Demo1 body contains legacy Cafen wording, but header/footer/title say Demo1; use the primary branding. Salon title is “Salon — Bold Beauty”; no “Light Salon” branding appeared. Burger logo/title/footer consistently say Join, not Joint. Preserve these facts and flag generic labels for later editorial approval. Source preview screenshots necessarily contain the supplied sites' own demo wording; ASL makes no claims based on their metrics. Atelier film skipped through its own control, then landing state captured. Burger landing preview captured at #top; approved outbound destination retains #menu.
+
+Sequence: ÉMBER → Nova Motor House → Salon → Demo 2 → Atelier Noir → Burger Join → Demo 1. Warm hospitality opener, dark automotive, bright beauty, dark coffee, dark grooming, orange food, light café finish. Each is an explicitly supplied ASL Concept; no commissioned-client evidence exists.

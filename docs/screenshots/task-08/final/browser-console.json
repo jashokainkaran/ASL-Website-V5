@@ -1,0 +1,8 @@
+[
+  {
+    "level": "warn",
+    "message": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.",
+    "timestamp": "2026-10-06T17:54:58.132Z",
+    "url": "http://127.0.0.1:3002/_next/static/chunks/1wowo-ncfr1ha.js"
+  }
+]

@@ -4,6 +4,7 @@
 @import "./editorial.css";
 @import "./environments.css";
 @import "./projects-contact.css";
+@import "./capabilities-page.css";
 * { box-sizing: border-box; }
 html { background: var(--color-void); color: var(--color-bone); }
 body { margin: 0; font-family: var(--font-geist), sans-serif; }
