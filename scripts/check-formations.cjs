@@ -89,3 +89,20 @@ const bytes=Object.values(resident.geometry.attributes).reduce((sum,a)=>sum+a.ar
 assert.ok(bytes<=8400000,'Primary attribute memory must remain bounded at high tier');
 resident.geometry.dispose();
 console.log(`${Object.keys(sectionFormations).length} lazy section formations passed; high-tier primary attributes ${bytes} bytes`);
+
+for (const width of [5.34,11.85]) {
+ const context={...tuning,width,height:11.547};
+ for(let chapter=0;chapter<4;chapter++) {
+  const points=capabilitySystem(chapter,18000,context,true);
+  assert.deepEqual(points,capabilitySystem(chapter,18000,context,true),'Mobile chapter regeneration must remain deterministic');
+  const side=chapter%2===0?1:-1;
+  let clear=0;
+  for(let i=0;i<points.length;i+=3) {
+   assert.ok(Number.isFinite(points[i])&&Number.isFinite(points[i+1])&&Number.isFinite(points[i+2]));
+   assert.ok(points[i+2]<9,'Mobile matter must preserve camera clearance');
+   if(points[i]*side>width*.08)clear++;
+  }
+  assert.ok(clear/18000>.90,'The material core must stay on the side opposite the mobile copy');
+ }
+}
+console.log('Portrait and compact landscape mobile capability sides, determinism and clearance passed');

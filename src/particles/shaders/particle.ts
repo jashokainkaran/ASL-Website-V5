@@ -9,7 +9,7 @@ attribute vec4 aIdentity; attribute vec4 aCharacter;
 #define aOffset (vec3(fract(aIdentity.x*17.3),fract(aCharacter.z*13.7),fract(aIdentity.w*5.1))-.5)
 attribute vec3 aSectionFrom,aSectionTarget,aRouteTarget;
 uniform float uRouteMix,uRouteProgress,uRouteFrom,uRouteFromPreset,uRoutePreset,uHomeIntro,uSectionStart,uSectionEnd,uSectionStrength,uAwakening,uWakeMotion;
-uniform float uBrightness,uRouteEntry,uContactReceipt,uArchivePopulated;
+uniform float uHomeLife,uBrightness,uRouteEntry,uContactReceipt,uArchivePopulated,uLogoGrain,uFormGrain;
 uniform vec4 uContactFocus;
 uniform float uTime,uProgress,uRate,uDpr,uSize,uDistribution,uLargeShare,uFocus,uBlur,uStretch,uTwinkle,uIdle,uCurve,uOctaves;
 uniform vec2 uViewport;
@@ -27,7 +27,12 @@ vec3 transit(vec3 from,vec3 target,float p,float start,float end,float time){
  float threshold=.55*aIdentity.y+.3*aIdentity.x+.15*fract(aIdentity.z/7.);
  if(start<.1)threshold=clamp(length(target)/6.,0.,1.)*.65+aIdentity.x*.35;
  if(start>.1&&start<.2)threshold=clamp(abs(target.y)/6.,0.,1.)*.45+aIdentity.x*.25+step(.45,aIdentity.x)*.2;
- float local=smoothstep(0.,.72,clamp((p-start)/(end-start)-threshold*.28,0.,1.));
+ // DNA: first strand, opposing strand, distant bridges, then near bridges.
+ if(start>.25&&start<.3){float strand=aIdentity.x;threshold=strand<.46?.12+aIdentity.y*.18:strand<.92?.38+aIdentity.y*.18:.65+clamp(target.z/7.+.5,0.,1.)*.22;}
+ // Identity: central structure arrives before extremities; bright dense groups lead.
+ if(start>.4&&start<.45)threshold=clamp(abs(target.x)*.15+abs(target.y)*.09,0.,.65)+aIdentity.x*.2+(1.-aCharacter.z)*.15;
+ float dnaConstruction=step(.25,start)*(1.-step(.3,start));
+ float local=smoothstep(0.,mix(.72,.42,dnaConstruction),clamp((p-start)/(end-start)-threshold*mix(.28,.58,dnaConstruction),0.,1.));
  vec3 axis=vec3(cos(aIdentity.w+local*PI*2.),sin(aIdentity.w+local*PI*2.),sin(local*PI+aIdentity.w));
  vec3 flow=curl(mix(from,target,local)*.36,time*.07)+axis*.20;
  return mix(from,target,local)+flow*sin(PI*local)*uCurve*.65;
@@ -39,6 +44,7 @@ vec3 finalTarget(vec3 logo){
 }
 vec3 positionAt(float time,float progress,float preset){
  vec3 p=position;
+ if(preset<.5&&progress<.104)p=transit(aRoamTarget,position,progress,.015,.102,time);
  ${formations.filter(f=>['cloud','helix','logo'].includes(f.name)).map(f=>`p=transit(p,${f.attribute},progress,${f.window[0].toFixed(4)},${f.window[1].toFixed(4)},time);`).join('\n')}
  if(progress>=.52){
   vec3 sectionSource=aSectionFrom;
@@ -50,23 +56,21 @@ vec3 positionAt(float time,float progress,float preset){
  p=transit(p,finalTarget(aLogoTarget),progress,.92,.99,time);
  float dnaHold=smoothstep(.3744,.385,progress)*(1.-smoothstep(.4212,.44,progress));
  float rest=(1.-smoothstep(.48,.505,progress)*.96)*(1.-dnaHold*.78);
- float routeLife=(preset>2.5&&preset<3.5)?0.:1.;
+ float routeLife=(preset<.5||preset>2.5&&preset<3.5)?0.:1.;
  float streamLife=routeLife*smoothstep(.69,.75,progress)*(1.-smoothstep(.77,.84,progress));
  p.x+=sin(time*.65+aIdentity.y*18.)*.12*streamLife;
  float clusterLife=routeLife*smoothstep(.77,.84,progress)*(1.-smoothstep(.86,.91,progress));
  p+=aOffset*sin(time*.5+aIdentity.y*PI*6.)*.18*clusterLife;
- if(preset>2.5&&preset<3.5)p=capabilityMotion(p,time,progress);
- float capabilityRest=(preset>2.5&&preset<3.5)?mix(.06,.6,uWakeMotion):1.;
+ if(preset<.5&&progress>=.52||preset>2.5&&preset<3.5)p=capabilityMotion(p,time,progress);
+ float capabilityRest=(preset<.5&&progress>=.52||preset>2.5&&preset<3.5)?mix(.06,.6,uWakeMotion):1.;
  p+=curl(p*.35,time*.12+aIdentity.w*.04)*uIdle*rest*capabilityRest;
  p+=aOffset*sin(time*.2+aIdentity.w)*uIdle*rest*capabilityRest;
- // Spatial emergence: depth birth, delayed groups and short currents organise into paths.
- if(progress<.104 && uHomeIntro<1.){
-  float born=smoothstep((aIdentity.x*.28+abs(aIdentity.y-.5)*.84),(aIdentity.x*.28+abs(aIdentity.y-.5)*.84)+.26,uHomeIntro);
-  float organise=smoothstep(.35,1.,uHomeIntro);
-  vec3 distant=aRoamTarget+aOffset*3.;distant.z-=10.*(1.-born);
-  p=mix(distant,p,organise);
-  p.y+=sin(aIdentity.y*12.+time*.35)*.18*(1.-organise);
+ // Sparse emergence is scroll-led; readiness reveals a handful, not completed paths.
+ if(preset<.5&&progress<.104){
+  float organise=smoothstep(.015,.102,progress);
+  p.z-=4.*(1.-organise);p.y+=sin(aIdentity.y*12.+time*.2)*.08*(1.-organise);
  }
+ if(preset<.5)p+=vec3(0.,sin(aIdentity.y*PI*8.+time*.22),cos(aIdentity.y*PI*6.+time*.18))*uHomeLife*dnaHold;
  float wake=sin(clamp(uAwakening,0.,1.)*PI);
  p.y+=sin(p.x*.45-uAwakening*7.)*wake*.16*uWakeMotion;
  return p;
@@ -124,14 +128,26 @@ void main(){
  float sectionBody=smoothstep(.52,.59,uProgress)*(1.-smoothstep(.92,.99,uProgress));
  float edgeRest=smoothstep(.86,.91,uProgress)*(1.-smoothstep(.92,.99,uProgress));
  float size=(1.+sectionBody*.10)*(1.+medium*.85*uDistribution+large*3.6*uDistribution)*(1.+vBlur*.25);
+ float identity=(smoothstep(.46,.494,uProgress)*(1.-smoothstep(.52,.59,uProgress))+smoothstep(.92,.99,uProgress))*float(uRoutePreset<.5);
+ float materialShape=smoothstep(.32,.3744,uProgress)*(1.-smoothstep(.4212,.46,uProgress));
+ materialShape+=smoothstep(.52,.59,uProgress)*(1.-smoothstep(.86,.91,uProgress));
+ materialShape*=float(uRoutePreset<.5||uRoutePreset>2.5&&uRoutePreset<3.5);
+ size*=mix(1.,.85,materialShape);
+ size*=mix(1.,.70,identity);
  gl_PointSize=clamp(uSize*uDpr*clamp(uViewport.y/900.,.85,1.25)*size*(10./-mv.z)*sqrt(vStretch),1.5*uDpr,12.*uDpr);
  vBrightness=(.48+aCharacter.z*.46+length(aOffset.xy)*.08)*(1.+uTwinkle*sin(uTime*.7+aIdentity.w))*exp(-max(0.,-mv.z-8.)*.04)/(1.+vBlur*.6);
- float born=(uProgress<.104 && uRouteProgress>=1.)?smoothstep((aIdentity.x*.28+abs(aIdentity.y-.5)*.84),(aIdentity.x*.28+abs(aIdentity.y-.5)*.84)+.26,uHomeIntro):1.;
+ float emergence=.001+uHomeIntro*.002+smoothstep(0.,.10,uProgress);
+ float born=(uRoutePreset<.5&&uProgress<.104&&uRouteProgress>=1.)?1.-smoothstep(emergence,emergence+.004,aIdentity.x):1.;
  gl_PointSize*=mix(.35,1.,born);
  vBrightness*=uBrightness*mix(1.,.4,large)*smoothstep(.30,.9,uAwakening)*born;vBrightness*=1.-edgeRest*.2;vWarm=aCharacter.w;vGold=(1.-uRouteMix)*step(.52,uProgress)*step(.998,aIdentity.x);gl_Position=clip;
- if(uRoutePreset>2.5&&uRoutePreset<3.5){
-  float propagation=smoothstep(.69,.75,uProgress)*(1.-smoothstep(.77,.84,uProgress))*uWakeMotion;
-  float travel=fract(aIdentity.y*3.+uTime*uPropagationSpeed*(.7+aIdentity.z*.07));
+ // Keep the full population; fewer bright grains prevent additive overlap becoming a stencil.
+ float grain=1.-smoothstep(uLogoGrain,uLogoGrain+.025,aCharacter.z);
+ vBrightness*=mix(1.,mix(.015,1.1,grain),identity);
+ float materialGrain=1.-smoothstep(uFormGrain,uFormGrain+.025,aCharacter.z);
+ vBrightness*=mix(1.,mix(.04,1.,materialGrain)*clamp((12.+mv.z)*.2+.65,.3,1.15),materialShape);
+ if(uRoutePreset<.5||uRoutePreset>2.5&&uRoutePreset<3.5){
+  float propagation=smoothstep(.69,.75,uProgress)*(1.-smoothstep(.77,.84,uProgress));
+  float travel=fract(aIdentity.y+uTime*uPropagationSpeed*mix(.35,1.,uWakeMotion)*(.7+streamLane()*.04));
   vBrightness*=mix(1.,smoothstep(0.,.045,travel)*(1.-smoothstep(.955,1.,travel)),propagation);
  }
  if(uRouteEntry>.5)vBrightness*=mix(.06,1.,smoothstep(0.,1.,uRouteProgress));
@@ -150,7 +166,8 @@ void main(){
  float r=length(q);if(r>1.)discard;
  // A readable central core, with a small low-energy shoulder; no bloom pass.
  float coreRadius=uCoreSize/(1.+vBlur*.14);
- float core=1.-smoothstep(coreRadius*.62,coreRadius,r);
+ float aa=max(fwidth(r),.025);
+ float core=1.-smoothstep(coreRadius*.72-aa,coreRadius+aa,r);
  float shoulder=exp(-r*r/max(.025,uFalloffSize*uFalloffSize*.35))*.10;
  float coverage=(core+shoulder)*(1.-smoothstep(.8,1.,r));
  // Core energy controls how overlaps accumulate, without a density render pass.

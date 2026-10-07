@@ -1972,3 +1972,468 @@ From Task 07 onward every implemented public page must include:
 - no-WebGL fallback where relevant
 - working navigation
 - no knowingly broken public CTA
+
+==================================================
+ASL CREATIVE SYSTEM — CURRENT CANONICAL RULES
+==================================================
+
+These rules apply across all future tasks unless the user explicitly changes
+the creative direction.
+
+
+==================================================
+1. MUTABLE MATTER HAS PURPOSE
+==================================================
+
+Particles are not decorative background effects.
+
+Every significant particle behaviour must communicate an idea.
+
+The core ASL motion language is:
+
+GATHER / DISPERSE
+ALIGN / ORGANISE
+STRETCH THROUGH DEPTH
+ATTRACT / SETTLE
+TRANSFORM WHILE PRESERVING MATERIAL CONTINUITY
+
+Avoid adding particle formations merely because they look interesting.
+
+
+==================================================
+2. HOME NARRATIVE
+==================================================
+
+The Home introduction communicates:
+
+POSSIBILITY
+→
+DIRECTION
+→
+STRUCTURE
+→
+SYSTEM
+→
+IDENTITY
+
+Canonical visual states:
+
+EMERGENCE
+→
+FILAMENTS
+→
+CLOUD
+→
+SPATIAL 3D DNA
+→
+ASL
+
+Do not add extra showcase shapes to the Home hero.
+
+
+==================================================
+3. HOME STORY COPY
+==================================================
+
+Current canonical narrative:
+
+Everything begins without form.
+
+Direction turns possibility into intention.
+
+Structure gives an idea something to hold onto.
+
+Design gives it shape.
+Engineering gives it substance.
+
+Final payoff:
+
+Digital matter, given form.
+
+
+==================================================
+4. HOME HEADER
+==================================================
+
+On fresh/direct Home entry:
+
+the permanent ASL logo/navigation must remain hidden during the cinematic
+introduction.
+
+Reveal the permanent header only after:
+
+ASL particle identity becomes recognisable
+→
+hero begins settling.
+
+Do not spoil the ASL formation by displaying the finished navigation logo
+from frame one.
+
+
+==================================================
+5. ENTRY SYSTEM
+==================================================
+
+HOME DIRECT ENTRY:
+
+logo-free technical entry cover
+→
+Home narrative.
+
+NON-HOME DIRECT ENTRY:
+
+compact ASL branded entry permitted.
+
+INTERNAL NAVIGATION:
+
+NO branded loader.
+
+Use persistent Mutable Matter route transitions.
+
+
+==================================================
+6. LOADER QUALITY
+==================================================
+
+The entry cover must be visible from first paint.
+
+Never:
+
+page flash
+→
+loader.
+
+Never show destination content before the entry cover.
+
+Loader pacing should feel:
+
+slow
+controlled
+premium
+intentional.
+
+Do not use:
+
+spinner
+percentage
+loading bar
+fast fly-away logo
+glitch.
+
+
+==================================================
+7. MATERIAL BLACK
+==================================================
+
+ASL black environments are never flat CSS black.
+
+They should use a restrained combination of:
+
+- near-black base
+- graphite/mineral tonal irregularity
+- very fine grain
+- low-frequency tonal field
+- broad directional illumination
+- shadow falloff
+- optional subtle colour contamination
+
+Texture must be felt rather than noticed.
+
+Avoid:
+
+- paper
+- grunge
+- distressed surfaces
+- TV noise
+- repeating grain
+- galaxy imagery.
+
+
+==================================================
+8. BURGUNDY MATERIAL
+==================================================
+
+Burgundy environments are also material surfaces.
+
+Use:
+
+deep wine / oxblood variation
++
+charcoal shadow
++
+fine grain
++
+large-scale tonal variation
++
+directional light
++
+dark edge falloff.
+
+Never use a flat burgundy rectangle as the final section treatment.
+
+
+==================================================
+9. PARTICLE MATERIAL
+==================================================
+
+Primary Mutable Matter:
+
+- warm bone / pale neutral
+- substantial readable core
+- restrained falloff
+- controlled glow
+- strong density hierarchy
+- subtle size/depth variation
+
+Dense regions may appear visually richer.
+
+Do not create excessive bloom.
+
+Do not make primary particles look like stars or dust.
+
+
+Ambient particles:
+
+- smaller
+- dimmer
+- slower
+- sparse
+- subordinate.
+
+
+==================================================
+10. POINTER PHYSICS
+==================================================
+
+Formed Mutable Matter should react locally to pointer/touch.
+
+Pointer may:
+
+- bend
+- separate
+- disperse
+- locally carve
+
+nearby particles.
+
+When input leaves:
+
+particles smoothly reconstruct their current target state.
+
+Never permanently destroy the formation.
+
+Keep this GPU-driven where possible.
+
+
+==================================================
+11. CAPABILITY MOTION LANGUAGE
+==================================================
+
+Capabilities must communicate physical ideas rather than arbitrary shapes.
+
+DESIGN:
+
+relationships becoming intentional / composition.
+
+DEVELOPMENT:
+
+relationships becoming structural / architecture.
+
+DEPLOYMENT:
+
+structure becoming propagation / distribution.
+
+DIGITAL PRODUCTS:
+
+independent modules becoming a coordinated system.
+
+Do not fall back to arbitrary:
+
+blobs
+shells
+ribbons
+membranes
+
+unless their behaviour genuinely communicates the concept.
+
+
+==================================================
+12. PAGE BEHAVIOURAL VERBS
+==================================================
+
+HOME:
+TRANSFORM
+
+PROJECTS:
+EXPLORE
+
+CAPABILITIES:
+ORGANISE
+
+ABOUT:
+CONNECT
+
+CONTACT:
+ATTRACT
+
+Each page should interpret Mutable Matter according to its behavioural verb.
+
+Do not reuse the exact Home animation on every route.
+
+
+==================================================
+13. PROJECTS
+==================================================
+
+Projects is a cinematic spatial archive.
+
+Project media remains dominant.
+
+Particles support depth and transitions but must not obscure media.
+
+Actual project/site names are shown.
+
+Deployment URLs are never printed visibly.
+
+No invented clients, results, testimonials or metrics.
+
+
+==================================================
+14. TYPOGRAPHY
+==================================================
+
+Current preferred direction:
+
+PRIMARY:
+Instrument Sans
+
+SECONDARY:
+Geist Mono
+
+Use Geist Mono sparingly for:
+
+- metadata
+- numbering
+- small technical labels.
+
+Do not turn the site into a monospace developer-tool aesthetic.
+
+
+==================================================
+15. MOTION DISCIPLINE
+==================================================
+
+Prefer a small reusable motion grammar.
+
+Good:
+
+- material transformations
+- restrained masking
+- subtle depth travel
+- local pointer response
+- purposeful parallax
+- particle organisation
+- environmental colour/material transitions
+
+Avoid using trends merely because they are visually impressive.
+
+Do not overuse:
+
+- text scrambling
+- custom cursors
+- magnetic effects
+- extreme parallax
+- glassmorphism
+- distortion
+- spinning objects
+- particle explosions
+- giant zooms.
+
+
+==================================================
+16. REFERENCE POLICY
+==================================================
+
+OpenAI GPT-6 Astra and Scrolltide may be studied as quality references.
+
+ASTRA:
+
+study particle cohesion, density, depth, restraint and luminous material
+quality.
+
+SCROLLTIDE:
+
+study spatial choreography, scroll-driven 3D motion, DNA-like compositions,
+camera depth and pacing.
+
+Never copy:
+
+- branding
+- layouts
+- assets
+- source code
+- exact forms
+- typography
+- animation sequences.
+
+Extract principles and reinterpret them through ASL.
+
+
+==================================================
+17. ANIMATION + TEXT
+==================================================
+
+Text and motion should communicate the same idea.
+
+Do not:
+
+play a visually impressive animation
++
+overlay unrelated marketing copy.
+
+Narrative text should appear at meaningful visual beats.
+
+Give each important line enough time to be read.
+
+
+==================================================
+18. PRODUCTION CONTENT
+==================================================
+
+The website is client-facing.
+
+Do not introduce:
+
+- placeholder copy
+- fictional clients
+- fictional case studies
+- fake metrics
+- fake testimonials
+- invented awards
+- invented experience claims
+- fake response times.
+
+Use approved production wording or flag missing information.
+
+
+==================================================
+19. PRESERVATION RULE
+==================================================
+
+Before replacing an existing system:
+
+inspect it.
+
+If stable:
+
+extend/refine it.
+
+Do not rebuild:
+
+- persistent canvas
+- particle engine
+- loader
+- route-transition system
+- content model
+
+without a concrete technical reason.

@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 /** One smoothed scroll driver writes the canonical progress for the entire page. */
 export function createSceneScroll(opening: HTMLElement) {
   if (!scene.manual) scene.sceneProgress = 0;
-  const pin = ScrollTrigger.create({ trigger: opening, start: 'top top', end: () => `+=${tuning.openingScreens*100}%`, pin: true, invalidateOnRefresh: true, refreshPriority: 1 });
+  const pin = ScrollTrigger.create({ trigger: opening, start: 'top top', end: () => `+=${(innerWidth<700?Math.min(tuning.openingScreens,2.7):tuning.openingScreens)*100}%`, pin: true, invalidateOnRefresh: true, refreshPriority: 1 });
   let anchors: { position: number; progress: number }[] = [];
   let distance = 1;
   const measure = () => {
@@ -17,6 +17,8 @@ export function createSceneScroll(opening: HTMLElement) {
     const chapters = document.querySelectorAll('.capability');
     let sectionTop = pin.end + opening.clientHeight;
     chapters.forEach((element, index) => { anchors.push({ position: sectionTop + element.clientHeight / 2 - innerHeight / 2, progress: [.60, .68, .76, .85][index] }); sectionTop += element.clientHeight; });
+    const preview=document.querySelector('.home-projects');
+    if(preview){anchors.push({position:sectionTop,progress:.875});sectionTop+=preview.clientHeight;}
     const statement = document.querySelector('.production-statement');
     const final = document.querySelector('.final-conversion');
     if (statement && final) {

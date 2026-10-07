@@ -5,6 +5,7 @@
 @import "./environments.css";
 @import "./projects-contact.css";
 @import "./capabilities-page.css";
+@import "./home-narrative.css";
 * { box-sizing: border-box; }
 html { background: var(--color-void); color: var(--color-bone); }
 body { margin: 0; font-family: var(--font-geist), sans-serif; }
@@ -49,7 +50,7 @@ h1 em { font-weight: 400; }
 [data-webgl="ready"][data-motion="full"] .static-mark { display:none; }
 .dev-readout { position: fixed; z-index:60; bottom:12px; right:12px; padding:10px; background:var(--color-ink); color:var(--color-bone); font:11px monospace; }
 .dev-readout pre { line-height:1.7; }
-[data-motion="static"] .hero-copy { visibility: visible !important; opacity: 1 !important; transform:none !important; }
+
 [data-motion="static"] .opening-foot { display:none; }
 @media(max-width:700px) {
  .opening-label { left:6vw; top:110px; }

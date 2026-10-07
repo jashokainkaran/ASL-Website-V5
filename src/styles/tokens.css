@@ -5,3 +5,5 @@
  --font-display: var(--font-instrument); --font-sans: var(--font-geist); --font-mono: var(--font-geist-mono);
 }
 :root { --surface: var(--color-void); --text: var(--color-bone); --line: color-mix(in srgb, var(--color-bone) 23%, transparent); }
+
+:root { --font-geist:var(--font-instrument-sans); --font-instrument:var(--font-instrument-sans); }
